@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progrest</title>
+    <link rel="icon" href="images/progrest_p_logo_green.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-gray-50 text-gray-800">
 
-<!-- NAVBAR -->
+<!-- Navbar -->
 <nav class="fixed w-full flex justify-between items-center px-10 py-5 bg-white shadow-sm z-50">
     <div class="w-30 h-8 bg-no-repeat bg-cover" style="background-image: url('images/progrest_logo_green.png')"></div>
 
@@ -23,11 +24,10 @@
 
 <div class="pt-20"></div>
 
-
 <!-- HERO -->
 <section class="px-10 py-20 grid md:grid-cols-2 xl:grid-cols-[2fr_3fr] gap-6 items-center bg-linear-to-r from-white to-[#E9F2EE]">
 
-    <!-- LEFT -->
+    <!-- kiri -->
     <div>
         <div class="text-white inline-block font-medium mb-4 px-6 py-2 bg-[#217750] rounded-2xl shadow-md">
             ⚙︎ Designed for teams. Built for progress.
@@ -48,7 +48,7 @@
                 Get Started Free
             </a>
 
-            <a href="#" class="border-2 border-gray-300  hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md">
+            <a href="#" class="border-2 border-gray-300  hover:bg-gray-100 px-6 py-3 rounded-lg font-medium shadow-md transition">
                 See How It Works
             </a>
         </div>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <!-- RIGHT (Dashboard Mock) -->
+    <!-- kanan (Dashboard Mock) -->
     <img 
         src="images/progrest_dashboard.png"
         class="w-full h-auto mx-auto rotate-3 shadow-2xl hover:rotate-0 transition duration-300 rounded-2xl"
@@ -70,7 +70,7 @@
 
 <section class="px-5 py-5 bg-white">
     <div class="px-5 py-15 flex flex-col items-center bg-no-repeat bg-cover gap-7 rounded-2xl" style="background-image: url('images/background_landing.jpg')">
-        <img src="images/progrest_logo_white.png" alt="" class="h-38 w-auto">
+        <img src="images/progrest_p_logo_white.png" alt="" class="h-38 w-auto">
         <div class="px-4 py-1 rounded-md bg-white text-[#14452F] font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
         <h1 class="text-5xl md:text-5xl font-semibold italic text-white w-7/8 text-center opacity-90">
                 "Make Progress and Let Others do the Rest"
@@ -78,8 +78,7 @@
     </div>
 </section>
 
-
-<!-- FEATURES -->
+<!-- Fiturs -->
 <section class="px-10 py-20 bg-linear-to-r from-white to-[#E9F2EE] text-center">
     <p class="text-[#217750] font-medium mb-2">
         Everything you need to deliver
@@ -93,55 +92,131 @@
     <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-6">
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
+            <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
+                <x-lucide-brain-cog class="w-6 h-6 text-[##217750]" />
+            </div>
             <h3 class="font-semibold text-lg mb-2">Smart Task Management</h3> 
-            {{-- <div class="h-0.5 w-full bg-[#217750] rounded-xl"></div> --}}
             <p class="text-gray-600 mt-4">
                 Organize tasks, set priorities, and track progress in real time.
             </p>
         </div>
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
+            <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
+                <x-lucide-handshake class="w-6 h-6 text-[##217750]" />
+            </div>
             <h3 class="font-semibold text-lg mb-2">Team Collaboration</h3>
-            {{-- <div class="h-0.5 w-full bg-[#217750] rounded-xl"></div> --}}
             <p class="text-gray-600 mt-4">
                 Communicate, share files, and work together seamlessly.
             </p>
         </div>
 
         <div class="p-6 border-2 border-[#217750] rounded-xl hover:shadow-md transition">
+            <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
+                <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[##217750]" />
+            </div>
             <h3 class="font-semibold text-lg mb-2">Insights & Reports</h3>
-            {{-- <div class="h-0.5 w-full bg-[#217750] rounded-xl"></div> --}}
             <p class="text-gray-600 mt-4">
                 Get clear insights into progress, performance, and deadlines.
             </p>
         </div>
-
     </div>
 </section>
 
-
 <!-- CTA -->
-<section class="px-10 py-16">
-    <div class="bg-[#14452F] text-white rounded-2xl p-10 flex flex-col md:flex-row justify-between items-center gap-6">
+<section class="px-10 py-15 flex flex-col items-center justify-center gap-10">
 
-        <div>
-            <h2 class="text-2xl font-bold mb-2">
-                Ready to bring clarity to your projects?
-            </h2>
-            <p class="text-green-100">
-                Join teams already using Progrest to get things done.
-            </p>
+    <div class="h-auto w-full flex items-center justify-center">
+        <img src="images/progrest_decoration2.png" alt="" class="z-2 -mr-40 max-h-50 -rotate-5 max-w-3/4 w-auto shadow-2xl rounded-2xl">
+        <img src="images/progrest_decoration1.png" alt="" class="z-3 max-h-70 max-w-3/4 w-auto shadow-2xl rounded-2xl hover:scale-103 transition duration-300">
+        <img src="images/progrest_decoration3.png" alt="" class="z-2 -ml-40 max-h-50 rotate-5 max-w-3/4 w-auto shadow-2xl rounded-2xl">
+    </div>
+
+    <div class="bg-[#14452F] text-white rounded-2xl p-10 flex flex-col items-center md:flex-row justify-between gap-6">
+
+        <div class="flex flex-row items-center justify-center gap-8">
+            <div class="p-2.5 flex items-center justify-center bg-white rounded-2xl">
+                <x-lucide-rocket class="h-8 w-8 text-[#14452F]"/>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-2">
+                    Ready to bring clarity to your projects?
+                </h2>
+                <p class="text-green-100">
+                    Join teams already using Progrest to get things done.
+                </p>
+            </div>
         </div>
 
-        <a href="#" class="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold">
+        <a href="#" class="bg-white text-[#14452F] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">
             Get Started Free
         </a>
 
     </div>
 </section>
 
-<footer class="px-8 py-10 bg-[#14452F]">
+<!-- footer --> 
+<footer class="bg-[#14452F] text-[#F5F7F6] px-10 py-16">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
+        <!-- brand -->
+        <div class="flex flex-col gap-2 items-start">
+            <img src="images/progrest_logo_white.png" alt="" class="w-40 h-auto">
+            <p class="text-sm opacity-80">
+                Make progress and let others do the rest.
+            </p>
+
+            <!-- CTA -->
+            <a href="#" 
+                class="inline-block px-4 py-1.5 mt-2 bg-white text-[#14452F] 
+                        rounded-xl font-semibold hover:bg-gray-100
+                        transition-transform duration-300">
+                    Get Started
+            </a>
+        </div>
+
+        <!-- Product -->
+        <div>
+            <h2 class="font-semibold mb-3">Product</h2>
+            <ul class="space-y-3 text-sm opacity-80">
+                <li><a href="#" class="hover:opacity-100">Dashboard</a></li>
+                <li><a href="#" class="hover:opacity-100">Projects</a></li>
+                <li><a href="#" class="hover:opacity-100">Collaboration</a></li>
+            </ul>
+        </div>
+
+        <!-- Company -->
+        <div>
+            <h2 class="font-semibold mb-3">Company</h2>
+            <ul class="space-y-3 text-sm opacity-80">
+                <li><a href="#" class="hover:opacity-100">About</a></li>
+                <li><a href="#" class="hover:opacity-100">Careers</a></li>
+                <li><a href="#" class="hover:opacity-100">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- Resources -->
+        <div>
+            <h2 class="font-semibold mb-3">Resources</h2>
+            <ul class="space-y-3 text-sm opacity-80">
+                <li><a href="#" class="hover:opacity-100">Help Center</a></li>
+                <li><a href="#" class="hover:opacity-100">Privacy Policy</a></li>
+                <li><a href="#" class="hover:opacity-100">Terms of Service</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Bawah Footer -->
+    <div class="border-t border-white/20 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-70">
+        <p>© 2026 Progrest. All rights reserved.</p>
+
+        <div class="flex gap-4 mt-3 md:mt-0">
+            <a href="#" class="hover:opacity-100">Twitter</a>
+            <a href="#" class="hover:opacity-100">LinkedIn</a>
+            <a href="#" class="hover:opacity-100">GitHub</a>
+        </div>
+    </div>
 </footer>
 
 </body>
