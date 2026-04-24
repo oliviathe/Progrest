@@ -10,13 +10,15 @@
 
 <body class="bg-gray-50 text-gray-800">
 
+<!-- sm md lg xl  -->
+
 <!-- Navbar -->
-<nav class="fixed w-full bg-white shadow-sm z-50">
+<nav class="fixed w-full bg-white shadow-sm z-5">
     
     <div class="flex justify-between items-center px-10 py-5">
         <!-- Logo -->
         <div class="w-30 h-8 bg-no-repeat bg-cover"
-            style="background-image: url('images/progrest_logo_green.png')"></div>
+            style="background-image: url('images/progrest_logo_green.png')"></div> 
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
@@ -237,6 +239,6 @@
     </div>
 </footer>
 
-<script src="resources/js/landing_navbar.js"></script>
+{{-- <script src="resources/js/landing_navbar.js"></script> --}}
 </body>
 </html>
