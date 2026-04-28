@@ -7,10 +7,11 @@ class DashboardController extends Controller
     public function index(){
         $menu = [
             [
-                'title' => 'Main', 
-                'items' => [
-                    ['name' => 'Dashboard', 'path' => '/'], 
-                    ['name' => 'Users', 'path' => '/']
+                'navigations' => [
+                    ['name' => 'Dashboard', 'path' => '/dashboard'], 
+                    ['name' => 'Projects', 'path' => '/projects'], 
+                    ['name' => 'Collab', 'path' => '/collab'], 
+                    ['name' => 'Profiles', 'path' => '/profiles']
                 ]
             ]
         ]; 
