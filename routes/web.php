@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DashboardController::class, 'index']);
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
+Route::get('/landing', function(){
+    return view('landing'); 
+}); 
+
 // Route::get('/', function(){
 //     return view('landing'); 
 // });

@@ -33,7 +33,7 @@
 <body class="font-inter antialiased min-h-screen lg:h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 py-8 md:p-8 overflow-x-hidden lg:overflow-hidden" 
       style="background-image: url('images/Checker_BG.png'); background-color: #E9F2EE;">
 
-    <div class="w-full max-w-6xl h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
+    <div class="w-full max-w-[340px] md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-[850px] min-h-min lg:min-h-[600px] bg-white/90 backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
         
         <div class="absolute top-6 right-8 hidden lg:block z-50">
             <img src="images/progrest_logo_green.png" alt="Progrest" class="h-8 w-auto hover:scale-105 transition duration-300 cursor-pointer">
@@ -117,12 +117,12 @@
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 relative h-40 sm:h-56 lg:h-full animate-reveal delay-200 opacity-0 order-first lg:order-last shrink-0 mt-2 lg:mt-0">
-            <div class="absolute top-[5%] lg:top-[12%] left-[8%] lg:left-[8%] w-[60%] lg:w-[72%] aspect-[3/2] bg-[#E9F2EE] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:-translate-y-6 lg:hover:-translate-x-6 hover:-rotate-3 hover:z-40 z-10 hover:shadow-2xl">
+        <div class="w-full lg:w-1/2 relative h-48 sm:h-64 md:h-80 lg:h-full animate-reveal delay-200 opacity-0 order-first lg:order-last shrink-0 mt-2 lg:mt-0">
+            <div class="absolute top-[5%] md:top-[10%] lg:top-[12%] left-[8%] md:left-[15%] lg:left-[8%] w-[60%] md:w-[45%] lg:w-[72%] aspect-[3/2] bg-[#E9F2EE] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:-translate-y-6 lg:hover:-translate-x-6 hover:-rotate-3 hover:z-40 z-10 hover:shadow-2xl">
                 <img src="images/Teamwork_Stock.png" alt="" class="w-full h-full object-cover">
             </div>
             
-            <div class="absolute bottom-[5%] lg:bottom-[12%] right-[8%] lg:right-[8%] w-[60%] lg:w-[72%] aspect-[3/2] bg-[#BDD7CB] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:translate-y-6 lg:hover:translate-x-6 hover:rotate-3 hover:z-40 z-20 hover:shadow-2xl">
+            <div class="absolute bottom-[5%] md:bottom-[10%] lg:bottom-[12%] right-[8%] md:right-[15%] lg:right-[8%] w-[60%] md:w-[45%] lg:w-[72%] aspect-[3/2] bg-[#BDD7CB] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg border-2 lg:border-4 border-white transform transition-all duration-500 hover:scale-105 lg:hover:translate-y-6 lg:hover:translate-x-6 hover:rotate-3 hover:z-40 z-20 hover:shadow-2xl">
                 <img src="images/Discuss_Stock.png" alt="" class="w-full h-full object-cover">
             </div>
         </div>
