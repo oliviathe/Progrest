@@ -23,7 +23,7 @@
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
             <a href="/sign-in" class="text-gray-600">Sign In</a>
-            <a href="/register" class="bg-[#14452F] hover:bg-[#217750] text-white px-5 py-2 rounded-lg font-semibold">
+            <a href="/register" class="bg-primary hover:bg-[#217750] text-white px-5 py-2 rounded-lg font-semibold">
                 Get Started Free
             </a>
         </div>
@@ -39,7 +39,7 @@
         class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out flex flex-col items-center gap-4 px-10">
         
         <a href="/sign-in" class="text-gray-600 py-2">Sign In</a>
-        <a href="/register" class="bg-[#14452F] text-white px-5 py-2 rounded-lg font-semibold mb-4">
+        <a href="/register" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold mb-4">
             Get Started Free
         </a>
     </div>
@@ -53,11 +53,11 @@
 
     <!-- kiri -->
     <div>
-        <div class="text-white inline-block font-medium mb-4 px-6 py-3 bg-[#217750] rounded-2xl shadow-md">
+        <div class="font-montserrat text-white inline-block font-medium mb-4 px-6 py-3 bg-[#217750] rounded-2xl shadow-md">
             ⚙︎ Designed for teams. Built for progress.
         </div>
 
-        <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+        <h1 class="font-montserrat text-5xl md:text-6xl font-bold leading-tight mb-6">
             Plan. Collaborate. <br>
             <span class="text-[#217750]">Deliver Results.</span>
         </h1>
@@ -68,7 +68,7 @@
         </p>
 
         <div class="flex gap-4 mb-6 text-md">
-            <a href="/register" class="bg-[#217750] hover:bg-[#14452F] transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
+            <a href="/register" class="bg-[#217750] hover:bg-primary transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
                 Get Started Free
             </a>
 
@@ -95,8 +95,8 @@
 <section class="px-5 py-5 bg-white">
     <div class="px-5 py-15 flex flex-col items-center bg-no-repeat bg-cover gap-7 rounded-2xl" style="background-image: url('images/background_landing.jpg')">
         <img src="images/progrest_p_logo_white.png" alt="" class="h-38 w-auto">
-        <div class="px-4 py-1 rounded-md bg-white text-[#14452F] font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
-        <h1 class="text-5xl md:text-5xl font-semibold italic text-white w-7/8 text-center opacity-90">
+        <div class="px-4 py-1 rounded-md bg-white text-primary font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
+        <h1 class="font-montserrat text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
                 "Make Progress and Let Others do the Rest"
         </h1>
     </div>
@@ -108,7 +108,7 @@
         Everything you need to deliver
     </p>
 
-    <h2 class="text-3xl font-bold mb-12">
+    <h2 class="font-montserrat text-3xl font-bold mb-12">
         Powerful features for
         <span class="underline decoration-dotted decoration-5 underline-offset-5">modern teams</span>
     </h2>
@@ -119,7 +119,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-brain-cog class="w-6 h-6 text-[##217750]" />
             </div>
-            <h3 class="font-semibold text-lg mb-2">Smart Task Management</h3> 
+            <h3 class="font-montserrat font-semibold text-lg mb-2">Smart Task Management</h3> 
             <p class="text-gray-600 mt-4">
                 Organize tasks, set priorities, and track progress in real time.
             </p>
@@ -129,7 +129,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-handshake class="w-6 h-6 text-[##217750]" />
             </div>
-            <h3 class="font-semibold text-lg mb-2">Team Collaboration</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2">Team Collaboration</h3>
             <p class="text-gray-600 mt-4">
                 Communicate, share files, and work together seamlessly.
             </p>
@@ -139,7 +139,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[##217750]" />
             </div>
-            <h3 class="font-semibold text-lg mb-2">Insights & Reports</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2">Insights & Reports</h3>
             <p class="text-gray-600 mt-4">
                 Get clear insights into progress, performance, and deadlines.
             </p>
@@ -156,14 +156,14 @@
         <img src="images/progrest_decoration3.png" alt="" class="z-2 -ml-40 max-h-50 rotate-5 max-w-3/4 w-auto shadow-2xl rounded-2xl">
     </div>
 
-    <div class="bg-[#14452F] text-white rounded-2xl p-10 flex flex-col items-center md:flex-row justify-between gap-6">
+    <div class="bg-primary text-white rounded-2xl p-10 flex flex-col items-center md:flex-row justify-between gap-6">
 
         <div class="flex flex-row items-center justify-center gap-8">
             <div class="p-2.5 flex items-center justify-center bg-white rounded-2xl">
-                <x-lucide-rocket class="h-8 w-8 text-[#14452F]"/>
+                <x-lucide-rocket class="h-8 w-8 text-primary"/>
             </div>
             <div>
-                <h2 class="text-2xl font-bold mb-2">
+                <h2 class="font-montserrat text-2xl font-bold mb-2">
                     Ready to bring clarity to your projects?
                 </h2>
                 <p class="text-green-100">
@@ -172,7 +172,7 @@
             </div>
         </div>
 
-        <a href="/register" class="bg-white text-[#14452F] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">
+        <a href="/register" class="bg-white text-primary px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">
             Get Started Free
         </a>
 
@@ -180,7 +180,7 @@
 </section>
 
 <!-- footer --> 
-<footer class="bg-[#14452F] text-[#F5F7F6] px-10 py-16">
+<footer class="bg-primary text-[#F5F7F6] px-10 py-16">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
         <!-- brand -->
@@ -192,7 +192,7 @@
 
             <!-- CTA -->
             <a href="/register" 
-                class="inline-block px-4 py-1.5 mt-2 bg-white text-[#14452F] 
+                class="inline-block px-4 py-1.5 mt-2 bg-white text-primary 
                         rounded-xl font-semibold hover:bg-gray-100
                         transition-transform duration-300">
                     Get Started
