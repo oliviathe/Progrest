@@ -1,28 +1,35 @@
-const btn = document.getElementById('menu-btn');
-const menu = document.getElementById('mobile-menu');
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
 
-let open = false;
+    let open = false;
 
-btn.addEventListener('click', () => {
-    open = !open;
+    if (btn && menu) {
+        btn.addEventListener('click', () => {
+            open = !open;
 
-    if (open) {
-        menu.classList.remove('max-h-0');
-        menu.classList.add('max-h-40'); // adjust height if needed
-    } else {
-        menu.classList.remove('max-h-40');
-        menu.classList.add('max-h-0');
+            if (open) {
+                menu.classList.remove('max-h-0');
+                menu.classList.add('max-h-40');
+            } else {
+                menu.classList.remove('max-h-40');
+                menu.classList.add('max-h-0');
+            }
+        });
     }
-}); 
 
-document.getElementById('scroll-features').addEventListener('click', () => {
-    const section = document.getElementById('features'); 
-    
-    const yOffset = -50; 
-    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset; 
-    
-    window.scrollTo({
-        top: y, 
-        behavior: 'smooth'
-    }); 
-})
+    const scrollBtn = document.getElementById('scroll-features');
+    const section = document.getElementById('features');
+
+    if (scrollBtn && section) {
+        scrollBtn.addEventListener('click', () => {
+            const yOffset = -50;
+            const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+            window.scrollTo({
+                top: y,
+                behavior: 'smooth'
+            });
+        });
+    }
+});

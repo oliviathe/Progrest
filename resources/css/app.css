@@ -34,3 +34,45 @@
     src: url('../fonts/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
 }
+
+@theme {
+    /*  LIGHT  */
+    --color-primary: #14452F;
+    --color-secondary: #DCECE2;
+    --color-tertiary: #F4F8F5;
+
+    --color-background: #FFFFFF;
+    --color-surface: #F5F4F1;
+    --color-border: #E5E7EB;
+
+    --color-text-primary: #111827;
+    --color-text-secondary: #6B7280;
+}
+
+.dark {
+    --color-primary: #22C55E;
+    --color-secondary: #4ADE80;
+    --color-tertiary: #163A2A;
+
+    --color-background: #0F172A;
+    --color-surface: #1E293B;
+    --color-border: #334155;
+
+    --color-text-primary: #F1F5F9;
+    --color-text-secondary: #94A3B8;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+        --color-primary: #22C55E;
+        --color-secondary: #4ADE80;
+        --color-tertiary: #163A2A;
+
+        --color-background: #0F172A;
+        --color-surface: #1E293B;
+        --color-border: #334155;
+
+        --color-text-primary: #F1F5F9;
+        --color-text-secondary: #94A3B8;
+    }
+}

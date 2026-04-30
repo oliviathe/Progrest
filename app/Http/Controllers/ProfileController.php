@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-class DashboardController extends Controller
+use Illuminate\Http\Request;
+
+class ProfileController extends Controller
 {
-    public function index(){
+    public function index() {
         $menu = [
             [
                 'navigations' => [
@@ -16,6 +18,6 @@ class DashboardController extends Controller
             ]
         ]; 
 
-        return view('dashboard.index', compact('menu')); 
+        return view('profile.index', compact('menu')); 
     }
 }
