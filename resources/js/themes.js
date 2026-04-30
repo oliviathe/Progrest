@@ -14,6 +14,7 @@ function applyTheme(theme) {
 
 function updateThemeAssets(theme) {
     const logo = document.getElementById('app-logo'); 
+    const logoP = document.getElementById('app-logo-p'); 
 
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches; 
 
@@ -21,9 +22,11 @@ function updateThemeAssets(theme) {
 
     if(theme == 'dark'){
         logo.src = 'images/progrest_logo_white.png'; 
+        logoP.src = 'images/progrest_p_logo_white.png'; 
     }
     else if(theme == 'light' || (theme == 'system' && !isDark)){
         logo.src = 'images/progrest_logo_green.png'; 
+        logoP.src = 'images/progrest_p_logo_green.png'; 
     }
     else {
 
