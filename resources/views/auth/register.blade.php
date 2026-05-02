@@ -55,7 +55,7 @@
         </div>
 
         {{-- LEFT --}}
-        <div class="w-full lg:w-5/8 p-6 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100 opacity-0">
+        <div class="w-full lg:w-13/16 p-6 lg:px-12 flex flex-col justify-center relative z-10 h-full animate-reveal delay-100 opacity-0">
             
             <div class="w-full mx-auto">
                 {{--TOMBOL BACK--}}
@@ -94,20 +94,21 @@
                         </label>
 
                         <div class="relative">
-
+                            
                             <input 
                                 id="usernameInput" required
                                 type="text" name="username" 
-                                placeholder="Username must be 4-8 characters and unique" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
+                                value="{{ old("username") }}"
+                                placeholder="Must be 4-8 characters & unique" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
                             >
-
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-user class="w-5 h-5 text-primary" />
                             </div>
-
                         </div>
-
+                        @error('username')
+                            <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- FULL NAME --}}
@@ -118,20 +119,22 @@
                         </label>
 
                         <div class="relative">
-
+                        
                             <input 
                                 id="nameInput" required
                                 type="text" name="name"
-                                placeholder="Full Name must be 3 characters minimum" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
+                                value="{{ old("name") }}"
+                                placeholder="Must be 6-12 characters" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
                             >
-
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-user-round class="w-5 h-5 text-primary" />
                             </div>
-
+                            
                         </div>
-
+                        @error('name')
+                            <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     {{-- EMAIL --}}
@@ -142,22 +145,23 @@
                         </label>
 
                         <div class="relative">
-                            @error('email')
-                                <div class="text-red-500 text-sm">{{ $message }}</div>
-                            @enderror
 
                             <input 
                                 id="emailInput" required
-                                type="email" name="email"
-                                placeholder="E-mail must be appropriate" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
+                                type="text" name="email"
+                                value="{{ old("email") }}"
+                                placeholder="Must be appropriate & unique" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
                             >
-
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-mail class="w-5 h-5 text-primary" />
                             </div>
 
                         </div>
+
+                        @error('email')
+                            <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                        @enderror 
 
                     </div>
 
@@ -173,13 +177,18 @@
                             <input 
                                 id="passwordInput" required
                                 type="password" name="password"
-                                placeholder="Password must be 6-12 characters" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
+                                value="{{ old("password") }}"
+                                placeholder="Must be 6-12 alphanumeric chars" 
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-gray-50 text-sm transition-all text-text-primary placeholder-gray-400"
                             >
 
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-lock class="w-5 h-5 text-primary" />
                             </div>
+
+                            @error('password')
+                                <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                            @enderror
 
                         </div>
 
@@ -200,7 +209,7 @@
                         {{-- REGISTER BUTTON --}}
                         <button 
                             type="submit" 
-                            class="w-[80%] mx-auto block bg-primary hover:bg-[#217750] text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                            class="w-[80%] mx-auto block bg-primary hover:bg-[#217750] text-white font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95"
                         >
                             Register
                         </button>
@@ -219,12 +228,12 @@
                         </div>
 
                         {{-- GOOGLE --}}
-                        <a href="/google" class="w-[80%] mx-auto flex bg-white border-2 border-primary text-text-primary font-bold py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
+                        <a href="/google" class="w-[80%] mx-auto flex bg-white border-2 border-primary text-text-primary font-bold py-1.5 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
 
                             <img 
                                 src="images/Google_Icon.png" 
                                 alt="" 
-                                class="w-5 h-5"
+                                class="w-4"
                             > 
 
                             Continue with Google
@@ -265,42 +274,5 @@
         </div>
 
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('registerForm'); 
-
-            const username = document.getElementById('usernameInput'); 
-            const name = document.getElementById('nameInput'); 
-            const email = document.getElementById('emailInput'); 
-            const password = document.getElementById('passwordInput'); 
-
-            form.addEventListener('submit', (e) => {
-                let valid = true; 
-
-                if(username.value.length < 4){
-                    alert('Username must be at least 4 characters'); 
-                    valid = false; 
-                }
-                if(name.value.length < 6){
-                    alert('Name must be at least 4 characters'); 
-                    valid = false; 
-                }
-                if(!email.checkValidity()){
-                    alert('E-mail format must be appropriate'); 
-                    valid = false; 
-                }
-                if(password.value.length < 6){
-                    alert('Password must be at least 8 characters'); 
-                    valid = false; 
-                }
-
-                if(!valid){
-                    e.preventDefault(); 
-                }
-            })
-
-        })
-    </script>
 </body>
 </html>

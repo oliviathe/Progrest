@@ -15,6 +15,7 @@ Route::get('/', function() {
 Route::get('/register', function() {
     return view('auth.register'); 
 })->name('register'); 
+Route::post('/register', [AuthController::class, 'register']); 
 
 Route::get('/login', [AuthController::class, 'index'])->name('login'); 
 Route::post('/login', [AuthController::class, 'login']); 
@@ -24,7 +25,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 //     return view('dashboard');
 // })->middleware('auth')->name('dashboard');
 
-Route::get('/dashboard', [DashboardController::class, 'index']); 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); 
 Route::get('/projects', [ProjectController::class, 'index']); 
 Route::get('/collab', [CollabController::class, 'index']); 
 Route::get('/profile', [ProfileController::class, 'index']); 

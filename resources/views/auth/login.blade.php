@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign In - Progrest</title>
+    <title>Log In - Progrest</title>
 
     <link rel="icon" href="images/progrest_p_logo_green.png">
     
@@ -54,22 +54,22 @@
                     </div>
 
                     <div class="relative w-max">
-                        <h1 class="text-4xl md:text-[3.5rem] text-center font-bold text-[#217750] font-parkinsans tracking-wide leading-none">Sign In</h1>
-                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[62%] w-[115%] text-5xl md:text-[4.5rem] text-primary font-redacted opacity-90 pointer-events-none leading-none text-center">
-                            Sign In
+                        <h1 class="text-4xl md:text-[3rem] text-center font-bold text-[#217750] font-parkinsans tracking-wide leading-none">Log In</h1>
+                        <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[62%] w-[115%] text-4xl md:text-[4.5rem] text-primary font-redacted opacity-90 pointer-events-none leading-none text-center">
+                            Log In
                         </span>
                     </div>
                 </div>
 
-                <p class="text-[#545454] text-center text-xs md:text-sm mb-4 lg:mb-6 leading-relaxed">
+                <p class="text-[#545454] text-center text-sm md:text-sm mb-3 lg:mb-5 leading-relaxed">
                     Plan your project effectively through simplified interactivity and collaboration with users around the world.
                 </p>
 
-                @if ($errors->has('login'))
+                {{-- @if ($errors->has('login'))
                     <div class="mb-3 text-red-600 text-sm text-center">
                         {{ $errors->first('login') }}
                     </div>
-                @endif
+                @endif --}}
 
                 <form id="loginForm" action="/login" method="POST" class="space-y-3 lg:space-y-3.5" novalidate>
                     @csrf
@@ -78,7 +78,7 @@
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">Email Address or Username</label>
                         <div class="relative">
                             <input id="loginInput" type="text" name="login" required placeholder="Enter your email or username" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-mail class="w-4 h-4 md:w-5 md:h-5 text-primary" />
                             </div>
@@ -88,25 +88,31 @@
                                 <div id="emailError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
+                        @error('auth')
+                            <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div id="passwordWrapper" class="group">
                         <label class="block text-xs md:text-sm font-bold text-[#111827] mb-1">Password</label>
                         <div class="relative">
                             <input id="passwordInput" type="password" name="password" required placeholder="Enter your password" 
-                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
+                                class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary focus:bg-white/80 text-xs md:text-sm transition-all text-[#111827] placeholder-gray-400 bg-white/50 group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-lock class="w-4 h-4 md:w-5 md:h-5 text-primary" />
                             </div>
 
-                            <div class="absolute left-0 top-[115%] w-max max-w-[280px] p-3 bg-primary border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
+                            <div class="absolute left-0 top-[115%] w-max max-w-70 p-3 bg-primary border border-[#217750] rounded-xl shadow-xl opacity-0 invisible transition-all duration-300 group-[.has-error]:opacity-100 group-[.has-error]:visible z-50 translate-y-2 group-[.has-error]:translate-y-0">
                                 <div class="absolute -top-1.5 left-5 w-3 h-3 bg-primary border-l border-t border-[#217750] rotate-45"></div>
                                 <div id="passwordError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
+                        @error('auth')
+                            <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
+                        @enderror
                     </div>
 
-                    <div class="flex items-center mt-1">
+                    <div class="flex items-center">
                         <input type="checkbox" name="remember" id="remember" class="w-3.5 h-3.5 md:w-4 md:h-4 text-primary border-gray-300 rounded focus:ring-primary cursor-pointer bg-white">
                         <label for="remember" class="ml-2 text-xs md:text-sm text-[#545454] cursor-pointer hover:text-primary transition-colors">Remember Me</label>
                     </div>
@@ -115,7 +121,7 @@
                         Don't have an account? <a href="/register" class="font-bold text-[#6B7280] hover:text-primary transition-colors underline decoration-1 underline-offset-4">Get Progrest Now</a>
                     </div>
 
-                    <button type="submit" class="w-full bg-primary hover:bg-[#217750] text-white font-bold py-2.5 md:py-3 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                    <button type="submit" class="w-full bg-primary hover:bg-[#217750] text-white font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         Log In
                     </button>
 
@@ -125,12 +131,12 @@
                         <hr class="grow border-gray-300">
                     </div>
 
-                    <a href="/google" class="w-full bg-white/80 border-2 border-primary text-[#111827] font-bold py-2.5 md:py-3 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-white transition-all shadow-sm active:scale-95 text-sm md:text-base">
-                        <img src="images/Google_Icon.png" alt="" class="w-4 h-4 md:w-5 md:h-5"> 
+                    <a href="/google" class="w-full bg-white/80 border-2 border-primary text-[#111827] font-bold py-1.5 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-white transition-all shadow-sm active:scale-95 text-sm md:text-base">
+                        <img src="images/Google_Icon.png" alt="" class="w-4"> 
                         Continue with Google
                     </a>
 
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-2">
                         <a href="/forgot" class="text-xs md:text-sm font-bold text-[#6B7280] hover:text-primary transition-colors underline decoration-1 underline-offset-4">Forgot Your Password?</a>
                     </div>
                 </form>
@@ -147,30 +153,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('loginForm');
-
-            const login = document.getElementById('loginInput');
-            const password = document.getElementById('passwordInput');
-
-            form.addEventListener('submit', (e) => {
-                let valid = true;
-
-                if (login.value.length == 0) {
-                    alert('E-mail or username must be filled!');
-                    valid = false;
-                }
-
-                if (password.value.length < 8) {
-                    alert('Password must be at least 8 characters');
-                    valid = false;
-                }
-
-                if (!valid) e.preventDefault();
-            });
-        });
-    </script>
 </body>
 </html>
