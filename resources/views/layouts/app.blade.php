@@ -55,7 +55,7 @@
     <div class="flex min-h-screen bg-surface">
     <x-sidebar :menu="$menu" />
 
-    <main class="flex-1 p-6">
+    <main class="flex-1">
         @yield('content')
     </main>
 </div>
