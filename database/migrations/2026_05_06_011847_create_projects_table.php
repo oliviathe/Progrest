@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamps(); 
 
             $table->string('icon')->default('folder-git-2'); 
+            $table->date('deadline')->nullable(); 
 
             $table->index('leader_id'); 
             $table->index('status'); 

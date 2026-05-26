@@ -28,9 +28,10 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::middleware(['auth'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard'); 
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index'); 
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store'); 
 }); 
 
-Route::get('/projects', [ProjectController::class, 'index']); 
 Route::get('/projects/tasks', function(){
     $projects = [];
     $menu = [

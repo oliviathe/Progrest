@@ -89,8 +89,6 @@
                 @include('components.footer')
             </main>
         </div>
-
-        
     </div>
 </body>
 </html>

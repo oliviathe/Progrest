@@ -58,6 +58,32 @@ class ProjectController extends Controller
         return view('projects.index', compact('menu', 'projects')); 
     }
 
+    public function store(Request $request){
+        $user_id = auth()->id(); 
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'accent' => 'required|string', 
+            'icon' => 'required|string', 
+            'deadline' => 'nullable|date'
+        ]);
+
+        $project = Project::create([
+            'leader_id' => $user_id,
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'accent' => $validated['accent'] ?? "#0EA5A4", 
+            'icon' => $validated['icon'] ?? "folder-git-2", 
+            'deadline' => $validated['deadline'] ?? null, 
+            'progress' => 0
+        ]);
+
+        $project->members()->syncWithoutDetaching([$user_id]); // add member + supaya enggak ada duplicated member juga 
+
+        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
+    }
+
     public function show(Project $project){
         $user_id = auth()->id(); 
 
@@ -67,24 +93,5 @@ class ProjectController extends Controller
         abort_if(!($isLeader || $isMember), 403); 
 
         return view('projects.show', compact('project')); 
-    }
-
-    public function store(Request $request){
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        $user_id = auth()->id(); 
-
-        Project::create([
-            'leader_id' => $user_id,
-            'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
-        ]);
-
-        $project->members()->attach($userId); 
-
-        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
 }

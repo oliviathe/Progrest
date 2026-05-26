@@ -131,8 +131,8 @@
                         <p class="text-xs text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-4xl">
-                            <span class="bg-primary text-white rounded-full w-7 h-7 flex items-center justify-center text-base">P</span> {{ $statistics['points']['current'] }}
+                        <div class="flex items-center gap-2 text-primary font-parkinsans font-bold text-4xl">
+                            <x-lucide-coins class="w-7 h-7" /> {{ $statistics['points']['current'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-sm mt-2">Points</p>
                         <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> Highest</p>

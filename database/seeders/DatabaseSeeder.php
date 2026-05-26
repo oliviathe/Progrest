@@ -6,7 +6,8 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash; 
+use Carbon\Carbon; 
 
 class DatabaseSeeder extends Seeder
 {
@@ -52,7 +53,8 @@ class DatabaseSeeder extends Seeder
             'description' => 'Mobile application that focuses on sea creatures education.',
             'progress' => 30,
             'accent' => '#7C2D8E',
-            'icon' => 'fishing-hook'
+            'icon' => 'fishing-hook', 
+            'deadline' => Carbon::parse('06/12/2026')
         ]); 
 
         $project2 = Project::create([
@@ -61,7 +63,8 @@ class DatabaseSeeder extends Seeder
             'description' => 'MindSpace Mobile App for mental health and mood tracking.',
             'progress' => 50,
             'accent' => '#0056D2', 
-            'icon' => 'heart-pulse'
+            'icon' => 'heart-pulse',
+            'deadline' => Carbon::parse('06/15/2026')
         ]); 
             
         $project3 = Project::create([
@@ -70,7 +73,8 @@ class DatabaseSeeder extends Seeder
             'description' => 'CookEase Mobile App for easy recipes and meal planning.',
             'progress' => 10,
             'accent' => '#1F5D3A', 
-            'icon' => 'cooking-pot'
+            'icon' => 'cooking-pot', 
+            'deadline' => Carbon::parse('06/19/2026')
         ]); 
             
         $project4 = Project::create([
@@ -79,7 +83,8 @@ class DatabaseSeeder extends Seeder
             'description' => 'PetPal Mobile App for smart pet care management system.',
             'progress' => 70,
             'accent' => '#0EA5A4', 
-            'icon' => 'cat'
+            'icon' => 'cat', 
+            'deadline' => Carbon::parse('06/23/2026')
         ]); 
         
         $project5 = Project::create([
@@ -88,7 +93,8 @@ class DatabaseSeeder extends Seeder
             'description' => 'TravelMate Mobile App for smart trip planning and itineraries.',
             'progress' => 100,
             'accent' => '#8B5A2B', 
-            'icon' => 'backpack'
+            'icon' => 'backpack', 
+            'deadline' => Carbon::parse('06/28/2026')
         ]); 
         
         $project6 = Project::create([
@@ -97,9 +103,9 @@ class DatabaseSeeder extends Seeder
             'description' => 'EcoTrack App for tracking and reducing daily carbon footprint.',
             'progress' => 40,
             'accent' => '#F35C75', 
-            'icon' => 'trees'
+            'icon' => 'trees', 
+            'deadline' => Carbon::parse('07/1/2026')
         ]); 
-
 
         $project1->members()->attach([
             $collab1->id, 
