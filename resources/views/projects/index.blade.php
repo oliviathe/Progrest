@@ -178,7 +178,7 @@
             </div>
         </div>
 
-        <div class="mt-4 grid  grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3">
+        <div class="mt-4 grid  grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 mb-10">
             @foreach ($projects as $project)
                 @include('projects.card', [
                     'title' => $project->title,

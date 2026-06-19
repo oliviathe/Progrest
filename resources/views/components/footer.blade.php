@@ -1,4 +1,4 @@
-<footer class="bg-primary text-[#F5F7F6] px-10 py-16 flex mt-10 flex-col">
+<footer class="bg-primary text-[#F5F7F6] px-10 py-16 flex flex-col">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
 
         <div class="flex flex-col gap-2 items-start">

@@ -40,83 +40,119 @@
     ];
 @endphp
 
-<div class="p-4 md:p-8 max-w-7xl mx-auto">
-
-    <!-- PROFILE HEADER -->
-    <div class="bg-background rounded-[2rem] overflow-hidden shadow-sm border border-border mb-8">
-
+<div class="p-4 md:p-8 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
+    <div class="bg-background rounded-4xl overflow-hidden shadow-sm border border-border mb-8">
         <!-- COVER -->
-        <div class="relative h-44 md:h-52 overflow-visible">
-
-            <!-- BACKGROUND -->
-            <div class="absolute inset-0 z-0">
-                <img 
-                    src="{{ asset('images/Checker_BG.png') }}" 
-                    alt="Background"
-                    class="w-full h-full object-cover"
-                >
-            </div>
-
-            <!-- EDIT BUTTON -->
-            <button class="absolute top-5 right-5 z-30 bg-primary hover:bg-primary-hover text-white px-5 py-2.5 rounded-full font-montserrat font-bold flex items-center gap-2 shadow-md transition-colors">
+        <div class="relative h-36 overflow-visible">
+            <img
+                src="{{ asset('images/Checker_BG.png') }}"
+                alt="Cover"
+                class="absolute inset-0 w-full h-full object-cover"
+            >
+            <!-- EDIT -->
+            <button
+                class="absolute top-5 right-5 bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
+            >
                 <x-lucide-pencil class="w-4 h-4" />
-                Edit
+                Edit Profile
             </button>
-
-            <!-- PROFILE IMAGE -->
-            <div class="absolute left-1/2 -bottom-14 -translate-x-1/2 z-50">
-                <img 
+        </div>
+        <!-- PROFILE CONTENT -->
+        <div class="relative px-10 pb-5">
+            <!-- AVATAR -->
+            <div class="absolute left-10 -top-14">
+                <img
                     src="{{ asset('images/profile.jpg') }}"
-                    class="w-32 h-32 rounded-full object-cover border-[7px] border-background shadow-xl"
+                    class="w-48 h-48 rounded-full object-cover border-[6px] border-background shadow-lg"
                 >
             </div>
+            <!-- POINTS -->
+            <div class="absolute right-10 top-6 bg-background-gradient pb-2 rounded-xl">
+                <div class="flex items-center gap-3 flex-col">
+                    <div class="bg-primary text-white rounded-lg px-4 py-2">
+                        <span class="font-parkinsans text-3xl font-bold">
+                            123
+                        </span>
+                    </div>
+                    <span class="font-montserrat text-lg font-semibold text-text-primary">
+                        Points
+                    </span>
+                </div>
+            </div>
 
+            <!-- PROFILE INFO -->
+            <div class="pt-6.5 ml-54">
+                <h1 class="font-parkinsans text-3xl font-bold text-text-primary">
+                    {{ auth()->user()->username }}
+                </h1>
+                <p class="font-montserrat text-lg text-text-secondary mt-px">
+                    @ {{ auth()->user()->name }}
+                </p>
+                <div class="flex flex-wrap items-center gap-5 mt-2 text-text-secondary">
+                    <div class="flex items-center gap-2">
+                        <x-lucide-map-pin class="w-4 h-4" />
+                        Jakarta, Indonesia
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <x-lucide-calendar class="w-4 h-4" />
+                        Joined Jan 2026
+                    </div>
+                </div>
+                <p class="mt-2 max-w-lg font-montserrat text-text-secondary">
+                    Passionate collaborator who enjoys building impactful
+                    projects and helping teams deliver high-quality products.
+                </p>
+            </div>
         </div>
 
-        <!-- PROFILE INFO -->
-        <div class="pt-20 pb-6 px-8 relative z-0 bg-background">
-
-            <!-- SLIDER -->
-            <div class="absolute left-6 top-5 flex items-center gap-3">
-
-                <div class="w-7 h-7 bg-border rounded"></div>
-                <div class="w-7 h-7 bg-border rounded"></div>
-                <div class="w-7 h-7 bg-border rounded"></div>
-
-                <button>
-                    <x-lucide-chevron-right class="w-5 h-5 text-text-primary" />
-                </button>
-
-                <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-
+        <!-- STATS -->
+        <div class="px-8 pb-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 bg-card border border-border rounded-3xl overflow-hidden">
+                <div class="flex flex-col items-center py-3">
+                    <div class="row flex gap-1.5 mb-1">
+                        <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
+                            <x-lucide-folder-git class="w-4 h-4 text-text-contrast"/>
+                        </div>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                    </div>
+                    <span class="text-text-secondary">
+                        Projects Joined
+                    </span>
+                </div>
+                <div class="flex flex-col items-center py-3 border-l border-border">
+                    <div class="row flex gap-1.5 mb-1">
+                        <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
+                            <x-lucide-clipboard-list class="w-4 h-4 text-text-contrast"/>
+                        </div>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                    </div>
+                    <span class="text-text-secondary">
+                        Tasks Completed
+                    </span>
+                </div>
+                <div class="flex flex-col items-center py-3 border-l border-border">
+                    <div class="row flex gap-1.5 mb-1">
+                        <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
+                            <x-lucide-users class="w-4 h-4 text-text-contrast"/>
+                        </div>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                    </div>
+                    <span class="text-text-secondary">
+                        Collaborations
+                    </span>
+                </div>
+                <div class="flex flex-col items-center py-3 border-l border-border">
+                    <div class="row flex gap-1.5 mb-1">
+                        <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
+                            <x-lucide-star class="w-4 h-4 text-text-contrast"/>
+                        </div>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                    </div>
+                    <span class="text-text-secondary">
+                        Total Points
+                    </span>
+                </div>
             </div>
-
-            <!-- POINTS -->
-            <div class="absolute right-8 top-5 flex items-center gap-2">
-
-                <span class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-3xl leading-none">
-                    123
-                </span>
-
-                <span class="font-montserrat text-text-primary text-lg">
-                    Points
-                </span>
-
-            </div>
-
-            <!-- NAME -->
-            <div class="text-center">
-
-                <h1 class="font-parkinsans text-3xl font-bold text-text-primary">
-                    Kevin Jio
-                </h1>
-
-                <p class="font-montserrat text-text-secondary text-lg">
-                    @progressor
-                </p>
-
-            </div>
-
         </div>
     </div>
 
@@ -124,11 +160,11 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <!-- ABOUT -->
-        <div class="bg-background rounded-[2rem] p-7 shadow-sm border border-border flex flex-col justify-between">
+        <div class="bg-background rounded-4xl p-7 shadow-sm border border-border flex flex-col justify-between">
 
             <div>
 
-                <h2 class="font-parkinsans text-3xl font-bold text-text-primary mb-5">
+                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary mb-5">
                     About
                 </h2>
 
@@ -161,12 +197,12 @@
         </div>
 
         <!-- TASK HELPED -->
-        <div class="bg-background rounded-[2rem] p-6 shadow-sm border border-border">
+        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border">
 
             <div class="flex items-center justify-between mb-5">
 
-                <h2 class="font-parkinsans text-2xl font-bold text-text-primary">
-                    Task Helped
+                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
+                    Tasks Helped
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
@@ -208,11 +244,11 @@
         </div>
 
         <!-- TASK CREATED -->
-        <div class="bg-background rounded-[2rem] p-6 shadow-sm border border-border">
+        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border">
 
             <div class="flex items-center justify-between mb-5">
 
-                <h2 class="font-parkinsans text-2xl font-bold text-text-primary">
+                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
                     Task Created
                 </h2>
 

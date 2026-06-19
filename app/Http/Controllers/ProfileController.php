@@ -20,8 +20,11 @@ class ProfileController extends Controller
             ]
         ];
 
-        $projects = Project::all();
+        $user = auth()->user(); 
 
-        return view('profile.index', compact('menu', 'projects')); 
+        return view('profile.index', [
+            'menu' => $menu, 
+            'projects' => $user->projects()->latest()->get()
+        ]); 
     }
 }

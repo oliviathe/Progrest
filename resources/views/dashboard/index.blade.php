@@ -65,7 +65,7 @@
 @endphp
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<div class="p-4 md:p-8 pt-6 max-w-7xl mx-auto">
+<div class="p-4 md:p-8 pt-6 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
     <div id="dashboard-header" class="bg-background rounded-4xl p-4 px-6 mb-8 shadow-sm border-[1.5px] border-border flex justify-between items-center">
         <div class="flex items-center gap-4">
             <img src="{{ asset('images/profile.jpg') }}" alt="Profile" class="w-14 h-14 rounded-full object-cover shadow-sm border-[3px] border-border">
@@ -91,57 +91,65 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         
         <div class="lg:col-span-2 flex flex-col gap-8">
             
-            <div id="dashboard-stats" class="bg-primary rounded-4xl px-5 pt-3 pb-5 shadow-md">
-                <div class="flex items-center justify-between text-white mb-2 px-3">
+            <div id="dashboard-stats" class="bg-primary rounded-4xl px-4 pt-2 pb-4 shadow-md">
+                <div class="flex items-center justify-between text-white mb-1 px-3">
                     <div class="flex gap-2">
                         <button id="share-btn" class="focus:outline-none hover:opacity-70 transition-opacity" title="Download Statistics">
                             <x-lucide-share-2 class="w-5 h-5" />
                         </button>
                     </div>
-                    <span class="font-montserrat font-bold text-xl">Account Statistics</span>
+                    <span class="font-montserrat font-semibold text-lg">Account Statistics</span>
                     <div class="w-14"></div>
                 </div>
                 
-                <div class="bg-surface rounded-2xl px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-2 divide-y md:divide-y-0 md:divide-x divide-border shadow-inner">
+                <div class="bg-surface rounded-2xl px-6 py-3 grid grid-cols-2 md:grid-cols-4 gap-2 divide-y md:divide-y-0 md:divide-x-2 divide-border shadow-inner">
                     <div class="flex flex-col items-center justify-center">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-4xl">
-                            <x-lucide-zap class="w-7 h-7 fill-current" /> {{ $statistics['login_streak']['current'] }}
+                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                            <x-lucide-zap class="w-6 h-6 fill-current" /> {{ $statistics['login_streak']['current'] }}
                         </div>
-                        <p class="font-montserrat font-bold text-text-primary text-md mt-2">Login Streak</p>
+                        <p class="font-montserrat font-bold text-text-primary text-md mt-1">Login Streak</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['login_streak']['best'] }}</span> Best</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-2 text-primary font-parkinsans font-bold text-4xl">
-                            <x-lucide-file-text class="w-7 h-7" /> {{ $statistics['projects_completed'] }}
+                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                            <x-lucide-file-text class="w-6 h-6" /> {{ $statistics['projects_completed'] }}
                         </div>
-                        <p class="font-montserrat font-bold text-text-primary text-md mt-2">Projects</p>
+                        <p class="font-montserrat font-bold text-text-primary text-md mt-1">Projects</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-2 text-primary font-parkinsans font-bold text-4xl">
-                            <x-lucide-users class="w-7 h-7" /> {{ $statistics['collabs_completed'] }}
+                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                            <x-lucide-users class="w-6 h-6" /> {{ $statistics['collabs_completed'] }}
                         </div>
-                        <p class="font-montserrat font-bold text-text-primary text-md mt-2">Collabs</p>
+                        <p class="font-montserrat font-bold text-text-primary text-md mt-1">Collabs</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-2 text-primary font-parkinsans font-bold text-4xl">
-                            <x-lucide-coins class="w-7 h-7" /> {{ $statistics['points']['current'] }}
+                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                            <x-lucide-coins class="w-6 h-6" /> {{ $statistics['points']['current'] }}
                         </div>
-                        <p class="font-montserrat font-bold text-text-primary text-md mt-2">Points</p>
+                        <p class="font-montserrat font-bold text-text-primary text-md mt-1">Points</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> Highest</p>
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col">
-                <h2 class="font-montserrat text-xl font-bold text-text-primary mb-4">Your Monthly Task Contribution</h2>
-                <div class="bg-background rounded-3xl p-6 shadow-sm border-[1.5px] border-border flex flex-col justify-between">
-                    <div class="flex justify-end gap-3 mb-6" id="chart-tabs">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="row flex gap-1 items-center">
+                        <div class="w-2 h-8 rounded-full bg-primary"></div>
+                        <x-lucide-bar-chart-3 class="w-7 h-7 text-primary" />
+                    </div>  
+                    <h2 class="text-2xl font-bold font-montserrat text-text-primary">
+                        Task Contribution Statistics
+                    </h2>
+                </div>
+                <div class="bg-background rounded-3xl px-6 py-4.5 shadow-sm border-[1.5px] border-border flex flex-col justify-between -mt-1">
+                    <div class="flex justify-end gap-3 mb-4.5" id="chart-tabs">
                         <button class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Weekly</button>
                         <button class="chart-tab active bg-border shadow-sm text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Monthly</button>
                         <button class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none">Annually</button>
@@ -168,16 +176,32 @@
         </div>
 
         <div class="lg:col-span-1 flex flex-col h-full">
-            <h2 class="font-montserrat text-xl font-bold text-text-primary mb-6">Current Projects</h2>
-            <div class="flex flex-col gap-5">
+            <div class="row flex items-center gap-3 mb-3">
+                <div class="row flex gap-1 items-center">
+                    <div class="w-1.5 h-6 rounded-full bg-primary"></div>
+                    <x-lucide-clock class="w-5 h-5 text-primary" />
+                </div>
+                <h2 class="text-lg font-semibold font-montserrat text-text-primary">
+                    Current Projects
+                </h2>
+            </div>
+            <div class="flex flex-col gap-4">
                 
                 @forelse ($projects->take(3) as $proj)
-                    <a href="/projects/{{$proj->id}}" class="block bg-background rounded-[1.25rem] p-5 shadow-sm border-[1.5px] border-border relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <a href="/projects/{{$proj->id}}" class="block bg-background rounded-[1.25rem] px-5 py-4 shadow-sm border-[1.5px] border-border relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all">
                         <div class="absolute left-0 top-0 bottom-0 w-2" style="background-color: {{ $proj->accent ?? '#14452F' }}"></div>
                         
                         <div class="pl-2">
-                            <h3 class="font-parkinsans font-bold text-text-primary text-lg group-hover:text-primary transition-colors">{{ $proj->title }}</h3>
-                            <p class="font-montserrat text-xs text-text-secondary mt-1.5 line-clamp-2 leading-relaxed">{{ $proj->description }}</p>
+                            <div class="row gap-2 flex">
+                                <h3 class="font-montserrat font-bold text-text-primary text-lg group-hover:text-primary transition-colors">{{ $proj->title }}</h3>
+                                <div class="p-1.5 rounded-md flex justify-center items-center" style="background-color: {{ $proj->accent }}">
+                                    <x-dynamic-component 
+                                        :component="'lucide-' . ($proj->icon ?: 'folder')"
+                                        class="w-3.5 text-text-contrast" 
+                                    />
+                                </div>
+                            </div>
+                            <p class="font-montserrat text-xs text-text-primary mt-1.5 line-clamp-2 leading-relaxed">{{ $proj->description }}</p>
                             
                             <div class="mt-5 flex items-center justify-between text-[11px] font-montserrat font-bold text-text-primary mb-2">
                                 <span>Progress:</span>
@@ -194,7 +218,7 @@
                     </div>
                 @endforelse
 
-                <a href="/projects" class="mt-2 w-full bg-primary hover:bg-primary-hover text-white py-3.5 rounded-full flex items-center justify-center gap-2 font-montserrat font-bold text-[13px] transition-colors shadow-md">
+                <a href="/projects" class="mt-1 w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-full flex items-center justify-center gap-2 font-montserrat font-bold text-[13px] transition-colors shadow-md">
                     <x-lucide-eye class="w-5 h-5" /> All Projects
                 </a>
             </div>
@@ -202,13 +226,16 @@
     </div>
 
     <div class="w-full">
-        <div class="flex items-center gap-2 mb-2">
-            <h2 class="font-montserrat text-xl font-bold text-text-primary">Task Reminders</h2>
+        <div class="flex items-center gap-4 mb-2">
+            <div class="row flex gap-1 items-center">
+                <div class="w-2 h-8 rounded-full bg-primary"></div>
+                <x-lucide-clipboard-clock class="w-7 h-7 text-primary" />
+            </div>  
+            <h2 class="text-2xl font-bold font-montserrat text-text-primary">
+                Task Reminder
+            </h2>
         </div>
-        <div class="flex items-center gap-2 mb-6">
-            <div class="w-2.5 h-2.5 bg-primary rounded-full"></div>
-            <span class="font-montserrat text-[13px] text-text-secondary">Keep your project on plan</span>
-        </div>
+        <div class="font-montserrat text-md text-text-secondary mb-5">Keep your project on plan. Finish nearly overdue and past deadline tasks.</div>
 
         <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             @foreach ($taskReminders as $task)
