@@ -49,7 +49,7 @@
                     </div>
                     <div class="relative w-max">
                         <h1 class="text-4xl md:text-[3rem] text-center font-bold text-primary font-parkinsans tracking-wide leading-none">Log In</h1>
-                        <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-4xl md:text-[4.5rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
+                        <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-3xl md:text-[5rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
                             Log In
                         </span>
                     </div>

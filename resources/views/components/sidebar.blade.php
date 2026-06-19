@@ -110,8 +110,32 @@
             <x-lucide-monitor id="sidebar-cycle-system" class="w-6 h-6 text-primary hidden" />
             <span id="sidebar-cycle-text" class="font-montserrat text-[10px] font-bold text-primary capitalize">Light</span>
         </button>
-
     </div>
+
+    <div class="mt-auto pt-3">
+    <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+
+        <button
+            type="submit"
+            class="sidebar-item group w-full h-10 bg-background border border-red-200 hover:bg-red-50 transition duration-300 rounded-xl flex items-center gap-2 px-2">
+
+            <div
+                class="h-full w-2 -ml-2.25 opacity-0 group-hover:opacity-100 bg-red-500 rounded-l-xl transition duration-300">
+            </div>
+
+            <div
+                class="sidebar-icon p-1.5 rounded-md flex items-center justify-center bg-red-50 text-red-500 group-hover:bg-red-100 transition-colors">
+                <x-lucide-log-out class="w-4 h-4" />
+            </div>
+
+            <span class="sidebar-text font-montserrat font-semibold text-sm text-red-500">
+                Log Out
+            </span>
+
+        </button>
+    </form>
+</div>
 </aside>
 
 @once

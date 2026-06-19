@@ -172,7 +172,7 @@
             <div class="flex flex-col gap-5">
                 
                 @forelse ($projects->take(3) as $proj)
-                    <a href="/projects" class="block bg-background rounded-[1.25rem] p-5 shadow-sm border-[1.5px] border-border relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <a href="/projects/{{$proj->id}}" class="block bg-background rounded-[1.25rem] p-5 shadow-sm border-[1.5px] border-border relative overflow-hidden group hover:shadow-md hover:-translate-y-0.5 transition-all">
                         <div class="absolute left-0 top-0 bottom-0 w-2" style="background-color: {{ $proj->accent ?? '#14452F' }}"></div>
                         
                         <div class="pl-2">

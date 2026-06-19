@@ -74,7 +74,7 @@ function updateSidebarCycleUI(theme) {
 // Initialize AFTER DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Load saved theme
-    const saved = localStorage.getItem('theme') || 'system';
+    const saved = localStorage.getItem('theme') || 'light';
     applyTheme(saved);
     updateThemeAssets(saved); 
     updateActiveThemeUI(saved); 
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listener untuk 1 Tombol Siklus (Sidebar Collapse)
     const cycleBtn = document.getElementById('sidebar-theme-cycle');
     cycleBtn?.addEventListener('click', () => {
-        const current = localStorage.getItem('theme') || 'system';
+        const current = localStorage.getItem('theme') || 'light';
         let next = current === 'light' ? 'dark' : (current === 'dark' ? 'system' : 'light');
         window.setTheme(next);
     });

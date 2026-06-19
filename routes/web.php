@@ -1,55 +1,82 @@
 <?php
 
-use App\Http\Controllers\AuthController; 
-use App\Http\Controllers\CollabController; 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CollabController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\DashboardController; 
-use App\Http\Controllers\ProfileController; 
-use App\Http\Controllers\ProjectController; 
-use Illuminate\Support\Facades\Route; 
+Route::get('/', function () {
+    return view('landing.index');
+})->name('landing');
 
-Route::get('/test-speed', function(){
-    return 'Hello World'; 
-}); 
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
 
-Route::get('/', function() {
-    return view('landing.index'); 
-})->name('landing'); 
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/register', function() {
-    return view('auth.register'); 
-})->name('register'); 
-Route::post('/register', [AuthController::class, 'register']); 
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/login', [AuthController::class, 'index'])
-    ->name('login'); 
-Route::post('/login', [AuthController::class, 'login']); 
-Route::post('/logout', [AuthController::class, 'logout'])
-    ->middleware('auth'); 
+Route::get('/forgot', function () {
+    return view('auth.forgot');
+})->name('forgot');
 
-Route::middleware(['auth'])->group(function() {
+Route::post('/forgot', function () {
+    return redirect()->route('otp');
+})->name('forgot.send');
+
+Route::get('/otp', function () {
+    return view('auth.otp');
+})->name('otp');
+
+Route::post('/otp', function () {
+    return redirect()->route('reset.password');
+})->name('otp.verify');
+
+Route::get('/reset-password', function () {
+    return view('auth.reset');
+})->name('reset.password');
+
+Route::post('/reset-password', function () {
+    return redirect()->route('login');
+})->name('reset.password.submit');
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard'); 
-    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index'); 
-    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store'); 
-}); 
+        ->name('dashboard');
 
-Route::get('/projects/tasks', function(){
+    Route::get('/projects', [ProjectController::class, 'index'])
+        ->name('projects.index');
+
+    Route::post('/projects', [ProjectController::class, 'store'])
+        ->name('projects.store');
+});
+
+Route::get('/projects/tasks', function () {
     $projects = [];
+
     $menu = [
         [
             'navigations' => [
-                ['name' => 'Dashboard', 'path' => '/dashboard'], 
-                ['name' => 'Projects', 'path' => '/projects'], 
-                ['name' => 'Collab', 'path' => '/collab'], 
-                ['name' => 'Profiles', 'path' => '/profile']
+                ['name' => 'Dashboard', 'path' => '/dashboard'],
+                ['name' => 'Projects', 'path' => '/projects'],
+                ['name' => 'Collab', 'path' => '/collab'],
+                ['name' => 'Profiles', 'path' => '/profile'],
             ]
         ]
     ];
+
     return view('projects.tasks.index', compact('projects', 'menu'));
 });
-Route::get('/projects/{project}', [ProjectController::class, 'show'])
-    ->middleware('auth'); 
 
-Route::get('/collab', [CollabController::class, 'index']); 
+Route::get('/projects/{project}', [ProjectController::class, 'show'])
+    ->middleware('auth');
+
+Route::get('/collab', [CollabController::class, 'index']);
+
 Route::get('/profile', [ProfileController::class, 'index']);
