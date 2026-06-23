@@ -9,31 +9,31 @@
         [
             'project' => 'AquaVerse',
             'task' => 'Design Quiz Interface',
-            'date' => 'Jan 2026',
+            'date' => '18 Jun 2026',
             'point' => '+5',
             'color' => '#8B3F3F'
         ],
         [
-            'project' => 'AquaVerse',
-            'task' => 'Design Quiz Interface',
-            'date' => 'Jan 2026',
-            'point' => '+5',
+            'project' => 'PetPal',
+            'task' => 'Manage Schema Integration',
+            'date' => '20 Jun 2026',
+            'point' => '+3',
             'color' => '#B89A3D'
         ],
         [
-            'project' => 'AquaVerse',
-            'task' => 'Design Quiz Interface',
-            'date' => 'Jan 2026',
-            'point' => '+5',
+            'project' => 'CookEase',
+            'task' => 'Add Menu Seeder',
+            'date' => '21 Jun 2026',
+            'point' => '+4',
             'color' => '#2F6D92'
         ],
     ];
 
     $taskCreated = [
         [
-            'project' => 'AquaVerse',
-            'task' => 'Design Quiz Interface',
-            'date' => 'Jan 2026',
+            'project' => 'TravelMate',
+            'task' => 'Integrate OAuth2',
+            'date' => '22 Jun 2026',
             'point' => '-8',
             'color' => '#23824F'
         ]
@@ -177,6 +177,9 @@
                     Highly experienced in designing and building mobile applications and desktop websites 
                     with structured architecture, efficient workflow design, and polished User Interface. 
                     Craving to learn about database schema integration and more. 
+                    <br><br>
+                    Currently involved in projects such as AquaVerse, PetPal, TravelMate, and many more. 
+                    Ambitious for future collaboration and open to freelance employment. 
                 </p>
 
             </div>
@@ -221,27 +224,53 @@
 
                 @foreach($taskHelped as $task)
 
-                    <div 
-                        class="rounded-[1.4rem] p-5 text-white relative overflow-hidden"
+                    <div
+                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white"
                         style="background-color: {{ $task['color'] }}"
                     >
 
-                        <div class="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center text-sm font-bold text-black">
-                            {{ $task['point'] }}
+                        <!-- Top Section -->
+                        <div class="flex gap-3 mb-4 row justify-between items-center">
+                            <div class="flex row gap-3 items-center">
+                                <div class="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                                    <x-lucide-list-todo class="w-4 h-4" />
+                                </div>
+                                <h3 class="font-parkinsans text-xl font-bold leading-tight">
+                                    {{ $task['project'] }}
+                                </h3>
+                            </div>
+                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                                <span class="font-montserrat font-semibold text-sm">
+                                    {{ $task['point'] }}
+                                </span>
+                            </div>
                         </div>
 
-                        <h3 class="font-parkinsans text-2xl font-bold leading-none">
-                            {{ $task['project'] }}
-                        </h3>
+                        <!-- Divider -->
+                        <div class="w-full h-px bg-white/35 rounded-lg mb-4"></div>
 
-                        <p class="font-montserrat text-sm mt-2">
+                        <!-- Task Description -->
+                        <p class="font-montserrat text-sm leading-relaxed text-white/90">
                             {{ $task['task'] }}
                         </p>
 
-                        <p class="font-montserrat text-sm mt-1">
-                            {{ $task['date'] }}
-                        </p>
+                        <!-- Footer -->
+                        <div class="flex items-center justify-between mt-4">
+                            
+                            <div class="flex items-center gap-2 text-white/80">
+                                <x-lucide-calendar class="w-4 h-4" />
+                                <span class="text-sm font-montserrat">
+                                    {{ $task['date'] }}
+                                </span>
+                            </div>
 
+                            <div class="px-3 py-1 rounded-full bg-white/15 border border-white/10 flex items-center">
+                                <span class="text-xs font-semibold font-montserrat">
+                                    Pending
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
 
                 @endforeach

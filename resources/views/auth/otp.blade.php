@@ -85,6 +85,10 @@
                         </div>
                     </div>
 
+                    @if (session('error_message'))
+                        <div class="text-red-500 text-sm mt-px text-center">{{ session('error_message') }}</div>
+                    @endif
+
                     <button type="submit"
                         class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         Verify OTP

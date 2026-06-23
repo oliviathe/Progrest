@@ -59,12 +59,25 @@
                     Plan your project effectively through simplified interactivity and collaboration with users around the world.
                 </p>
 
+                @if (session('error_message'))
+                    <div class="mb-3 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-2 shadow-sm">
+                        <div class="shrink-0">
+                            <x-lucide-circle-alert class="w-5 h-5 text-red-500" />
+                        </div>
+                        <div>
+                            <h4 class="font-montserrat font-semibold text-red-700 text-sm">
+                                {{ session('error_message') }}
+                            </h4>
+                        </div>
+                    </div>
+                @endif
+
                 <form id="loginForm" action="/login" method="POST" class="space-y-3 lg:space-y-3.5" novalidate>
                     @csrf                    
                     <div id="loginWrapper" class="group">
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">Email Address or Username</label>
                         <div class="relative">
-                            <input id="loginInput" type="text" name="login" required placeholder="Enter your email or username" 
+                            <input value="{{old('login')}}" id="loginInput" type="text" name="login" required placeholder="Enter your email or username" 
                                 class="text-text-primary w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary text-xs md:text-sm transition-all placeholder-text-secondary/50 bg-background focus:bg-surface group-[.has-error]:border-[#217750] group-[.has-error]:bg-white">
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
                                 <x-lucide-mail class="w-4 h-4 md:w-5 md:h-5 text-primary" />
@@ -75,7 +88,7 @@
                                 <div id="emailError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
-                        @error('auth')
+                        @error('login')
                             <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
                         @enderror
                     </div>
@@ -94,7 +107,7 @@
                                 <div id="passwordError" class="text-xs text-white font-medium relative z-10 leading-relaxed tracking-wide"></div>
                             </div>
                         </div>
-                        @error('auth')
+                        @error('password')
                             <div class="text-red-500 text-sm mt-px">{{ $message }}</div>
                         @enderror
                     </div>
@@ -118,7 +131,7 @@
                         <hr class="grow border-gray-300">
                     </div>
 
-                    <a href="/google" class="text-text-primary w-full bg-background/80 border-2 border-primary text-text-text-primary font-bold py-1.5 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-light-border-hover transition-all shadow-sm active:scale-95 text-sm md:text-base">
+                    <a href="/auth/google" class="text-text-primary w-full bg-background/80 border-2 border-primary text-text-text-primary font-bold py-1.5 rounded-xl flex items-center justify-center gap-2 md:gap-3 hover:bg-light-border-hover transition-all shadow-sm active:scale-95 text-sm md:text-base">
                         <img src="images/Google_Icon.png" alt="" class="w-4"> 
                         Continue with Google
                     </a>

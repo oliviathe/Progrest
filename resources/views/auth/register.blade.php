@@ -210,7 +210,7 @@
                         </div>
 
                         {{-- Google --}}
-                        <a href="/google" class="w-[80%] mx-auto flex bg-background border-2 border-primary text-text-primary font-bold py-1.5 rounded-xl items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
+                        <a href="/auth/google" class="w-[80%] mx-auto flex bg-background border-2 border-primary text-text-primary font-bold py-1.5 rounded-xl items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
                             <img 
                                 src="images/Google_Icon.png" 
                                 alt="" 

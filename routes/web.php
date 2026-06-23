@@ -11,6 +11,11 @@ Route::get('/', function () {
     return view('landing.index');
 })->name('landing');
 
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])
+    ->name('google.login');
+
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
@@ -24,25 +29,24 @@ Route::get('/forgot', function () {
     return view('auth.forgot');
 })->name('forgot');
 
-Route::post('/forgot', function () {
-    return redirect()->route('otp');
-})->name('forgot.send');
+Route::post('/forgot', [AuthController::class, 'sendOtp'])->name('forgot.send');
 
 Route::get('/otp', function () {
     return view('auth.otp');
 })->name('otp');
 
-Route::post('/otp', function () {
-    return redirect()->route('reset.password');
-})->name('otp.verify');
+Route::post('/otp', [AuthController::class, 'verifyOtp'])->name('otp.verify'); 
 
 Route::get('/reset-password', function () {
     return view('auth.reset');
 })->name('reset.password');
 
-Route::post('/reset-password', function () {
-    return redirect()->route('login');
-})->name('reset.password.submit');
+// Route::post('/reset-password', function () {
+//     return redirect()->route('login');
+// })->name('reset.password.submit');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->name('reset.password.submit'); 
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
