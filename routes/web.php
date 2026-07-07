@@ -59,6 +59,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/projects', [ProjectController::class, 'store'])
         ->name('projects.store');
+
+    Route::get('/profile', [ProfileController::class, 'index'])
+        ->name('profile');
+
+    Route::post('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 });
 
 Route::get('/projects/tasks', function () {
@@ -82,5 +88,3 @@ Route::get('/projects/{project}', [ProjectController::class, 'show'])
     ->middleware('auth');
 
 Route::get('/collab', [CollabController::class, 'index']);
-
-Route::get('/profile', [ProfileController::class, 'index']);

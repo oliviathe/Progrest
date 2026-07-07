@@ -5,6 +5,20 @@
 @section('content')
 
 @php
+    $currentUser = auth()->user();
+
+    $avatarUrl = $currentUser->avatar
+        ? (str_starts_with($currentUser->avatar, 'http')
+            ? $currentUser->avatar
+            : asset('storage/' . $currentUser->avatar))
+        : asset('images/profile.jpg');
+
+    $bannerUrl = $currentUser->banner
+        ? (str_starts_with($currentUser->banner, 'http')
+            ? $currentUser->banner
+            : asset('storage/' . $currentUser->banner))
+        : asset('images/Checker_BG.png');
+
     $taskHelped = [
         [
             'project' => 'AquaVerse',
@@ -45,7 +59,7 @@
         <!-- COVER -->
         <div class="relative h-36 overflow-visible">
             <img
-                src="{{ asset('images/Checker_BG.png') }}"
+                src="{{ $bannerUrl }}"
                 alt="Cover"
                 class="absolute inset-0 w-full h-full object-cover"
             >
@@ -63,7 +77,7 @@
             <!-- AVATAR -->
             <div class="absolute left-10 -top-14">
                 <img
-                    src="{{ asset('images/profile.jpg') }}"
+                    src="{{ $avatarUrl }}"
                     class="w-48 h-48 rounded-full object-cover border-[6px] border-background shadow-lg"
                 >
             </div>
@@ -172,35 +186,31 @@
                     <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
                 </div>
 
-                <p class="font-montserrat text-text-secondary leading-relaxed text-sm">
-                    Undergraduate programmer who actively collaborate to develop full stack applications. 
-                    Highly experienced in designing and building mobile applications and desktop websites 
-                    with structured architecture, efficient workflow design, and polished User Interface. 
-                    Craving to learn about database schema integration and more. 
-                    <br><br>
-                    Currently involved in projects such as AquaVerse, PetPal, TravelMate, and many more. 
-                    Ambitious for future collaboration and open to freelance employment. 
-                </p>
+                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line">{{ auth()->user()->about ?: 'No description provided yet.' }}</p>
 
             </div>
 
             <div class="mt-12 flex flex-col gap-5">
 
-                <div class="flex items-center gap-3 text-text-secondary">
-                    <x-lucide-mail class="w-5 h-5 text-primary" />
+                @unless (auth()->user()->hide_email)
+                    <div class="flex items-center gap-3 text-text-secondary">
+                        <x-lucide-mail class="w-5 h-5 text-primary" />
 
-                    <span class="font-montserrat text-sm">
-                        progressor@gmail.com
-                    </span>
-                </div>
+                        <span class="font-montserrat text-sm">
+                            {{ auth()->user()->email }}
+                        </span>
+                    </div>
+                @endunless
 
-                <div class="flex items-center gap-3 text-text-secondary">
-                    <x-lucide-phone-call class="w-5 h-5 text-primary" />
+                @if (auth()->user()->linkedin)
+                    <div class="flex items-center gap-3 text-text-secondary">
+                        <x-lucide-contact class="w-5 h-5 text-primary" />
 
-                    <span class="font-montserrat text-sm">
-                        <strong>+62</strong> 81234567890
-                    </span>
-                </div>
+                        <span class="font-montserrat text-sm">
+                            {{ auth()->user()->linkedin }}
+                        </span>
+                    </div>
+                @endif
 
             </div>
         </div>
@@ -391,11 +401,20 @@
 
             </div>
 
+            <!-- FORM (wraps banner + fields so uploads submit together) -->
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <!-- Hidden file inputs -->
+                <input type="file" id="avatarInput" name="avatar" accept="image/*" class="hidden">
+                <input type="file" id="bannerInput" name="banner" accept="image/*" class="hidden">
+
             <!-- BANNER -->
             <div class="relative h-[100px]">
 
                 <img
-                    src="{{ asset('images/Checker_BG.png') }}"
+                    id="bannerPreview"
+                    src="{{ $bannerUrl }}"
                     alt=""
                     class="w-full h-full object-cover"
                 >
@@ -406,7 +425,8 @@
                     <div class="flex items-center gap-4">
 
                         <img
-                            src="{{ asset('images/profile.jpg') }}"
+                            id="avatarPreview"
+                            src="{{ $avatarUrl }}"
                             alt=""
                             class="w-[65px] h-[65px] rounded-full border-4 border-background object-cover"
                         >
@@ -428,6 +448,7 @@
 
                         <button
                             type="button"
+                            onclick="document.getElementById('avatarInput').click()"
                             class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
@@ -436,6 +457,7 @@
 
                         <button
                             type="button"
+                            onclick="document.getElementById('bannerInput').click()"
                             class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
@@ -448,8 +470,8 @@
 
             </div>
 
-            <!-- FORM -->
-            <form class="p-6">
+            <!-- FIELDS -->
+            <div class="p-6">
 
                 <!-- ROW -->
                 <div class="grid grid-cols-2 gap-6">
@@ -461,7 +483,8 @@
 
                         <input
                             type="text"
-                            value="progressor"
+                            name="username"
+                            value="{{ old('username', $currentUser->username) }}"
                             class="w-full h-12 border-2 border-border rounded-xl px-4"
                         >
                     </div>
@@ -473,7 +496,8 @@
 
                         <input
                             type="text"
-                            value="Kevin Jio"
+                            name="name"
+                            value="{{ old('name', $currentUser->name) }}"
                             class="w-full h-12 border-2 border-border rounded-xl px-4"
                         >
                     </div>
@@ -489,8 +513,9 @@
 
                     <textarea
                         rows="3"
+                        name="about"
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
-                    >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</textarea>
+                    >{{ old('about', $currentUser->about) }}</textarea>
 
                 </div>
 
@@ -508,7 +533,8 @@
 
                         <input
                             type="text"
-                            value="Task Progressor"
+                            name="linkedin"
+                            value="{{ old('linkedin', $currentUser->linkedin) }}"
                             class="w-full h-12 border-2 border-border rounded-xl px-4"
                         >
 
@@ -520,6 +546,9 @@
 
                             <input
                                 type="checkbox"
+                                name="hide_email"
+                                value="1"
+                                {{ old('hide_email', $currentUser->hide_email) ? 'checked' : '' }}
                                 class="w-5 h-5"
                             >
 
@@ -541,6 +570,9 @@
 
                 </div>
 
+            </div>
+            <!-- /FIELDS -->
+
             </form>
 
         </div>
@@ -548,5 +580,44 @@
     </div>
 
 </div>
+
+<!-- SUCCESS TOAST -->
+@if (session('success'))
+    <div
+        id="profileToast"
+        class="fixed bottom-6 right-6 z-[1000] bg-primary text-white px-6 py-3 rounded-2xl shadow-lg font-montserrat font-semibold flex items-center gap-2"
+    >
+        <x-lucide-circle-check class="w-5 h-5" />
+        {{ session('success') }}
+    </div>
+    <script>
+        setTimeout(() => document.getElementById('profileToast')?.remove(), 4000);
+    </script>
+@endif
+
+<script>
+    // Live preview for avatar + banner uploads
+    (function () {
+        function bindPreview(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            if (!input || !preview) return;
+
+            input.addEventListener('change', function () {
+                const file = this.files && this.files[0];
+                if (!file) return;
+                preview.src = URL.createObjectURL(file);
+            });
+        }
+
+        bindPreview('avatarInput', 'avatarPreview');
+        bindPreview('bannerInput', 'bannerPreview');
+
+        // Re-open the modal automatically if the server returned validation errors
+        @if ($errors->any())
+            document.getElementById('editProfileModal')?.classList.remove('hidden');
+        @endif
+    })();
+</script>
 
 @endsection
