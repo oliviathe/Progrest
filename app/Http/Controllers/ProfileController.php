@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'username'   => 'required|string|max:255',
             'name'       => 'required|string|max:255',
-            'about'      => 'nullable|string|max:2000',
+            'about'      => 'required|string|max:2000',
             'linkedin'   => 'nullable|string|max:255',
             'hide_email' => 'nullable|boolean',
             'avatar'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:4096',

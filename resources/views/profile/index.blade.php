@@ -84,7 +84,7 @@
             <!-- POINTS -->
             <div class="absolute right-10 top-6 bg-background-gradient pb-2 rounded-xl">
                 <div class="flex items-center gap-3 flex-col">
-                    <div class="bg-primary text-white rounded-lg px-4 py-2">
+                    <div class="bg-primary text-white rounded-t-lg px-4 py-2">
                         <span class="font-parkinsans text-3xl font-bold">
                             123
                         </span>
@@ -101,7 +101,7 @@
                     {{ auth()->user()->username }}
                 </h1>
                 <p class="font-montserrat text-lg text-text-secondary mt-px">
-                    @ {{ auth()->user()->name }}
+                    {{ auth()->user()->name }}
                 </p>
                 <div class="flex flex-wrap items-center gap-5 mt-2 text-text-secondary">
                     <div class="flex items-center gap-2">
@@ -204,7 +204,7 @@
 
                 @if (auth()->user()->linkedin)
                     <div class="flex items-center gap-3 text-text-secondary">
-                        <x-lucide-contact class="w-5 h-5 text-primary" />
+                        <x-lucide-linkedin class="w-5 h-5 text-primary" />
 
                         <span class="font-montserrat text-sm">
                             {{ auth()->user()->linkedin }}
@@ -431,16 +431,6 @@
                             class="w-[65px] h-[65px] rounded-full border-4 border-background object-cover"
                         >
 
-                        <div
-                            class="bg-background rounded-full px-5 py-2 flex items-center gap-3 shadow"
-                        >
-                            <div class="w-7 h-7 bg-border rounded"></div>
-                            <div class="w-7 h-7 bg-border rounded"></div>
-                            <div class="w-7 h-7 bg-border rounded"></div>
-
-                            <x-lucide-chevron-down class="w-4 h-4" />
-                        </div>
-
                     </div>
 
                     <!-- RIGHT -->
@@ -484,6 +474,7 @@
                         <input
                             type="text"
                             name="username"
+                            required
                             value="{{ old('username', $currentUser->username) }}"
                             class="w-full h-12 border-2 border-border rounded-xl px-4"
                         >
@@ -497,6 +488,7 @@
                         <input
                             type="text"
                             name="name"
+                            required
                             value="{{ old('name', $currentUser->name) }}"
                             class="w-full h-12 border-2 border-border rounded-xl px-4"
                         >
@@ -514,6 +506,7 @@
                     <textarea
                         rows="3"
                         name="about"
+                        required
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('about', $currentUser->about) }}</textarea>
 
