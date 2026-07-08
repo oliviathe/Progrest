@@ -23,16 +23,16 @@ function updateThemeAssets(theme) {
     const useDark = theme === 'dark' || (theme === 'system' && isDark);
 
     const mainLogo = useDark 
-        ? 'images/progrest_logo_white.png'
-        : 'images/progrest_logo_green.png';
+        ? '/images/progrest_logo_white.png'
+        : '/images/progrest_logo_green.png';
 
     const footerLogo = useDark 
-        ? 'images/progrest_logo_green.png'
-        : 'images/progrest_logo_white.png'; 
+        ? '/images/progrest_logo_green.png'
+        : '/images/progrest_logo_white.png'; 
 
     const pLogo = useDark 
-        ? 'images/progrest_p_logo_white.png'
-        : 'images/progrest_p_logo_green.png';
+        ? '/images/progrest_p_logo_white.png'
+        : '/images/progrest_p_logo_green.png';
 
     if (logo) logo.src = mainLogo;
     if (logoLanding) logoLanding.src = mainLogo;

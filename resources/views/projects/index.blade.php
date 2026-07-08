@@ -165,10 +165,11 @@
         <div class="mt-4 grid  grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 mb-10">
             @foreach ($projects as $project)
                 @include('projects.card', [
+                    'id' => $project->id,
                     'title' => $project->title,
                     'description' => $project->description,
-                    'progress' => $project->progress,
-                    'collaborators' => $project->members,
+                    'progress' => $project->getProgressAttribute(),
+                    'collaborators' => $project->users,
                     'accentColor' => $project->accent, 
                     'icon' => $project->icon, 
                     'days_remaining' => $project->days_remaining

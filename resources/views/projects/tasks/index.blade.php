@@ -1,6 +1,6 @@
 @extends('layouts.projects-tasks') 
 
-@section('title', 'Tasks - Aquaverse')
+@section('title', 'Project - ' . $project->title)
 
 @section('content')
     @php

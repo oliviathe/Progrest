@@ -30,7 +30,7 @@ class ProjectController extends Controller
 
         $projects = Project::where(function ($query) {
             $query->where('leader_id', auth()->id())
-                ->orWhereHas('members', function ($q) {
+                ->orWhereHas('users', function ($q) {
                     $q->where('user_id', auth()->id());
                 });
         });
@@ -79,7 +79,7 @@ class ProjectController extends Controller
             'progress' => 0
         ]);
 
-        $project->members()->syncWithoutDetaching([$user_id]); // add member + supaya enggak ada duplicated member juga 
+        $project->users()->syncWithoutDetaching([$user_id]); // add member + supaya enggak ada duplicated member juga 
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
@@ -88,7 +88,7 @@ class ProjectController extends Controller
         $user_id = auth()->id(); 
 
         $isLeader = $project->leader_id === $user_id; 
-        $isMember = $project->members()->where('user_id', $user_id)->exists(); 
+        $isMember = $project->users()->where('user_id', $user_id)->exists(); 
 
         abort_if(!($isLeader || $isMember), 403); 
 

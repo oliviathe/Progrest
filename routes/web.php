@@ -5,6 +5,7 @@ use App\Http\Controllers\CollabController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -67,22 +68,24 @@ Route::middleware(['auth'])->group(function () {
         ->name('profile.update');
 });
 
-Route::get('/projects/tasks', function () {
-    $projects = [];
+// Route::get('/projects/tasks', function () {
+//     $projects = [];
 
-    $menu = [
-        [
-            'navigations' => [
-                ['name' => 'Dashboard', 'path' => '/dashboard'],
-                ['name' => 'Projects', 'path' => '/projects'],
-                ['name' => 'Collab', 'path' => '/collab'],
-                ['name' => 'Profiles', 'path' => '/profile'],
-            ]
-        ]
-    ];
+//     $menu = [
+//         [
+//             'navigations' => [
+//                 ['name' => 'Dashboard', 'path' => '/dashboard'],
+//                 ['name' => 'Projects', 'path' => '/projects'],
+//                 ['name' => 'Collab', 'path' => '/collab'],
+//                 ['name' => 'Profiles', 'path' => '/profile'],
+//             ]
+//         ]
+//     ];
 
-    return view('projects.tasks.index', compact('projects', 'menu'));
-})->name('projects.tasks');
+//     return view('projects.tasks.index', compact('projects', 'menu'));
+// })->name('projects.tasks');
+
+Route::get('/projects/{id}', [TaskController::class, 'index'])->name('projects.tasks');
 
 Route::get('/projects/{project}', [ProjectController::class, 'show'])
     ->middleware('auth');

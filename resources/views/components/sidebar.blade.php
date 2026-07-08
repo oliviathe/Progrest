@@ -16,6 +16,14 @@
         src="{{ asset('/images/progrest_p_logo_green.png') }}"
         class="hidden w-9 h-auto mt-13 mx-auto transition-all duration-300">
 
+    {{-- <div id="app-logo" class="bg-red-500 text-white p-4">
+        TEST LOGO
+    </div>
+
+    <div id="app-logo-p" class="bg-red-500 text-white p-4">
+        TEST LOGO
+    </div> --}}
+
     <div class="w-full h-px bg-border rounded-xl"></div>
 
     <div class="sidebar-profile flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center bg-background">

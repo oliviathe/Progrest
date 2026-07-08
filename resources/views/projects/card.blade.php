@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <a href="{{ route('projects.tasks') }}" class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0">
+    <a href="{{ route('projects.tasks', $id) }}" class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0">
         Continue
         <x-lucide-eye class="w-5 h-5" />
     </a>

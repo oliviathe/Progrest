@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index() {
-        $projects = [];
+    public function index($id) {
+        $project = Project::firstWhere('id', $id); 
         $menu = [
             [
                 'navigations' => [
@@ -18,9 +19,7 @@ class TaskController extends Controller
                 ]
             ]
         ];
-
-        $user = auth()->user();
         
-        return view('projects.tasks.index', compact('projects', 'menu'));
+        return view('projects.tasks.index', compact('project', 'menu'));
     }
 }
