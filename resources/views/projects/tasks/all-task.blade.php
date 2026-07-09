@@ -9,7 +9,8 @@
             'low' => 'bg-quartiary'
         };
 
-        $isCompleted = isset($progress) ? ($progress >= 100) : (strtolower($status ?? '') === 'completed');
+        $avatar = "/images/profile.jpg"; 
+        $image = "/images/profile.jpg"; 
     @endphp
 
     {{-- Floating Left Accent Line --}}
@@ -26,7 +27,7 @@
         </div>
 
         {{-- Top Right: Status --}}
-        @if (!$isCompleted)
+        @if (!$task->is_completed)
             <div class="text-pastel-yellow-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-yellow-background px-3 py-1 rounded-lg flex items-center justify-center">
                     <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold leading-none">In Progress</span>
@@ -69,8 +70,10 @@
     <div class="mb-4 shrink-0">
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborator</h3>
         <div class="flex items-center gap-2.5">
-            <img src="{{ $avatar }}" alt="{{ $collaborator }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs">
-            <span class="font-montserrat text-sm font-medium text-text-primary">{{ $collaborator }}</span>
+            <img src="{{ $avatar }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs">
+            @foreach ($task->users() as $user)
+                <span class="font-montserrat text-sm font-medium text-text-primary">{{ $user }}</span>
+            @endforeach
         </div>
     </div>
 
@@ -78,7 +81,7 @@
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            <p class="font-montserrat text-text-secondary text-sm">Due {{ $dueDate }}</p>
+            <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline }}</p>
         </div>
 
         {{-- Added Comment Counter --}}

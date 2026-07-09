@@ -3,75 +3,6 @@
 @section('title', 'Project - ' . $project->title)
 
 @section('content')
-    @php
-    $avatarPath = asset('images/profile.jpg');   
-        $teamMembers = [
-            $avatarPath,
-            $avatarPath,
-            $avatarPath,
-            $avatarPath,
-            $avatarPath
-        ];
-
-        $displayLimit = 3;
-        $extraMembers = count($teamMembers) - $displayLimit;
-
-        $priorityTasks = [
-        [
-            'status' => 'OVERDUE',
-            'projectName' => 'TravelMate',
-            'title' => 'Code Login & Discover Page',
-            'dueDate' => '10/05/26',
-            'daysLeft' => -5,
-        ],
-        [
-            'status' => 'DUE SOON',
-            'projectName' => 'AquaVerse',
-            'title' => 'Set the Whole Concept',
-            'dueDate' => '16/05/26',
-            'daysLeft' => 1,
-        ],
-        
-    ];
-
-    $allTasks = [
-        [
-            'title' => 'Overall Home Page Concept',
-            'priority' => 'Medium',
-            'priorityColor' => 'bg-yellow-400',
-            'dueDate' => '11/04/26',
-            'collaborator' => 'Ziu Rama',
-            'avatar' => $avatarPath,
-            'image' => null,
-            'lineColor' => 'bg-green-500',
-            'icon' => '<svg></svg>',
-        ],
-
-        [
-            'title' => 'Make Home Page Prototype',
-            'priority' => 'High',
-            'priorityColor' => 'bg-red-500',
-            'dueDate' => '13/04/26',
-            'collaborator' => 'Kevin Jio',
-            'avatar' => $avatarPath,
-            'image' => asset("images/prototype.png"),
-            'lineColor' => 'bg-black',
-            'icon' => '<svg></svg>',
-        ],
-
-        [
-            'title' => 'Correcting the Buttons Color',
-            'priority' => 'Low',
-            'priorityColor' => 'bg-indigo-500',
-            'dueDate' => '13/04/26',
-            'collaborator' => 'Jonea',
-            'avatar' => $avatarPath,
-            'image' => null,
-            'lineColor' => 'bg-black',
-            'icon' => '<svg></svg>',
-        ],
-    ];
-    @endphp
 
     {{-- HEADER --}}
     <div class="bg-primary rounded-b-4xl px-8 py-6 flex flex-col lg:flex-row gap-4 justify-between shadow-md">
@@ -208,7 +139,7 @@
             </div>
         </div>
 
-        <div class="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
             @foreach ($allTasks as $task)
                 @include('projects.tasks.all-task', $task)
             @endforeach

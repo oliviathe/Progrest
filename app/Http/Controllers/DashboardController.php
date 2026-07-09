@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
+use App\Models\Task;
+
 class DashboardController extends Controller
 {
     public function index(){
@@ -16,11 +19,25 @@ class DashboardController extends Controller
             ]
         ]; 
 
-        $user = auth()->user(); 
+        $projects = Project::with('users', 'tasks')->get(); 
+
+        $priorityTasks = Task::where('is_completed', false)
+            ->orderBy('deadline')
+            ->take(2)
+            ->get();
+
+        $allTasks = Task::with('users', 'project')
+            ->latest()
+            ->get();
+
+        $user = Auth()->user(); 
 
         return view('dashboard.index', [
             'menu' => $menu, 
-            'projects' => $user->projects()->latest()->get()
+            'projects' => $user->projects()->latest()->get(), 
+            'priorityTasks', 
+            'allTasks', 
+            'user'
         ]); 
     }
 }

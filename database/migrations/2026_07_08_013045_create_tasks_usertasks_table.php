@@ -20,8 +20,7 @@ return new class extends Migration
             $table->enum('priority', [
                 'low',
                 'medium',
-                'high',
-                'urgent'
+                'high'
             ])->default('medium');
             $table->enum('status', [
                 'pending',

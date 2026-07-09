@@ -17,7 +17,6 @@ return new class extends Migration
 
             $table->string('status')->default('active'); 
 
-            $table->unsignedTinyInteger('progress')->default(0); 
             $table->string('accent'); 
             $table->timestamps(); 
 
