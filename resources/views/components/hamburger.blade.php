@@ -8,7 +8,7 @@
             </svg>
         </button>
 
-        <img id="mobile-logo" src="images/progrest_logo_green.png" alt="Progrest" class="h-7 mt-1 w-auto transition-all duration-300">
+        <img id="mobile-logo" src="{{ asset('images/progrest_logo_green.png') }}" alt="Progrest" class="h-7 mt-1 w-auto transition-all duration-300">
 
         <div class="relative">
             <button id="mobile-profile-btn" class="focus:outline-none flex items-center">
