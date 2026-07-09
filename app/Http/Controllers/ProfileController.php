@@ -37,6 +37,9 @@ class ProfileController extends Controller
             'username'   => 'required|string|max:255',
             'name'       => 'required|string|max:255',
             'about'      => 'required|string|max:2000',
+            'more_about' => 'nullable|string|max:5000',
+            'city'       => 'nullable|string|max:255',
+            'country'    => 'nullable|string|max:255',
             'linkedin'   => 'nullable|string|max:255',
             'hide_email' => 'nullable|boolean',
             'avatar'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:4096',
@@ -46,6 +49,9 @@ class ProfileController extends Controller
         $user->username   = $validated['username'];
         $user->name       = $validated['name'];
         $user->about      = $validated['about'] ?? null;
+        $user->more_about = $validated['more_about'] ?? null;
+        $user->city       = $validated['city'] ?? null;
+        $user->country    = $validated['country'] ?? null;
         $user->linkedin   = $validated['linkedin'] ?? null;
         $user->hide_email = $request->boolean('hide_email');
 

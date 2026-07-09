@@ -26,6 +26,9 @@ class User extends Authenticatable
         'avatar',
         'banner',
         'about',
+        'more_about',
+        'city',
+        'country',
         'linkedin',
         'hide_email',
     ];
