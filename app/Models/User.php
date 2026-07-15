@@ -26,6 +26,9 @@ class User extends Authenticatable
         'avatar',
         'banner',
         'about',
+        'more_about',
+        'city',
+        'country',
         'linkedin',
         'hide_email',
     ];
@@ -44,7 +47,7 @@ class User extends Authenticatable
             return asset('images/profile.jpg');
         }
 
-        return Str::startsWith($this->avatar, 'http')
+        return Str::startsWith($this->avatar, ['http', 'data:'])
             ? $this->avatar
             : asset('storage/' . $this->avatar);
     }
@@ -55,7 +58,7 @@ class User extends Authenticatable
             return asset('images/Checker_BG.png');
         }
 
-        return Str::startsWith($this->banner, 'http')
+        return Str::startsWith($this->banner, ['http', 'data:'])
             ? $this->banner
             : asset('storage/' . $this->banner);
     }

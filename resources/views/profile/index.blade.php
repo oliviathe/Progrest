@@ -7,17 +7,8 @@
 @php
     $currentUser = auth()->user();
 
-    $avatarUrl = $currentUser->avatar
-        ? (str_starts_with($currentUser->avatar, 'http')
-            ? $currentUser->avatar
-            : asset('storage/' . $currentUser->avatar))
-        : asset('images/profile.jpg');
-
-    $bannerUrl = $currentUser->banner
-        ? (str_starts_with($currentUser->banner, 'http')
-            ? $currentUser->banner
-            : asset('storage/' . $currentUser->banner))
-        : asset('images/Checker_BG.png');
+    $avatarUrl = $currentUser->avatar_url;
+    $bannerUrl = $currentUser->banner_url;
 
     $taskHelped = [
         [
@@ -104,19 +95,22 @@
                     {{ auth()->user()->name }}
                 </p>
                 <div class="flex flex-wrap items-center gap-5 mt-2 text-text-secondary">
-                    <div class="flex items-center gap-2">
-                        <x-lucide-map-pin class="w-4 h-4" />
-                        Jakarta, Indonesia
-                    </div>
+                    @php
+                        $u = auth()->user();
+                        $place = collect([$u->city, $u->country])->filter()->implode(', ');
+                    @endphp
+                    @if ($place)
+                        <div class="flex items-center gap-2">
+                            <x-lucide-map-pin class="w-4 h-4" />
+                            {{ $place }}
+                        </div>
+                    @endif
                     <div class="flex items-center gap-2">
                         <x-lucide-calendar class="w-4 h-4" />
-                        Joined Jan 2026
+                        Joined {{ auth()->user()->created_at?->format('M Y') ?? 'Jan 2026' }}
                     </div>
                 </div>
-                <p class="mt-2 max-w-lg font-montserrat text-text-secondary">
-                    Passionate collaborator who enjoys building impactful
-                    projects and helping teams deliver high-quality products.
-                </p>
+                <p class="mt-2 max-w-lg font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: 'No bio yet.' }}</p>
             </div>
         </div>
 
@@ -186,7 +180,7 @@
                     <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
                 </div>
 
-                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line">{{ auth()->user()->about ?: 'No description provided yet.' }}</p>
+                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line">{{ auth()->user()->more_about ?: 'No description provided yet.' }}</p>
 
             </div>
 
@@ -377,11 +371,11 @@
 
         <!-- MODAL -->
         <div
-            class="w-full max-w-[850px] bg-background rounded-[32px] overflow-hidden shadow-2xl"
+            class="w-full max-w-[850px] max-h-[90vh] flex flex-col bg-background rounded-[32px] overflow-hidden shadow-2xl"
         >
 
             <!-- HEADER -->
-            <div class="bg-primary h-[70px] px-8 flex items-center justify-between">
+            <div class="bg-primary h-[70px] shrink-0 px-8 flex items-center justify-between">
 
                 <div class="flex items-center gap-3 text-white">
                     <x-lucide-pencil class="w-6 h-6" />
@@ -401,8 +395,8 @@
 
             </div>
 
-            <!-- FORM (wraps banner + fields so uploads submit together) -->
-            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+            <!-- FORM-->
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="flex-1 flex flex-col min-h-0 overflow-hidden">
                 @csrf
 
                 <!-- Hidden file inputs -->
@@ -410,7 +404,7 @@
                 <input type="file" id="bannerInput" name="banner" accept="image/*" class="hidden">
 
             <!-- BANNER -->
-            <div class="relative h-[100px]">
+            <div class="relative h-[100px] shrink-0">
 
                 <img
                     id="bannerPreview"
@@ -461,7 +455,18 @@
             </div>
 
             <!-- FIELDS -->
-            <div class="p-6">
+            <div class="p-6 flex-1 overflow-y-auto min-h-0">
+
+                <!-- VALIDATION ERRORS -->
+                @if ($errors->any())
+                    <div class="mb-5 rounded-xl border-2 border-red-300 bg-red-50 p-4">
+                        <ul class="list-disc pl-5 font-montserrat text-sm text-red-700">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <!-- ROW -->
                 <div class="grid grid-cols-2 gap-6">
@@ -496,19 +501,76 @@
 
                 </div>
 
-                <!-- ABOUT -->
+                <!-- LOCATION -->
+                <div class="mt-5 grid grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="block mb-2 font-montserrat font-bold text-base">
+                            City
+                            <span class="font-normal text-text-secondary">
+                                (optional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            value="{{ old('city', $currentUser->city) }}"
+                            class="w-full h-12 border-2 border-border rounded-xl px-4"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-montserrat font-bold text-base">
+                            Country
+                            <span class="font-normal text-text-secondary">
+                                (optional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="country"
+                            value="{{ old('country', $currentUser->country) }}"
+                            class="w-full h-12 border-2 border-border rounded-xl px-4"
+                        >
+                    </div>
+
+                </div>
+
+                <!-- ABOUT ME -->
                 <div class="mt-5">
 
                     <label class="block mb-2 font-montserrat font-bold text-base">
-                        About
+                        About Me
+                        <span class="font-normal text-text-secondary">
+                            (optional)
+                        </span>
                     </label>
 
                     <textarea
-                        rows="3"
+                        rows="2"
                         name="about"
-                        required
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('about', $currentUser->about) }}</textarea>
+
+                </div>
+
+                <!-- MORE ABOUT ME -->
+                <div class="mt-5">
+
+                    <label class="block mb-2 font-montserrat font-bold text-base">
+                        More About Me
+                        <span class="font-normal text-text-secondary">
+                            (optional)
+                        </span>
+                    </label>
+
+                    <textarea
+                        rows="4"
+                        name="more_about"
+                        class="w-full border-2 border-border rounded-xl p-4 resize-none"
+                    >{{ old('more_about', $currentUser->more_about) }}</textarea>
 
                 </div>
 

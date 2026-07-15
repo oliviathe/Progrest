@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 use App\Models\Project;
 
 class ProfileController extends Controller
@@ -34,31 +34,35 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $validated = $request->validate([
-            'username'   => 'required|string|max:255',
+            'username'   => 'required|string|max:30',
             'name'       => 'required|string|max:255',
-            'about'      => 'required|string|max:2000',
-            'linkedin'   => 'nullable|string|max:255',
+            'about'      => 'nullable|string|max:2000',
+            'more_about' => 'nullable|string|max:5000',
+            'city'       => 'nullable|string|max:255',
+            'country'    => 'nullable|string|max:255',
+            'linkedin'   => 'nullable|string|max:30',
             'hide_email' => 'nullable|boolean',
-            'avatar'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:4096',
-            'banner'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'avatar'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:1024',
+            'banner'     => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
         ]);
 
         $user->username   = $validated['username'];
         $user->name       = $validated['name'];
         $user->about      = $validated['about'] ?? null;
+        $user->more_about = $validated['more_about'] ?? null;
+        $user->city       = $validated['city'] ?? null;
+        $user->country    = $validated['country'] ?? null;
         $user->linkedin   = $validated['linkedin'] ?? null;
         $user->hide_email = $request->boolean('hide_email');
 
-        // PHOTO — store the new upload and remove the previous local file
+        // PHOTO - store the uploaded image directly in the database
         if ($request->hasFile('avatar')) {
-            $this->deleteStoredFile($user->avatar);
-            $user->avatar = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $this->encodeImage($request->file('avatar'));
         }
 
-        // BANNER — store the new upload and remove the previous local file
+        // BANNER - store the uploaded image directly in the database
         if ($request->hasFile('banner')) {
-            $this->deleteStoredFile($user->banner);
-            $user->banner = $request->file('banner')->store('banners', 'public');
+            $user->banner = $this->encodeImage($request->file('banner'));
         }
 
         $user->save();
@@ -66,12 +70,12 @@ class ProfileController extends Controller
         return redirect('/profile')->with('success', 'Profile updated successfully!');
     }
 
-    private function deleteStoredFile(?string $path): void
+    /**
+     * Encode an uploaded image as a base64 data URI for database storage.
+     */
+    private function encodeImage(UploadedFile $file): string
     {
-        if (! $path || str_starts_with($path, 'http')) {
-            return;
-        }
-
-        Storage::disk('public')->delete($path);
+        return 'data:' . $file->getMimeType() . ';base64,'
+            . base64_encode(file_get_contents($file->getRealPath()));
     }
 }
