@@ -83,15 +83,4 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
-
-    public function show(Project $project){
-        $user_id = auth()->id(); 
-
-        $isLeader = $project->leader_id === $user_id; 
-        $isMember = $project->users()->where('user_id', $user_id)->exists(); 
-
-        abort_if(!($isLeader || $isMember), 403); 
-
-        return view('projects.show', compact('project')); 
-    }
 }

@@ -62,7 +62,16 @@
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
+            @if ($days_remaining > 0)
+                <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
+            @elseif ($days_remaining < 0)
+                @php
+                    $days_overdue = $days_remaining * -1
+                @endphp
+                <p class="font-montserrat text-text-secondary text-sm">Overdue after {{ $days_overdue }} days</p>
+            @else
+                <p class="font-montserrat text-text-secondary text-sm">Due Today</p>
+            @endif
         </div>
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-message-circle class="w-3.5 h-3.5 text-text-secondary"/> 

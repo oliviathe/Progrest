@@ -102,29 +102,7 @@
 
     {{-- SLIDE PANEL --}}
 
-    <div id="panel" 
-        x-data="{
-            title: '', 
-            description: '', 
-            accentColor: '#0EA5A4', 
-            icon: 'folder', 
-            deadline: '',
-            
-            get remainingDays() {
-                if (!this.deadline) return null;
-
-                const today = new Date();
-                const due = new Date(this.deadline);
-
-                today.setHours(0,0,0,0);
-                due.setHours(0,0,0,0);
-
-                const diff = due - today;
-
-                return Math.ceil(diff / (1000 * 60 * 60 * 24));
-            }
-        }"
-        class="fixed flex flex-col top-0 right-0 z-50 h-full w-full max-w-lg
+    <div id="panel" class="fixed flex flex-col top-0 right-0 z-50 h-full w-full max-w-lg
         translate-x-full bg-background shadow-2xl
         transition-transform duration-300 p-4 rounded-l-2xl">
 
@@ -150,8 +128,8 @@
                         <x-lucide-folder-plus class="w-8 text-pastel-green-text"/>
                     </div>
                     <div class="flex flex-col text-text-secondary text-sm max-w-70">
-                        <p class="font-montserrat font-bold text-2xl text-text-primary">Create New Project</p>
-                        <p>Start a Project and Collab with Team Members!</p>
+                        <p class="font-montserrat font-bold text-2xl text-text-primary">Create New Task</p>
+                        <p>Create a New Task and Assign Team Members</p>
                     </div>
                 </div>
             </div>
@@ -164,33 +142,33 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-folder-git-2 class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Project Details</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Task Details</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Project Title</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Title</p>
 
-                            {{-- PROJECT TITLE INPUT --}}
+                            {{-- Task TITLE INPUT --}}
 
                             <input
                                 x-model="title"
                                 name="title"
                                 type="text"
-                                placeholder="e.g. AquaVerse"
+                                placeholder="e.g. User Interface Refinement"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             >
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Project Description</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Description</p>
 
                             {{-- PROJECT DESCRIPTION INPUT --}}
 
                             <textarea
                                 x-model="description"
                                 name="description"
-                                placeholder="Describe your project goals, purpose, and plans..."
-                                class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
+                                placeholder="Describe the overview and purpose of the task..."
+                                class="w-full h-30 rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             ></textarea>
                         </div>
                     </div>
@@ -204,7 +182,7 @@
                                 <div class="shadow-2xl shadow-pastel-green-background">
                                     <x-lucide-palette class="w-5 text-pastel-green-text"/>
                                 </div>
-                                <p class="font-montserrat font-semibold text-[14px] text-text-primary">Project Theme</p>
+                                <p class="font-montserrat font-semibold text-[14px] text-text-primary">Task Theme</p>
                             </div>
 
                             {{-- HIDDEN INPUT --}}
@@ -330,7 +308,7 @@
                                     </div>
 
                                     <p class="font-montserrat font-semibold text-[14px] text-text-primary">
-                                        Project Icon
+                                        Task Icon
                                     </p>
                                 </div>
 
@@ -425,7 +403,7 @@
                         </div>
                     </div>
 
-                    {{-- PROJECT TIMELINE INPUT --}}
+                    {{-- Task TIMELINE INPUT --}}
 
                     <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
                         <div class="flex flex-row gap-2 items-center">
@@ -461,226 +439,116 @@
                         </div>
                     </div>
 
-                    {{-- Member Selection --}}
+                    {{-- Task Detail Input --}}
 
-                    <div
-                        x-data="memberSearch({{ $project->id }})"
-                        class="space-y-4 rounded-xl border-[1.5px] border-border p-4 flex flex-col relative"
-                    >
-
-                        {{-- Header --}}
-                        <div class="flex flex-row items-center gap-2">
-
-                            <div class="shadow-2xl shadow-pastel-blue-background">
-                                <x-lucide-users class="w-5 text-pastel-blue-text"/>
+                    <div class="space-y-4 p-4 flex flex-col border-[1.5px] rounded-xl border-border">
+                        <div class="flex flex-row gap-2 items-center">
+                            <div class="shadow-2xl shadow-pastel-green-background">
+                                <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
                             </div>
-
-                            <p class="font-montserrat text-[14px] font-semibold text-text-primary">
-                                Members
-                            </p>
-
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Details</p>
                         </div>
 
-                        {{-- Search --}}
                         <div class="flex flex-col gap-1">
-
-                            <p class="font-montserrat text-[12px] font-semibold text-text-primary">
-                                Search users
-                            </p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Status</p>
 
                             <div class="relative">
 
-                                <x-lucide-search
-                                    class="pointer-events-none absolute left-4 top-1/2 h-4.5 w-4.5 -translate-y-1/2 text-text-primary"
+                                {{-- CUSTOM ICON --}}
+                                <x-lucide-info
+                                    class="absolute right-4 top-1/2 -translate-y-1/2
+                                        w-4.5 h-4.5 text-text-primary pointer-events-none"
                                 />
-
-                                <input
-                                    type="text"
-                                    placeholder="Search by username or email..."
-                                    x-model.debounce.300ms="query"
-                                    @input="search()"
-                                    class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
-                                >
-
-                                {{-- Dropdown --}}
-                                <div
-                                    x-show="users.length > 0"
-                                    x-transition
-                                    class="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-white shadow-lg"
-                                >
-
-                                    <template x-for="user in users" :key="user.id">
-
-                                        <button
-                                            type="button"
-                                            @click="selectUser(user)"
-                                            class="flex w-full items-center justify-between px-4 py-3 transition hover:bg-gray-100"
-                                        >
-
-                                            <div class="flex flex-col items-start">
-
-                                                <span
-                                                    class="font-montserrat font-semibold text-sm text-text-primary"
-                                                    x-text="user.name"
-                                                ></span>
-
-                                                <span
-                                                    class="font-montserrat text-xs text-text-secondary"
-                                                    x-text="user.email"
-                                                ></span>
-
-                                            </div>
-
-                                        </button>
-
-                                    </template>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {{-- Selected members --}}
-                        <div
-                            x-show="selectedUsers.length"
-                            class="flex flex-wrap gap-2"
-                        >
-
-                            <template
-                                x-for="user in selectedUsers"
-                                :key="user.id"
-                            >
 
                                 <div
-                                    class="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1"
-                                >
+                                    x-data="{ status: 'pending' }"
+                                    class="relative inline-grid grid-cols-2 rounded-lg bg-gray-100 p-1">
 
-                                    <span
-                                        class="font-montserrat text-sm text-primary"
-                                        x-text="user.name"
-                                    ></span>
+                                    <div
+                                        class="absolute left-1 top-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-md bg-primary-hover transition-transform duration-300"
+                                        :class="status === 'in_progress' ? 'translate-x-full' : ''">
+                                    </div>
 
-                                    <button
-                                        type="button"
-                                        @click="removeUser(user.id)"
-                                    >
+                                    <label
+                                        @click="status = 'pending'"
+                                        :class="status === 'pending' ? 'text-white' : 'text-black'"
+                                        class="relative z-10 px-6 py-2 cursor-pointer text-center">
+                                        <input type="radio" name="status" value="pending" class="hidden font-montserrat" checked>
+                                        Pending
+                                    </label>
 
-                                        <x-lucide-x class="h-4 w-4 text-primary"/>
+                                    <label
+                                        @click="status = 'in_progress'"
+                                        :class="status === 'in_progress' ? 'text-white' : 'text-black'"
+                                        class="relative z-10 px-6 py-2 cursor-pointer text-center">
+                                        <input type="radio" name="status" value="in_progress" class="hidden font-montserrat">
+                                        In Progress
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-                                    </button>
+                        <div class="flex flex-col gap-1">
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Priority</p>
+
+                            <div class="relative">
+
+                                {{-- CUSTOM ICON --}}
+                                <x-lucide-chart-no-axes-column-increasing
+                                    class="absolute right-4 top-1/2 -translate-y-1/2
+                                        w-4.5 h-4.5 text-text-primary pointer-events-none"
+                                />
+
+                                <div
+                                    x-data="{ priority: 'medium' }"
+                                    class="relative inline-grid grid-cols-3 rounded-lg bg-gray-100 p-1 w-72">
+
+                                    <!-- Sliding Indicator -->
+                                    <div
+                                        class="absolute left-1 top-1 h-[calc(100%-8px)] w-[calc((100%-8px)/3)] rounded-md bg-primary-hover transition-all duration-300"
+                                        :style="{
+                                            transform:
+                                                priority === 'low'
+                                                    ? 'translateX(0%)'
+                                                    : priority === 'medium'
+                                                        ? 'translateX(100%)'
+                                                        : 'translateX(200%)'
+                                        }">
+                                    </div>
+
+                                    <!-- Low -->
+                                    <label
+                                        @click="priority = 'low'"
+                                        :class="priority === 'low' ? 'text-white' : 'text-black'"
+                                        class="relative z-10 cursor-pointer py-2 text-center">
+                                        <input type="radio" name="priority" value="low" class="hidden font-montserrat">
+                                        Low
+                                    </label>
+
+                                    <!-- Medium -->
+                                    <label
+                                        @click="priority = 'medium'"
+                                        :class="priority === 'medium' ? 'text-white' : 'text-black'"
+                                        class="relative z-10 cursor-pointer py-2 text-center">
+                                        <input type="radio" name="priority" value="medium" class="hidden font-montserrat" checked>
+                                        Medium
+                                    </label>
+
+                                    <!-- High -->
+                                    <label
+                                        @click="priority = 'high'"
+                                        :class="priority === 'high' ? 'text-white' : 'text-black'"
+                                        class="relative z-10 cursor-pointer py-2 text-center">
+                                        <input type="radio" name="priority" value="high" class="hidden font-montserrat">
+                                        High
+                                    </label>
 
                                 </div>
-
-                            </template>
-
+                            </div>
                         </div>
-
                     </div>
 
-                    <div class="rounded-2xl border border-border py-6 px-10 space-y-4 bg-background relative">
-
-                        <div class="project-line absolute left-4 top-6 bottom-2 w-1 
-                            rounded-full" 
-                            :style="`background:${accentColor}`">
-                        </div> 
-
-                        <div class="flex justify-between items-start mb-1.5">
-                            <div class="p-2 rounded-xl flex justify-center items-center"
-                                :style="`background:${accentColor}`">
-                                <x-lucide-folder
-                                    x-show="icon === 'folder'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-clock
-                                    x-show="icon === 'clock'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-book-open
-                                    x-show="icon === 'book-open'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-chart-column
-                                    x-show="icon === 'chart-column'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-trees
-                                    x-show="icon === 'trees'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-calendar
-                                    x-show="icon === 'calendar'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-backpack
-                                    x-show="icon === 'backpack'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-camera
-                                    x-show="icon === 'camera'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-shopping-cart
-                                    x-show="icon === 'shopping-cart'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-gamepad-2
-                                    x-show="icon === 'gamepad-2'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-cat
-                                    x-show="icon === 'cat'"
-                                    class="w-6 text-text-contrast"
-                                />
-                                <x-lucide-cooking-pot
-                                    x-show="icon === 'cooking-pot'"
-                                    class="w-6 text-text-contrast"
-                                />
-                            </div>
-
-                            <div class="text-pastel-yellow-text flex flex-row gap-3">
-                                <div class="bg-pastel-yellow-background px-3 rounded-lg">
-                                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold">In Progress</span>
-                                </div>
-                                <x-lucide-clock class="w-7" />
-                            </div>
-                        </div>
-
-                        <div class="pr-2 flex flex-col">
-                            <h2 x-text="title || 'Untitled Project'"
-                                class="text-text-primary text-xl font-semibold font-parkinsans"></h2>
-                            <p x-text="description || 'Your project description goes here...'"
-                                class="text-text-primary text-sm mt-1 leading-snug"></p>
-                        </div>
-
-                        <div class="mb-3.25 mt-4.5">
-                            <div class="flex justify-between items-center mb-2">
-                                <h3 class="text-text-primary font-semibold font-parkinsans text-sm">Progress</h3>
-                                <span class="text-text-primary font-semibold font-parkinsans text-sm">0%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden"></div>
-                        </div>
-
-                        <div class="flex flex-row items-center justify-between mb-3">
-                            <div class="flex flox-row gap-1.5">
-                                <x-lucide-calendar class="w-3 text-text-secondary"/> 
-                                <p class="text-text-secondary text-sm">
-                                    <span x-show="remainingDays != null">
-                                        Due in 
-                                        <span x-text="remainingDays"></span> days
-                                    </span>
-                                    <span x-show="remainingDays === null">
-                                        No due date
-                                    </span>
-                                </p>
-                            </div>
-                            <div class="flex flox-row gap-1.5">
-                                <x-lucide-message-circle class="w-3 text-text-secondary"/> 
-                                <p class="text-text-secondary text-sm">10</p>
-                            </div>
-                        </div>
-
-                    </div>
+                    {{-- Submit Button --}}
 
                     <button
                         type="submit"
@@ -689,7 +557,7 @@
                         text-sm mb-1.5"
                     >
                         <x-lucide-rocket class="w-5 text-text-contrast"/>
-                        Create Project
+                        Create Task
                     </button>
 
                 </form>

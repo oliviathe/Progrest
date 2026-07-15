@@ -1,7 +1,7 @@
 <div class="bg-background rounded-3xl p-5 shadow-sm relative pl-9 w-full flex flex-col h-full hover:shadow-md hover:-translate-y-0.5 transition-all">
 
     @php
-        $priorityLower = strtolower($priority);
+        $priorityLower = strtolower($task->priority);
 
         $accentClass = match($priorityLower) {
             'high' => 'bg-red-500',
@@ -14,7 +14,7 @@
     @endphp
 
     {{-- Floating Left Accent Line --}}
-    <div class="absolute left-4 top-6 bottom-20 w-1 rounded-full {{ $accentClass }}"></div>
+    <div class="absolute left-4 top-6 bottom-7 w-1 rounded-full {{ $accentClass }}"></div>
 
     {{-- HEADER ROW --}}
     <div class="flex justify-between items-center mb-3 shrink-0">
@@ -22,7 +22,7 @@
         {{-- Top Left: Priority --}}
         <div class="{{ $accentClass }} px-3 py-1 rounded-lg flex items-center justify-center shadow-2xs">
             <span class="font-montserrat text-white text-[12px] font-semibold uppercase tracking-wider leading-none">
-                {{ $priority }}
+                {{ $task->priority }}
             </span>
         </div>
 
@@ -46,9 +46,9 @@
     </div>
 
     {{-- TITLE --}}
-    <div class="pr-2 flex flex-col flex-grow">
+    <div class="pr-2 flex flex-col grow">
         <h2 class="text-text-primary text-xl font-semibold font-montserrat leading-snug">
-            {{ $title }}
+            {{ $task->title }}
         </h2>
     </div>
 
@@ -81,7 +81,7 @@
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline }}</p>
+            <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline->format('d M Y') }}</p>
         </div>
 
         {{-- Added Comment Counter --}}
@@ -93,10 +93,9 @@
 
     {{-- ACTION BUTTON --}}
     <button
-        @click="showTaskModal = true"
-        class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer"
-    >
-        View <x-lucide-eye class="w-4 h-4 text-text-secondary" />
+        class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer">
+            View
+        <x-lucide-eye class="w-4 h-4 text-text-secondary" />
     </button>
 
 </div>

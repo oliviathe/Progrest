@@ -27,8 +27,8 @@
     <div class="w-full h-px bg-border rounded-xl"></div>
 
     <div class="sidebar-profile flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center bg-background">
-        <div class="w-12 h-12 aspect-square flex-shrink-0 rounded-full border border-border">
-            <img src="{{ auth()->check() ? auth()->user()->avatar_url : asset('/images/profile.jpg') }}" class="w-full h-full rounded-full sidebar-icon object-cover">
+        <div class="w-12 h-12 aspect-square shrink-0 rounded-full border border-border">
+            <img src="{{ auth()->check() ? auth()->user()->avatar : asset('/images/profile.jpg') }}" class="w-full h-full rounded-full sidebar-icon object-cover">
         </div>
         <div class="flex flex-col justify-center sidebar-text">
             <p class="font-montserrat font-bold text-text-primary text-sm">

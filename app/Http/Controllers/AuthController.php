@@ -15,19 +15,19 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthController extends Controller
 {
     // Arahin ke login page
-    public function index()
-    {
+    public function index(){
+        if(Auth::check()){
+            return redirect()->route('dashboard'); 
+        }
         return view('auth.login');
     }
 
     // Arahin ke register page
-    public function registerForm()
-    {
+    public function registerForm(){
         return view('auth.register');
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request){
         $validated = $request->validate([
             'username' => 'required|string|min:4|max:8|unique:users,username',
             'name' => 'required|string|min:6|max:12',
@@ -65,9 +65,7 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function login(Request $request)
-    {
-        // dd($request->all()); 
+    public function login(Request $request){
 
         $credentials = $request->validate([
             'login' => 'required|string', // bisa username OR email
@@ -82,7 +80,9 @@ class AuthController extends Controller
             ? 'email' 
             : 'username';
 
-        if (Auth::attempt([$field => $credentials['login'], 'password' => $credentials['password']])) {
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt([$field => $credentials['login'], 'password' => $credentials['password']], $remember)) {
             $request->session()->regenerate();
             return redirect()->intended(route('dashboard'));
         }
@@ -90,8 +90,7 @@ class AuthController extends Controller
         return back()->with('error_message', 'Invalid Username/E-mail or Password.')->onlyInput('login');
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
         Auth::logout();
 
         $request->session()->invalidate();
@@ -150,7 +149,7 @@ class AuthController extends Controller
 
         // dd($googleUser);
 
-        Auth::login($user);
+        Auth::login($user, true);
         return redirect()->route('dashboard');
     }
 

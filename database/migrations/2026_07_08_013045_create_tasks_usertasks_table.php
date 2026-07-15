@@ -26,7 +26,6 @@ return new class extends Migration
                 'pending',
                 'in_progress',
                 'completed',
-                'on_hold',
                 'cancelled'
             ])->default('pending');
             $table->date('deadline')->nullable(); 

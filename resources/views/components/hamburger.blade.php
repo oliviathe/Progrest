@@ -8,11 +8,11 @@
             </svg>
         </button>
 
-        <img id="mobile-logo" src="images/progrest_logo_green.png" alt="Progrest" class="h-7 mt-1 w-auto transition-all duration-300">
+        <img id="mobile-logo" src="/images/progrest_logo_green.png" alt="Progrest" class="h-7 mt-1 w-auto transition-all duration-300">
 
         <div class="relative">
             <button id="mobile-profile-btn" class="focus:outline-none flex items-center">
-                <img src="{{ auth()->check() ? auth()->user()->avatar_url : asset('images/profile.jpg') }}" alt="Profile" class="h-10 rounded-full border border-border object-cover">
+                <img src="{{ auth()->check() ? auth()->user()->avatar : asset('/images/profile.jpg') }}" alt="Profile" class="h-10 rounded-full border border-border object-cover">
             </button>
 
             <div id="mobile-profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-background border border-border rounded-xl shadow-lg p-4 text-center">
@@ -90,13 +90,10 @@
 
             <button type="submit"
                 class="w-full flex items-center gap-3 py-3 px-2 group transition duration-300 rounded-xl relative overflow-hidden mb-1 bg-background hover:bg-surface hover:shadow-md">
-
                 <div class="absolute left-0 top-0 h-full w-1.5 bg-red-500 opacity-0 group-hover:opacity-100 transition duration-300"></div>
-
                 <div class="p-1.5 rounded-md flex items-center justify-center transition-colors ml-2 bg-surface text-red-500 group-hover:bg-red-100 group-hover:text-red-600 border border-border">
                     <x-lucide-log-out class="w-4 h-4" />
                 </div>
-
                 <span class="font-montserrat text-sm font-semibold text-red-500 group-hover:text-red-600">
                     Log Out
                 </span>

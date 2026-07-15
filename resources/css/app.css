@@ -162,3 +162,10 @@
         --color-text-contrast: #161B22;
     }
 }
+
+@layer utilities {
+    .scroll-container {
+        overflow-x: auto;
+        scrollbar-gutter: stable;
+    }
+}
