@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\PostTooLargeException;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,5 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // error instead of directing to 413
+        $exceptions->render(function (PostTooLargeException $e, Request $request) {
+            return back()
+                ->withInput()
+                ->withErrors(['banner' => 'The upload is too large. Please choose a smaller image.']);
+        });
     })->create();

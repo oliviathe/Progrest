@@ -9,40 +9,6 @@
 
     $avatarUrl = $currentUser->avatar_url;
     $bannerUrl = $currentUser->banner_url;
-
-    $taskHelped = [
-        [
-            'project' => 'AquaVerse',
-            'task' => 'Design Quiz Interface',
-            'date' => '18 Jun 2026',
-            'point' => '+5',
-            'color' => '#8B3F3F'
-        ],
-        [
-            'project' => 'PetPal',
-            'task' => 'Manage Schema Integration',
-            'date' => '20 Jun 2026',
-            'point' => '+3',
-            'color' => '#B89A3D'
-        ],
-        [
-            'project' => 'CookEase',
-            'task' => 'Add Menu Seeder',
-            'date' => '21 Jun 2026',
-            'point' => '+4',
-            'color' => '#2F6D92'
-        ],
-    ];
-
-    $taskCreated = [
-        [
-            'project' => 'TravelMate',
-            'task' => 'Integrate OAuth2',
-            'date' => '22 Jun 2026',
-            'point' => '-8',
-            'color' => '#23824F'
-        ]
-    ];
 @endphp
 
 <div class="p-4 md:p-8 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
@@ -57,7 +23,7 @@
             <!-- EDIT -->
             <button
                 onclick="document.getElementById('editProfileModal').classList.remove('hidden')"
-                class="absolute top-5 right-5 bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
+                class="absolute top-5 right-5 bg-primary hover:bg-primary-hover cursor-pointer text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
             >
                 <x-lucide-pencil class="w-4 h-4" />
                 Edit Profile
@@ -72,18 +38,22 @@
                     class="w-48 h-48 rounded-full object-cover border-[6px] border-background shadow-lg"
                 >
             </div>
-            <!-- POINTS -->
-            <div class="absolute right-10 top-6 bg-background-gradient pb-2 rounded-xl">
-                <div class="flex items-center gap-3 flex-col">
-                    <div class="bg-primary text-white rounded-t-lg px-4 py-2">
-                        <span class="font-parkinsans text-3xl font-bold">
-                            123
-                        </span>
-                    </div>
-                    <span class="font-montserrat text-lg font-semibold text-text-primary">
-                        Points
-                    </span>
+            <!-- LOCATION + JOINED -->
+            @php
+                $u = auth()->user();
+                $place = collect([$u->city, $u->country])->filter()->implode(', ');
+            @endphp
+            <div class="absolute right-10 top-6 flex flex-col items-start gap-2 text-text-secondary">
+                <div class="flex items-center gap-2">
+                    <x-lucide-calendar class="w-4 h-4" />
+                    Joined {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
                 </div>
+                @if ($place)
+                    <div class="flex items-center gap-2">
+                        <x-lucide-map-pin class="w-4 h-4" />
+                        {{ $place }}
+                    </div>
+                @endif
             </div>
 
             <!-- PROFILE INFO -->
@@ -94,22 +64,6 @@
                 <p class="font-montserrat text-lg text-text-secondary mt-px">
                     {{ auth()->user()->name }}
                 </p>
-                <div class="flex flex-wrap items-center gap-5 mt-2 text-text-secondary">
-                    @php
-                        $u = auth()->user();
-                        $place = collect([$u->city, $u->country])->filter()->implode(', ');
-                    @endphp
-                    @if ($place)
-                        <div class="flex items-center gap-2">
-                            <x-lucide-map-pin class="w-4 h-4" />
-                            {{ $place }}
-                        </div>
-                    @endif
-                    <div class="flex items-center gap-2">
-                        <x-lucide-calendar class="w-4 h-4" />
-                        Joined {{ auth()->user()->created_at?->format('M Y') ?? 'Jan 2026' }}
-                    </div>
-                </div>
                 <p class="mt-2 max-w-lg font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: 'No bio yet.' }}</p>
             </div>
         </div>
@@ -122,7 +76,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-folder-git class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Projects Joined
@@ -133,7 +87,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-clipboard-list class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['tasks_completed'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Tasks Completed
@@ -144,7 +98,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-users class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['collaborations'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Collaborations
@@ -155,7 +109,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-star class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">4</span>
+                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['points'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Total Points
@@ -169,22 +123,22 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         <!-- ABOUT -->
-        <div class="bg-background rounded-4xl p-7 shadow-sm border border-border flex flex-col justify-between">
+        <div class="bg-background rounded-4xl p-7 shadow-sm border border-border flex flex-col h-[600px]">
 
-            <div>
+            <div class="flex flex-col flex-1 min-h-0">
 
-                <div class="flex justify-between items-center mb-5">
+                <div class="flex justify-between items-center mb-5 shrink-0">
                     <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
                         More About Me
                     </h2>
                     <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
                 </div>
 
-                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line">{{ auth()->user()->more_about ?: 'No description provided yet.' }}</p>
+                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line flex-1 min-h-0 overflow-y-auto pr-1">{{ auth()->user()->more_about ?: 'No description provided yet.' }}</p>
 
             </div>
 
-            <div class="mt-12 flex flex-col gap-5">
+            <div class="mt-6 flex flex-col gap-5 shrink-0">
 
                 @unless (auth()->user()->hide_email)
                     <div class="flex items-center gap-3 text-text-secondary">
@@ -210,7 +164,7 @@
         </div>
 
         <!-- TASK HELPED -->
-        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border">
+        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border h-[600px] flex flex-col">
 
             <div class="flex items-center justify-between mb-5">
 
@@ -219,18 +173,17 @@
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
-                    12
+                    {{ $tasksHelped->count() }}
                 </div>
 
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 flex-1 overflow-y-auto">
 
-                @foreach($taskHelped as $task)
+                @forelse($tasksHelped as $task)
 
                     <div
-                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white"
-                        style="background-color: {{ $task['color'] }}"
+                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white bg-primary shrink-0"
                     >
 
                         <!-- Top Section -->
@@ -240,12 +193,12 @@
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
                                 <h3 class="font-parkinsans text-xl font-bold leading-tight">
-                                    {{ $task['project'] }}
+                                    {{ $task->project?->title ?? 'No project' }}
                                 </h3>
                             </div>
-                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                                <span class="font-montserrat font-semibold text-sm">
-                                    {{ $task['point'] }}
+                            <div class="px-2.5 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                                <span class="font-montserrat font-semibold text-xs capitalize">
+                                    {{ $task->priority }}
                                 </span>
                             </div>
                         </div>
@@ -253,37 +206,43 @@
                         <!-- Divider -->
                         <div class="w-full h-px bg-white/35 rounded-lg mb-4"></div>
 
-                        <!-- Task Description -->
+                        <!-- Task Title -->
                         <p class="font-montserrat text-sm leading-relaxed text-white/90">
-                            {{ $task['task'] }}
+                            {{ $task->title }}
                         </p>
 
                         <!-- Footer -->
                         <div class="flex items-center justify-between mt-4">
-                            
+
                             <div class="flex items-center gap-2 text-white/80">
                                 <x-lucide-calendar class="w-4 h-4" />
                                 <span class="text-sm font-montserrat">
-                                    {{ $task['date'] }}
+                                    {{ ($task->deadline ?? $task->created_at)?->format('d M Y') }}
                                 </span>
                             </div>
 
                             <div class="px-3 py-1 rounded-full bg-white/15 border border-white/10 flex items-center">
-                                <span class="text-xs font-semibold font-montserrat">
-                                    Pending
+                                <span class="text-xs font-semibold font-montserrat capitalize">
+                                    {{ str_replace('_', ' ', $task->status) }}
                                 </span>
                             </div>
 
                         </div>
                     </div>
 
-                @endforeach
+                @empty
+
+                    <p class="font-montserrat text-sm text-text-secondary">
+                        No tasks helped with yet.
+                    </p>
+
+                @endforelse
 
             </div>
         </div>
 
         <!-- TASK CREATED -->
-        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border">
+        <div class="bg-background rounded-4xl p-6 shadow-sm border border-border h-[600px] flex flex-col">
 
             <div class="flex items-center justify-between mb-5">
 
@@ -292,18 +251,17 @@
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
-                    1
+                    {{ $tasksCreated->count() }}
                 </div>
 
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4 flex-1 overflow-y-auto">
 
-                @foreach($taskCreated as $task)
+                @forelse($tasksCreated as $task)
 
                     <div
-                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white"
-                        style="background-color: {{ $task['color'] }}"
+                        class="relative overflow-hidden rounded-3xl p-3 shadow-sm text-white bg-primary shrink-0"
                     >
 
                         <!-- Top Section -->
@@ -313,12 +271,12 @@
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
                                 <h3 class="font-parkinsans text-xl font-bold leading-tight">
-                                    {{ $task['project'] }}
+                                    {{ $task->project?->title ?? 'No project' }}
                                 </h3>
                             </div>
-                            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                                <span class="font-montserrat font-semibold text-sm">
-                                    {{ $task['point'] }}
+                            <div class="px-2.5 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
+                                <span class="font-montserrat font-semibold text-xs capitalize">
+                                    {{ $task->priority }}
                                 </span>
                             </div>
                         </div>
@@ -326,31 +284,37 @@
                         <!-- Divider -->
                         <div class="w-full h-px bg-white/35 rounded-lg mb-4"></div>
 
-                        <!-- Task Description -->
+                        <!-- Task Title -->
                         <p class="font-montserrat text-sm leading-relaxed text-white/90">
-                            {{ $task['task'] }}
+                            {{ $task->title }}
                         </p>
 
                         <!-- Footer -->
                         <div class="flex items-center justify-between mt-4">
-                            
+
                             <div class="flex items-center gap-2 text-white/80">
                                 <x-lucide-calendar class="w-4 h-4" />
                                 <span class="text-sm font-montserrat">
-                                    {{ $task['date'] }}
+                                    {{ ($task->deadline ?? $task->created_at)?->format('d M Y') }}
                                 </span>
                             </div>
 
                             <div class="px-3 py-1 rounded-full bg-white/15 border border-white/10 flex items-center">
-                                <span class="text-xs font-semibold font-montserrat">
-                                    Pending
+                                <span class="text-xs font-semibold font-montserrat capitalize">
+                                    {{ str_replace('_', ' ', $task->status) }}
                                 </span>
                             </div>
 
                         </div>
                     </div>
 
-                @endforeach
+                @empty
+
+                    <p class="font-montserrat text-sm text-text-secondary">
+                        No tasks created yet.
+                    </p>
+
+                @endforelse
 
             </div>
 
@@ -388,7 +352,7 @@
                 <button
                     type="button"
                     onclick="document.getElementById('editProfileModal').classList.add('hidden')"
-                    class="text-white"
+                    class="text-white cursor-pointer"
                 >
                     <x-lucide-x class="w-8 h-8" />
                 </button>
@@ -433,7 +397,7 @@
                         <button
                             type="button"
                             onclick="document.getElementById('avatarInput').click()"
-                            class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
+                            class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
                             Upload Icon
@@ -442,7 +406,7 @@
                         <button
                             type="button"
                             onclick="document.getElementById('bannerInput').click()"
-                            class="bg-primary text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
+                            class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
                             Upload Banner
@@ -456,17 +420,6 @@
 
             <!-- FIELDS -->
             <div class="p-6 flex-1 overflow-y-auto min-h-0">
-
-                <!-- VALIDATION ERRORS -->
-                @if ($errors->any())
-                    <div class="mb-5 rounded-xl border-2 border-red-300 bg-red-50 p-4">
-                        <ul class="list-disc pl-5 font-montserrat text-sm text-red-700">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
 
                 <!-- ROW -->
                 <div class="grid grid-cols-2 gap-6">
@@ -541,12 +494,15 @@
                 <!-- ABOUT ME -->
                 <div class="mt-5">
 
-                    <label class="block mb-2 font-montserrat font-bold text-base">
-                        About Me
-                        <span class="font-normal text-text-secondary">
-                            (optional)
-                        </span>
-                    </label>
+                    <div class="flex items-end justify-between mb-2">
+                        <label class="font-montserrat font-bold text-base">
+                            About Me
+                            <span class="font-normal text-text-secondary">
+                                (max. 200 characters) (optional)
+                            </span>
+                        </label>
+                        <span data-counter-for="about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
+                    </div>
 
                     <textarea
                         rows="2"
@@ -559,15 +515,18 @@
                 <!-- MORE ABOUT ME -->
                 <div class="mt-5">
 
-                    <label class="block mb-2 font-montserrat font-bold text-base">
-                        More About Me
-                        <span class="font-normal text-text-secondary">
-                            (optional)
-                        </span>
-                    </label>
+                    <div class="flex items-end justify-between mb-2">
+                        <label class="font-montserrat font-bold text-base">
+                            More About Me
+                            <span class="font-normal text-text-secondary">
+                                (max. 2000 characters) (optional)
+                            </span>
+                        </label>
+                        <span data-counter-for="more_about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
+                    </div>
 
                     <textarea
-                        rows="4"
+                        rows="22"
                         name="more_about"
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('more_about', $currentUser->more_about) }}</textarea>
@@ -615,7 +574,7 @@
 
                         <button
                             type="submit"
-                            class="bg-primary text-white px-8 py-3 rounded-full flex items-center gap-2 font-parkinsans text-xl font-bold"
+                            class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-8 py-3 rounded-full flex items-center gap-2 font-parkinsans text-xl font-bold"
                         >
                             <x-lucide-save class="w-5 h-5" />
                             Save
@@ -638,21 +597,72 @@
 
 <!-- SUCCESS TOAST -->
 @if (session('success'))
-    <div
-        id="profileToast"
-        class="fixed bottom-6 right-6 z-[1000] bg-primary text-white px-6 py-3 rounded-2xl shadow-lg font-montserrat font-semibold flex items-center gap-2"
-    >
-        <x-lucide-circle-check class="w-5 h-5" />
-        {{ session('success') }}
+    <div class="fixed bottom-6 right-6 z-[1000] flex flex-col-reverse gap-2">
+        <div
+            id="profileToast"
+            class="max-w-sm bg-primary text-white px-6 py-3 rounded-2xl shadow-lg font-montserrat font-semibold flex items-start gap-2"
+        >
+            <x-lucide-circle-check class="w-5 h-5 shrink-0 mt-0.5" />
+            <span>{{ session('success') }}</span>
+        </div>
     </div>
     <script>
         setTimeout(() => document.getElementById('profileToast')?.remove(), 4000);
     </script>
 @endif
 
+<!-- ERROR TOASTS (one per error) -->
+@if ($errors->any())
+    <div
+        id="profileErrorToasts"
+        class="fixed bottom-6 right-6 z-[1000] flex flex-col-reverse gap-2"
+    >
+        @foreach ($errors->all() as $error)
+            <div
+                class="profile-error-toast max-w-sm bg-red-600 text-white px-6 py-3 rounded-2xl shadow-lg font-montserrat font-semibold flex items-start gap-2"
+            >
+                <x-lucide-circle-alert class="w-5 h-5 shrink-0 mt-0.5" />
+                <span>{{ $error }}</span>
+            </div>
+        @endforeach
+    </div>
+    <script>
+        document.querySelectorAll('#profileErrorToasts .profile-error-toast')
+            .forEach((toast, i) => setTimeout(() => toast.remove(), 4000 + i * 400));
+    </script>
+@endif
+
 <script>
-    // Live preview for avatar + banner uploads
+    // live preview
     (function () {
+        const KB = 1024;
+        const LIMITS = {
+            avatarInput: { maxBytes: 1024 * KB, label: 'Profile image', max: '1 MB' },
+            bannerInput: { maxBytes: 2048 * KB, label: 'Banner', max: '2 MB' },
+        };
+
+        function showErrorToast(message) {
+            let container = document.getElementById('profileErrorToasts');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'profileErrorToasts';
+                container.className = 'fixed bottom-6 right-6 z-[1000] flex flex-col-reverse gap-2';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            toast.className = 'profile-error-toast max-w-sm bg-red-600 text-white px-6 py-3 rounded-2xl shadow-lg font-montserrat font-semibold flex items-start gap-2';
+
+            // alert icon
+            toast.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0 mt-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>';
+            const text = document.createElement('span');
+            text.textContent = message;
+
+            toast.appendChild(text);
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
         function bindPreview(inputId, previewId) {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
@@ -661,6 +671,14 @@
             input.addEventListener('change', function () {
                 const file = this.files && this.files[0];
                 if (!file) return;
+
+                const limit = LIMITS[inputId];
+                if (limit && file.size > limit.maxBytes) {
+                    showErrorToast(`${limit.label} is too large (max ${limit.max}). Please choose a smaller file.`);
+                    this.value = '';            // clear so it is never submitted
+                    return;
+                }
+
                 preview.src = URL.createObjectURL(file);
             });
         }
@@ -668,7 +686,29 @@
         bindPreview('avatarInput', 'avatarPreview');
         bindPreview('bannerInput', 'bannerPreview');
 
-        // Re-open the modal automatically if the server returned validation errors
+        // word count
+        function bindCounter(name, limit) {
+            const field = document.querySelector(`[name="${name}"]`);
+            const counter = document.querySelector(`[data-counter-for="${name}"]`);
+            if (!field || !counter) return;
+
+            const update = () => {
+                const over = field.value.length - limit;
+                if (over > 0) {
+                    counter.textContent = '-' + over;
+                    counter.classList.remove('hidden');
+                } else {
+                    counter.classList.add('hidden');
+                }
+            };
+
+            field.addEventListener('input', update);
+            update();
+        }
+
+        bindCounter('about', 200);
+        bindCounter('more_about', 2000);
+
         @if ($errors->any())
             document.getElementById('editProfileModal')?.classList.remove('hidden');
         @endif

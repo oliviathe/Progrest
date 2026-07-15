@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -23,9 +25,40 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
+        // Tasks helped / done (completed only)
+        $tasksHelped = $user->tasks()
+            ->where('is_completed', true)
+            ->with('project')
+            ->latest()
+            ->get();
+
+        // Tasks created / project lead
+        $tasksCreated = Task::whereIn('project_id', $user->ledProjects()->pluck('id'))
+            ->with('project')
+            ->latest()
+            ->get();
+
+        $projectIds = $user->projects()->pluck('projects.id');
+
+        // Points per task priority
+        $priorityPoints = ['high' => 15, 'medium' => 10, 'low' => 5];
+
+        $stats = [
+            'projects_joined' => $projectIds->count(),
+            'tasks_completed' => $tasksHelped->count(),
+            // Other users who share projects with user
+            'collaborations'  => User::where('id', '!=', $user->id)
+                ->whereHas('projects', fn ($q) => $q->whereIn('projects.id', $projectIds))
+                ->count(),
+            'points'          => $tasksHelped->sum(fn ($task) => $priorityPoints[$task->priority] ?? 0),
+        ];
+
         return view('profile.index', [
             'menu' => $menu,
-            'projects' => $user->projects()->latest()->get()
+            'projects' => $user->projects()->latest()->get(),
+            'tasksHelped' => $tasksHelped,
+            'tasksCreated' => $tasksCreated,
+            'stats' => $stats,
         ]);
     }
 
@@ -33,11 +66,20 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
+        foreach (['avatar' => 'profile image', 'banner' => 'banner'] as $field => $label) {
+            $file = $request->file($field);
+            if ($file !== null && ! $file->isValid()) {
+                return back()
+                    ->withInput()
+                    ->withErrors([$field => "The {$label} is too large to upload. Please choose a smaller file."]);
+            }
+        }
+
         $validated = $request->validate([
             'username'   => 'required|string|max:30',
             'name'       => 'required|string|max:255',
-            'about'      => 'nullable|string|max:2000',
-            'more_about' => 'nullable|string|max:5000',
+            'about'      => 'nullable|string|max:200',
+            'more_about' => 'nullable|string|max:2000',
             'city'       => 'nullable|string|max:255',
             'country'    => 'nullable|string|max:255',
             'linkedin'   => 'nullable|string|max:30',
@@ -55,12 +97,10 @@ class ProfileController extends Controller
         $user->linkedin   = $validated['linkedin'] ?? null;
         $user->hide_email = $request->boolean('hide_email');
 
-        // PHOTO - store the uploaded image directly in the database
         if ($request->hasFile('avatar')) {
             $user->avatar = $this->encodeImage($request->file('avatar'));
         }
 
-        // BANNER - store the uploaded image directly in the database
         if ($request->hasFile('banner')) {
             $user->banner = $this->encodeImage($request->file('banner'));
         }
@@ -71,7 +111,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Encode an uploaded image as a base64 data URI for database storage.
+     * encode and upload image as base64
      */
     private function encodeImage(UploadedFile $file): string
     {
