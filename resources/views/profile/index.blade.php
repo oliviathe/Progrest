@@ -7,17 +7,8 @@
 @php
     $currentUser = auth()->user();
 
-    $avatarUrl = $currentUser->avatar
-        ? (str_starts_with($currentUser->avatar, 'http')
-            ? $currentUser->avatar
-            : asset('storage/' . $currentUser->avatar))
-        : asset('images/profile.jpg');
-
-    $bannerUrl = $currentUser->banner
-        ? (str_starts_with($currentUser->banner, 'http')
-            ? $currentUser->banner
-            : asset('storage/' . $currentUser->banner))
-        : asset('images/Checker_BG.png');
+    $avatarUrl = $currentUser->avatar_url;
+    $bannerUrl = $currentUser->banner_url;
 
     $taskHelped = [
         [
@@ -404,7 +395,7 @@
 
             </div>
 
-            <!-- FORM (wraps banner + fields so uploads submit together) -->
+            <!-- FORM-->
             <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="flex-1 flex flex-col min-h-0 overflow-hidden">
                 @csrf
 
@@ -466,6 +457,17 @@
             <!-- FIELDS -->
             <div class="p-6 flex-1 overflow-y-auto min-h-0">
 
+                <!-- VALIDATION ERRORS -->
+                @if ($errors->any())
+                    <div class="mb-5 rounded-xl border-2 border-red-300 bg-red-50 p-4">
+                        <ul class="list-disc pl-5 font-montserrat text-sm text-red-700">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- ROW -->
                 <div class="grid grid-cols-2 gap-6">
 
@@ -499,7 +501,7 @@
 
                 </div>
 
-                <!-- LOCATION (City + Country side by side) -->
+                <!-- LOCATION -->
                 <div class="mt-5 grid grid-cols-2 gap-6">
 
                     <div>
@@ -536,23 +538,25 @@
 
                 </div>
 
-                <!-- ABOUT ME (short header bio) -->
+                <!-- ABOUT ME -->
                 <div class="mt-5">
 
                     <label class="block mb-2 font-montserrat font-bold text-base">
                         About Me
+                        <span class="font-normal text-text-secondary">
+                            (optional)
+                        </span>
                     </label>
 
                     <textarea
                         rows="2"
                         name="about"
-                        required
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('about', $currentUser->about) }}</textarea>
 
                 </div>
 
-                <!-- MORE ABOUT ME (long description) -->
+                <!-- MORE ABOUT ME -->
                 <div class="mt-5">
 
                     <label class="block mb-2 font-montserrat font-bold text-base">
