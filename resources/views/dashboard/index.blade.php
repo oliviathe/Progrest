@@ -108,28 +108,28 @@
                 
                 <div class="bg-surface rounded-2xl px-6 py-3 grid grid-cols-2 md:grid-cols-4 gap-2 divide-y md:divide-y-0 md:divide-x-2 divide-border shadow-inner">
                     <div class="flex flex-col items-center justify-center">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                        <div class="flex items-center gap-1.5 text-primary font-montserrat font-bold text-3xl">
                             <x-lucide-zap class="w-6 h-6 fill-current" /> {{ $statistics['login_streak']['current'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-md mt-1">Login Streak</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['login_streak']['best'] }}</span> Best</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                        <div class="flex items-center gap-1.5 text-primary font-montserrat font-bold text-3xl">
                             <x-lucide-file-text class="w-6 h-6" /> {{ $statistics['projects_completed'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-md mt-1">Projects</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                        <div class="flex items-center gap-1.5 text-primary font-montserrat font-bold text-3xl">
                             <x-lucide-users class="w-6 h-6" /> {{ $statistics['collabs_completed'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-md mt-1">Collabs</p>
                         <p class="text-sm text-text-secondary font-montserrat mt-0.5">Completed</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
-                        <div class="flex items-center gap-1.5 text-primary font-parkinsans font-bold text-3xl">
+                        <div class="flex items-center gap-1.5 text-primary font-montserrat font-bold text-3xl">
                             <x-lucide-coins class="w-6 h-6" /> {{ $statistics['points']['current'] }}
                         </div>
                         <p class="font-montserrat font-bold text-text-primary text-md mt-1">Points</p>
@@ -262,7 +262,7 @@
                             <div class="w-full h-36 bg-surface rounded-xl mb-4 border border-border overflow-hidden"></div>
                         @endif
 
-                        <h3 class="font-parkinsans font-bold text-text-primary text-[17px] leading-tight mb-4 group-hover:text-primary transition-colors">{{ $task['title'] }}</h3>
+                        <h3 class="font-montserrat font-bold text-text-primary text-[17px] leading-tight mb-4 group-hover:text-primary transition-colors">{{ $task['title'] }}</h3>
                         <p class="text-[11px] font-montserrat font-medium text-text-secondary opacity-80">Due {{ $task['due_date'] }}</p>
                     </div>
                 </a>

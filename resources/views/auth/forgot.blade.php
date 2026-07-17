@@ -10,13 +10,12 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Parkinsans:wght@600;700&family=Redacted+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&family=Redacted+Script:wght@400;700&display=swap" rel="stylesheet">
     
     @vite(['resources/css/app.css', 'resources/js/app.js']) 
 
     <style>
-        .font-inter { font-family: 'Inter', sans-serif; }
-        .font-parkinsans { font-family: 'Parkinsans', sans-serif; }
+        .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .font-redacted { font-family: 'Redacted Script', cursive; }
         @keyframes fastReveal {
             from { opacity: 0; transform: translateY(15px) scale(0.99); }
@@ -29,7 +28,7 @@
         .delay-200 { animation-delay: 200ms; }
     </style>
 </head>
-<body class="font-inter antialiased min-h-screen lg:h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 py-8 md:p-8 overflow-x-hidden lg:overflow-hidden" 
+<body class="font-montserrat antialiased min-h-screen lg:h-screen w-full bg-cover bg-center bg-no-repeat flex items-center justify-center p-4 py-8 md:p-8 overflow-x-hidden lg:overflow-hidden" 
     style="background-image: url('images/Checker_BG.png');">
 
     <div class="w-full max-w-85 md:max-w-2xl lg:max-w-6xl h-auto lg:h-[85vh] lg:max-h-212.5 min-h-min lg:min-h-150 bg-background backdrop-blur-md rounded-[30px] lg:rounded-[40px] shadow-2xl flex flex-col lg:flex-row relative animate-reveal">
@@ -48,7 +47,7 @@
                         </a>
                     </div>
                     <div class="relative w-max">
-                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-parkinsans tracking-wide leading-none">Forgot Password</h1>
+                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">Forgot Password</h1>
                         <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-3xl md:text-[3rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
                             Forgot Password
                         </span>
