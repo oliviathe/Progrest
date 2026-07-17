@@ -24,9 +24,9 @@ class ProjectController extends Controller
             ]
         ]; 
 
-        $sort = $request->get('sort', 'recent');
+        $sort = $request->get('sort', 'recent'); 
         $search = $request->get('search'); 
-        $direction = $request->get('direction', 'desc');
+        $direction = $request->get('direction', 'desc'); 
 
         $projects = Project::where(function ($query) {
             $query->where('leader_id', auth()->id())

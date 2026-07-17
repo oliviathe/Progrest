@@ -69,10 +69,13 @@
     {{-- collaborator --}}
     <div class="mb-4 shrink-0">
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborator</h3>
-        <div class="flex items-center gap-2.5">
-            @foreach ($task->users as $user)
-                <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs">
+        <div class="flex items-center">
+            @foreach ($task->users->take(3) as $user)
+                <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs first:ml-0 -ml-2.5">
             @endforeach
+            @if ($task->users->count() > 3)
+                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface flex items-center justify-center text-xs font-semibold text-text-primary">+{{$task->users->count() - 3}}</div>
+            @endif
         </div>
     </div>
 
@@ -90,8 +93,16 @@
         </div>
     </div>
 
-    {{-- ACTION BUTTON --}}
+    {{-- View button --}}
     <button
+        @click="open({
+            id: {{ $task->id }},
+            title: @js($task->title),
+            description: @js($task->description),
+            priority: @js($task->priority),
+            completed: {{ $task->is_completed ? 'true' : 'false' }},
+            deadline: @js(optional($task->deadline)?->format('d M Y')),
+        })"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer">
             View
         <x-lucide-eye class="w-4 h-4 text-text-secondary" />

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class ProjectTaskController extends Controller
 {
-    public function index($id) {
+    public function index($id, Request $request) {
 
         $userId = auth()->id();
         $project = Project::findOrFail($id); 
@@ -18,18 +18,6 @@ class ProjectTaskController extends Controller
             $project->users()->where('user_id', $userId)->exists();
 
         abort_unless($hasAccess, 403);
-        
-        $allTasks = $project->tasks()
-            ->orderBy('is_completed')
-            ->orderByRaw("
-                CASE priority
-                    WHEN 'high' THEN 1
-                    WHEN 'medium' THEN 2
-                    WHEN 'low' THEN 3
-                END
-            ")
-            ->orderBy('deadline')
-            ->get();
 
         $menu = [
             [
@@ -73,6 +61,54 @@ class ProjectTaskController extends Controller
         $progress = $totalTasks > 0
             ? ($completedTasks / $totalTasks) * 100
             : 0;
+
+        $sort = $request->get('sort', 'priority'); 
+        $search = $request->get('search'); 
+        $direction = $request->get('direction', 'desc'); 
+
+        $query = $project->tasks()
+            ->orderBy('is_completed'); 
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%"); 
+            });
+        }
+
+
+        $priorityOrder = $direction === 'asc'
+        ? "
+            CASE priority
+                WHEN 'low' THEN 1
+                WHEN 'medium' THEN 2
+                WHEN 'high' THEN 3
+            END
+        "
+        : "
+            CASE priority
+                WHEN 'high' THEN 1
+                WHEN 'medium' THEN 2
+                WHEN 'low' THEN 3
+            END
+        ";
+
+        switch ($sort) {
+            case 'alphabetical':
+                $query->orderBy('title', $direction);
+                break;
+
+            case 'deadline':
+                $query->orderBy('deadline', $direction);
+                break;
+
+            default: // priority
+                $query->orderByRaw($priorityOrder)
+                    ->orderBy('deadline');
+                break;
+        }
+
+        $allTasks = $query->get();
 
         return view('projects.tasks.index', compact('project', 'menu', 'priorityTasks', 'allTasks', 
             'avatarPath', 'teamMembers', 'displayLimit', 'extraMembers', 'completedTasks', 

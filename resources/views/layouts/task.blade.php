@@ -564,5 +564,23 @@
             </div>
 
     </div>
+
+    <script>
+    function taskModal() {
+        return {
+            show: false,
+            task: {},
+
+            open(task) {
+                this.task = task;
+                this.show = true;
+            },
+
+            close() {
+                this.show = false;
+            }
+        }
+    }
+    </script>
 </body>
 </html>

@@ -76,6 +76,11 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function preserveScroll() {
+            sessionStorage.setItem('scrollY', window.scrollY);
+        }
+    </script>
 </head>
 <body>
     <div class="flex min-h-screen bg-surface">
