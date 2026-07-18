@@ -72,4 +72,11 @@ class Project extends Model
     public function getCompletedTasks(){
         return $this->hasMany(Task::class)->where('is_completed', true); 
     }
+
+    public function collaborations(){
+        return $this->hasManyThrough(
+            TaskCollaboration::class,
+            Task::class
+        );
+    }
 }

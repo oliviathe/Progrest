@@ -447,97 +447,276 @@
                                         Collaborators
                                     </p>
 
-                                    <div
-                                        class="mt-1 bg-surface rounded-2xl px-4 py-3"
-                                        x-data="{ showMembers: false }"
-                                    >
+                                    <template x-if="!editing">
+                                        <div
+                                            class="mt-1 bg-surface rounded-2xl px-4 py-3"
+                                            x-data="{ showMembers: false }"
+                                        >
+                                            {{-- Top Row --}}
+                                            <div class="flex items-center justify-between pl-2">
+                                                {{-- Tumpukan avatar --}}
+                                                <div class="flex items-center">
+                                                    {{-- Mobile --}}
+                                                    <div class="flex lg:hidden">
+                                                        <template x-for="member in task.members.slice(0, 3)" :key="member.id">
+                                                            <img
+                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                                class="w-8 h-8 shrink-0 min-w-8 rounded-full object-cover border-2 border-surface first:ml-1 -ml-2.5"
+                                                            >
+                                                        </template>
+                                                        <template x-if="task.members.length > 3">
+                                                            <div
+                                                                class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
+                                                            >
+                                                                <span x-text="'+' + (task.members.length - 3)"></span>
+                                                            </div>
+                                                        </template>
+                                                    </div>
 
-                                        {{-- Top Row --}}
-                                        <div class="flex items-center justify-between pl-2">
+                                                    {{-- Desktop --}}
+                                                    <div class="hidden lg:flex">
+                                                        <template x-for="member in task.members.slice(0, 5)" :key="member.id">
+                                                            <img
+                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                                class="w-8 h-8 min-w-8 shrink-0 rounded-full object-cover border-2 border-surface first:ml-0 -ml-2.5"
+                                                            >
+                                                        </template>
 
-                                            {{-- Tumpukan avatar --}}
-                                            <div class="flex items-center">
+                                                        <template x-if="task.members.length > 5">
+                                                            <div
+                                                                class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
+                                                            >
+                                                                <span x-text="'+' + (task.members.length - 5)"></span>
+                                                            </div>
+                                                        </template>
+                                                    </div>
 
-                                                {{-- Mobile --}}
-                                                <div class="flex lg:hidden">
-                                                    <template x-for="member in task.members.slice(0, 3)" :key="member.id">
-                                                        <img
-                                                            :src="member.avatar ? member.avatar : '/images/profile.jpg'"
-                                                            class="w-8 h-8 shrink-0 min-w-8 rounded-full object-cover border-2 border-surface first:ml-1 -ml-2.5"
-                                                        >
-                                                    </template>
-
-                                                    <template x-if="task.members.length > 3">
-                                                        <div
-                                                            class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
-                                                        >
-                                                            <span x-text="'+' + (task.members.length - 3)"></span>
-                                                        </div>
-                                                    </template>
                                                 </div>
 
-                                                {{-- Desktop --}}
-                                                <div class="hidden lg:flex">
-                                                    <template x-for="member in task.members.slice(0, 5)" :key="member.id">
-                                                        <img
-                                                            :src="member.avatar ? member.avatar : '/images/profile.jpg'"
-                                                            class="w-8 h-8 min-w-8 shrink-0 rounded-full object-cover border-2 border-surface first:ml-0 -ml-2.5"
+                                                {{-- Expand Button --}}
+                                                <button
+                                                    @click="showMembers = !showMembers"
+                                                    class="flex items-center gap-1 text-hyperlink hover:opacity-80 transition text-sm font-medium"
+                                                >
+                                                    <span
+                                                        class="cursor-pointer"
+                                                        x-text="showMembers
+                                                            ? 'Hide'
+                                                            : `View all (${task.members.length})`">
+                                                    </span>
+
+                                                    <x-lucide-chevron-down
+                                                        class="w-4 h-4 transition-transform duration-200"
+                                                        ::class="{ 'rotate-180': showMembers }"
+                                                    />
+                                                </button>
+
+                                            </div>
+
+                                            {{-- Expandable members (view all members) --}}
+                                            <div
+                                                x-show="showMembers"
+                                                x-collapse
+                                                class="mt-4 border-t-2 border-border pt-3"
+                                            >
+                                                <div class="max-h-56 overflow-y-auto space-y-2 pr-1"
+                                                >
+                                                    <template
+                                                        x-for="member in task.members"
+                                                        :key="member.id"
+                                                    >
+                                                        <div class="flex items-center justify-between rounded-xl px-3 py-2 hover:bg-background transition"
                                                         >
+                                                            <div class="flex items-center gap-3">
+                                                                <img
+                                                                    :src="member.avatar ? member.avatar : '/images/profile.jpg'"
+                                                                    class="w-6 h-6 min-w-6 shrink-0 rounded-full object-cover"
+                                                                >
+                                                                <div>
+                                                                    <p
+                                                                        class="font-montserrat text-sm font-semibold text-text-primary"
+                                                                        x-text="member.name"
+                                                                    ></p>
+
+                                                                    <p
+                                                                        x-show="member.id == task.leader_id"
+                                                                        class="text-xs text-emerald-600"
+                                                                    >
+                                                                        Project Leader
+                                                                    </p>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            <x-lucide-crown
+                                                                x-show="member.id == task.leader_id"
+                                                                class="w-4 h-4 text-yellow-500"
+                                                            />
+
+                                                        </div>
+
                                                     </template>
 
-                                                    <template x-if="task.members.length > 5">
-                                                        <div
-                                                            class="w-8 h-8 rounded-full bg-background border-2 border-surface flex items-center justify-center text-xs font-semibold -ml-2.5"
-                                                        >
-                                                            <span x-text="'+' + (task.members.length - 5)"></span>
-                                                        </div>
-                                                    </template>
                                                 </div>
 
                                             </div>
 
-                                            {{-- Expand Button --}}
-                                            <button
-                                                @click="showMembers = !showMembers"
-                                                class="flex items-center gap-1 text-hyperlink hover:opacity-80 transition text-sm font-medium"
-                                            >
-                                                <span
-                                                    class="cursor-pointer"
-                                                    x-text="showMembers
-                                                        ? 'Hide'
-                                                        : `View all (${task.members.length})`">
-                                                </span>
-
-                                                <x-lucide-chevron-down
-                                                    class="w-4 h-4 transition-transform duration-200"
-                                                    ::class="{ 'rotate-180': showMembers }"
-                                                />
-                                            </button>
-
                                         </div>
+                                    </template>
 
-                                        {{-- Expandable members (view all members) --}}
+                                    <template x-if="editing">
                                         <div
-                                            x-show="showMembers"
-                                            x-collapse
-                                            class="mt-4 border-t-2 border-border pt-3"
+                                            class="bg-surface rounded-2xl p-4 space-y-4"
                                         >
-                                            <div class="max-h-56 overflow-y-auto space-y-2 pr-1"
-                                            >
+                                            {{-- Header --}}
+                                            <div class="flex items-center gap-2">
+                                                <div class="shadow-2xl shadow-pastel-blue-background">
+                                                    <x-lucide-users class="w-5 text-primary"/>
+                                                </div>
+
+                                                <div>
+                                                    <p class="font-montserrat text-sm font-semibold text-text-primary">
+                                                        Collaborators
+                                                    </p>
+
+                                                    <p class="text-xs text-text-secondary font-montserrat">
+                                                        Add or remove members assigned to this task.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {{-- Search --}}
+                                            <div class="space-y-1">
+
+                                                <p class="text-xs font-semibold text-text-primary font-montserrat">
+                                                    Search users
+                                                </p>
+
+                                                <div class="relative">
+
+                                                    <x-lucide-search
+                                                        class="absolute left-4 top-1/2 -translate-y-1/2
+                                                            w-4 h-4 text-text-secondary"
+                                                    />
+
+                                                    <input
+                                                        type="text"
+                                                        x-model="memberQuery"
+                                                        @input="searchUsers()"
+                                                        placeholder="Username or email..."
+                                                        class="w-full rounded-xl
+                                                            border-2 border-border
+                                                            bg-background
+                                                            py-2.5 pl-11 pr-10
+                                                            text-[12px]
+                                                            text-text-primary
+                                                            outline-none
+                                                            focus:border-primary font-montserrat"
+                                                    >
+
+                                                    <button
+                                                        x-show="memberQuery.length"
+                                                        @click="
+                                                            memberQuery = '';
+                                                            searchResults = [];
+                                                        "
+                                                        type="button"
+                                                        class="absolute right-3 top-1/2
+                                                            -translate-y-1/2
+                                                            rounded-full p-1
+                                                            hover:bg-surface cursor-pointer"
+                                                    >
+                                                        <x-lucide-x class="w-4 h-4 text-text-primary"/>
+                                                    </button>
+
+                                                    {{-- Dropdown --}}
+                                                    <div
+                                                        x-show="searchResults.length"
+                                                        x-transition
+                                                        class="absolute left-0 right-0 top-full mt-2
+                                                            rounded-xl border border-border
+                                                            bg-background
+                                                            shadow-xl
+                                                            overflow-hidden
+                                                            z-50"
+                                                    >
+
+                                                        <template
+                                                            x-for="user in searchResults"
+                                                            :key="user.id"
+                                                        >
+
+                                                            <button
+                                                                type="button"
+                                                                @click="addMember(user)"
+                                                                class="w-full
+                                                                    flex items-center gap-2
+                                                                    px-2 py-3
+                                                                    hover:bg-surface
+                                                                    transition"
+                                                            >
+
+                                                                <img
+                                                                    :src="user.avatar || '/images/profile.jpg'"
+                                                                    class="w-6 h-6 rounded-full object-cover"
+                                                                >
+
+                                                                <div class="flex flex-col text-left">
+
+                                                                    <span
+                                                                        class="font-semibold text-sm text-text-primary font-montserrat"
+                                                                        x-text="user.name"
+                                                                    ></span>
+
+                                                                    <span
+                                                                        class="text-[10px] text-text-secondary font-montserrat"
+                                                                        x-text="user.email"
+                                                                    ></span>
+
+                                                                </div>
+
+                                                            </button>
+
+                                                        </template>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            {{-- Selected members --}}
+                                            <div class="space-y-2">
+
+                                                <p class="text-xs font-semibold text-text-primary">
+                                                    Assigned Members
+                                                </p>
+
                                                 <template
-                                                    x-for="member in task.members"
+                                                    x-for="member in selectedMembers"
                                                     :key="member.id"
                                                 >
-                                                    <div class="flex items-center justify-between rounded-xl px-3 py-2 hover:bg-background transition"
+
+                                                    <div
+                                                        class="flex items-center justify-between
+                                                            rounded-xl
+                                                            bg-background
+                                                            px-3 py-2
+                                                            border border-border"
                                                     >
+
                                                         <div class="flex items-center gap-3">
+
                                                             <img
-                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
-                                                                class="w-6 h-6 min-w-6 shrink-0 rounded-full object-cover"
+                                                                :src="member.avatar || '/images/profile.jpg'"
+                                                                class="w-9 h-9 rounded-full object-cover"
                                                             >
+
                                                             <div>
+
                                                                 <p
-                                                                    class="font-montserrat text-sm font-semibold text-text-primary"
+                                                                    class="font-medium text-sm text-text-primary"
                                                                     x-text="member.name"
                                                                 ></p>
 
@@ -552,10 +731,17 @@
 
                                                         </div>
 
-                                                        <x-lucide-crown
-                                                            x-show="member.id == task.leader_id"
-                                                            class="w-4 h-4 text-yellow-500"
-                                                        />
+                                                        <button
+                                                            type="button"
+                                                            @click="removeMember(member.id)"
+                                                            class="w-8 h-8
+                                                                rounded-full
+                                                                hover:bg-red-50
+                                                                text-red-500
+                                                                transition"
+                                                        >
+                                                            <x-lucide-x class="w-4 h-4 mx-auto"/>
+                                                        </button>
 
                                                     </div>
 
@@ -565,7 +751,7 @@
 
                                         </div>
 
-                                    </div>
+                                    </template>
                                 </div>
 
                             {{-- Status --}}
@@ -730,24 +916,48 @@
                                 </template>
                             </div>
                         </div>
+                        
                     </div>
 
                     {{-- FOOTER --}}
                     <div class="border-t-2 border-border px-6 py-4 flex justify-between gap-3 shrink-0">
                         <div>
-                            <button
-                                class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
-                                @click="editing = true"
-                            >
-                                Edit Task
-                            </button>
+                            <template x-if="!editing">
+                                <button
+                                    @click="edit()"
+                                    class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
+                                >
+                                    Edit Task
+                                </button>
+                            </template>
+
+                            <template x-if="editing">
+                                <div class="flex gap-2">
+                                    <button
+                                        @click="saveTask()"
+                                        class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
+                                    >
+                                        Save Changes
+                                    </button>
+
+                                    <button
+                                        @click="editing = false"
+                                        class="border-2 border-red-accent text-red-accent cursor-pointer px-5 py-2.5 rounded-2xl transition hover:bg-surface bg-background font-montserrat font-semibold"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </template>
                         </div>
                         <div>
-                            <button
-                                class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition cursor-pointer"
-                            >
-                                Go to Collaboration
-                            </button>
+                            <template x-if="!editing">
+                                <button
+                                    class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition cursor-pointer"
+                                >
+                                    Go Collab:
+                                    <strong x-text="task.go_collab ? 'ON' : 'OFF'"></strong>
+                                </button>
+                            </template>
                             <button
                                 @click="close()"
                                 class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
