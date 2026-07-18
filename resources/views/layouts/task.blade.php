@@ -566,21 +566,114 @@
     </div>
 
     <script>
-    function taskModal() {
-        return {
-            show: false,
-            task: {},
+        function taskModal() {
+            return {
+                show: false,
+                editing: false,
+                task: {},
+                selectedMembers: [],
+                selectedCollaborators: [], 
+                memberQuery: '',
+                searchResults: [],
 
-            open(task) {
-                this.task = task;
-                this.show = true;
-            },
+                open(task) {
+                    // console.log(task);
 
-            close() {
-                this.show = false;
+                    this.task = structuredClone(task); 
+                    this.selectedMembers = [...this.task.members];
+                    this.memberQuery = '';
+                    this.searchResults = [];
+                    this.selectedCollaborators = [...(this.task.collaborators ?? [])];
+                    this.show = true;
+                    this.editing = false;
+                },
+
+                addMember(user) {
+                    if (this.selectedMembers.some(m => m.id === user.id)) return;
+                    this.selectedMembers.push(user);
+                    this.task.members = [...this.selectedMembers];
+                    this.memberQuery = '';
+                    this.searchResults = [];
+                },
+
+                async searchUsers() {
+                    if (this.memberQuery.length < 2) {
+                        this.searchResults = [];
+                        return;
+                    }
+                    try {
+                        const response = await fetch(
+                            `/users/search?q=${encodeURIComponent(this.memberQuery)}`
+                        );
+                        this.searchResults = await response.json();
+                    } catch (error) {
+                        console.error(error);
+                        this.searchResults = [];
+                    }
+                },
+
+                async save() {
+                    try {
+                        const response = await fetch(`/tasks/${this.task.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document
+                                    .querySelector('meta[name="csrf-token"]')
+                                    .content,
+                            },
+                            body: JSON.stringify({
+                                title: this.task.title,
+                                description: this.task.description,
+                                priority: this.task.priority,
+                                status: this.task.status,
+                                deadline: this.task.deadline,
+                                members: this.selectedMembers.map(m => m.id),
+                                go_collab_enabled: this.task.go_collab_enabled,
+                                go_collab_description: this.task.go_collab_description,
+                                go_collab_limit: this.task.go_collab_limit,
+                                go_collab_reward: this.task.go_collab_reward,
+
+                                collaborators: this.selectedCollaborators.map(c => ({
+                                    id: c.id
+                                }))
+                            })
+                        });
+                        const data = await response.json();
+                        if (!response.ok)
+                            throw data;
+                        location.reload();
+                    } catch (e) {
+                        console.error(e);
+                        alert("Unable to save task.");
+                    }
+                }, 
+
+                removeMember(id) {
+                    this.selectedMembers =
+                        this.selectedMembers.filter(m => m.id !== id);
+                    this.task.members = [...this.selectedMembers];
+                },
+
+                removeCollaborator(id) {
+                    this.task.collaborators =
+                        this.task.collaborators.filter(user => user.id !== id);
+                },
+
+                edit() {
+                    this.editing = true;
+                },
+
+                close() {
+                    this.show = false;
+                    this.editing = false;
+                    this.memberQuery = '';
+                    this.searchResults = [];
+                    this.selectedMembers = [];
+                }
             }
         }
-    }
     </script>
 </body>
 </html>

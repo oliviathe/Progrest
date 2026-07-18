@@ -74,4 +74,19 @@ class User extends Authenticatable
     public function tasks(){
         return $this->belongsToMany(Task::class); 
     }
+
+    public function taskCollaborations(){
+        return $this->hasMany(TaskCollaboration::class);
+    }
+
+    public function collaborativeTasks(){
+        return $this->belongsToMany(Task::class, 'task_collaborations')
+                    ->withPivot([
+                        'status',
+                        'reward_earned',
+                        'joined_at',
+                        'completed_at'
+                    ])
+                    ->withTimestamps();
+    }
 }

@@ -28,6 +28,20 @@ return new class extends Migration
                 'completed',
                 'cancelled'
             ])->default('pending');
+
+            $table->boolean('go_collab_enabled')
+                ->default(false); 
+
+            $table->text('go_collab_description')
+                ->nullable();
+
+            $table->unsignedTinyInteger('go_collab_limit')
+                ->nullable(); 
+
+            $table->unsignedInteger('go_collab_reward')
+                ->default(0); 
+
+            $table->string('image')->default('/images/default-task-image.png');
             $table->date('deadline')->nullable(); 
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate(); 
             $table->boolean('is_completed')->default(false); 

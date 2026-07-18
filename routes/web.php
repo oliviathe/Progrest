@@ -78,6 +78,9 @@ Route::middleware(['auth'])->group(function () {
         '/projects/{project}/members/search',
         [ProjectMemberController::class, 'search']
     );
+
+    Route::put('/tasks/{task}', [ProjectTaskController::class, 'update'])
+        ->name('tasks.update');
     
     Route::get('/collab', [CollabController::class, 'index']);
 });

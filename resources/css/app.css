@@ -120,6 +120,9 @@
     --color-red-accent: #EF4444; 
     --color-yellow-accent: #EAB308; 
     --color-orange-accent: #F97316; 
+    --color-blue-accent: #3B82F6; 
+
+    --color-hyperlink: #059669; 
 }
 
 .dark {
@@ -150,6 +153,8 @@
     --color-red-accent: #B00020; 
     --color-yellow-accent: #CA8A04; 
     --color-orange-accent: #C2410C; 
+    --color-blue-accent: #60A5FA; 
+    --color-hyperlink: #34D399; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -170,6 +175,8 @@
         --color-red-accent: #B00020; 
         --color-yellow-accent: #CA8A04; 
         --color-orange-accent: #C2410C; 
+        --color-blue-accent: #60A5FA; 
+        --color-hyperlink: #34D399; 
     }
 }
 
@@ -178,4 +185,22 @@
         overflow-x: auto;
         scrollbar-gutter: stable;
     }
+}
+
+.date-input {
+    position: relative;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.date-input::-webkit-inner-spin-button,
+.date-input::-webkit-clear-button {
+    display: none;
 }
