@@ -102,11 +102,28 @@
             priority: @js($task->priority),
             status: @js($task->status),
             deadline: @js(optional($task->deadline)?->format('d M Y')),
+            go_collab_enabled: @js($task->go_collab_enabled),
+            go_collab_description: @js($task->go_collab_description),
+            go_collab_limit: @js($task->go_collab_limit),
+            go_collab_reward: @js($task->go_collab_reward),
             members: @js($task->users->map(fn ($member) => [
                 'id' => $member->id,
                 'name' => $member->name,
                 'avatar' => $member->avatar
             ])),
+            collaborators: @js(
+                $task->collaborators->map(fn ($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'avatar' => $user->avatar,
+                    'pivot' => [
+                        'status' => $user->pivot->status,
+                        'reward_earned' => $user->pivot->reward_earned,
+                        'joined_at' => optional($user->pivot->joined_at)?->format('d M Y'),
+                        'completed_at' => optional($user->pivot->completed_at)?->format('d M Y'),
+                    ],
+                ])
+            ),
             leader_id: {{ $project->leader->id }}
         })"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer">

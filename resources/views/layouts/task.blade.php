@@ -572,14 +572,18 @@
                 editing: false,
                 task: {},
                 selectedMembers: [],
+                selectedCollaborators: [], 
                 memberQuery: '',
                 searchResults: [],
 
                 open(task) {
+                    // console.log(task);
+
                     this.task = structuredClone(task); 
                     this.selectedMembers = [...this.task.members];
                     this.memberQuery = '';
                     this.searchResults = [];
+                    this.selectedCollaborators = [...(this.task.collaborators ?? [])];
                     this.show = true;
                     this.editing = false;
                 },
@@ -608,10 +612,53 @@
                     }
                 },
 
+                async save() {
+                    try {
+                        const response = await fetch(`/tasks/${this.task.id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': document
+                                    .querySelector('meta[name="csrf-token"]')
+                                    .content,
+                            },
+                            body: JSON.stringify({
+                                title: this.task.title,
+                                description: this.task.description,
+                                priority: this.task.priority,
+                                status: this.task.status,
+                                deadline: this.task.deadline,
+                                members: this.selectedMembers.map(m => m.id),
+                                go_collab_enabled: this.task.go_collab_enabled,
+                                go_collab_description: this.task.go_collab_description,
+                                go_collab_limit: this.task.go_collab_limit,
+                                go_collab_reward: this.task.go_collab_reward,
+
+                                collaborators: this.selectedCollaborators.map(c => ({
+                                    id: c.id
+                                }))
+                            })
+                        });
+                        const data = await response.json();
+                        if (!response.ok)
+                            throw data;
+                        location.reload();
+                    } catch (e) {
+                        console.error(e);
+                        alert("Unable to save task.");
+                    }
+                }, 
+
                 removeMember(id) {
                     this.selectedMembers =
                         this.selectedMembers.filter(m => m.id !== id);
                     this.task.members = [...this.selectedMembers];
+                },
+
+                removeCollaborator(id) {
+                    this.task.collaborators =
+                        this.task.collaborators.filter(user => user.id !== id);
                 },
 
                 edit() {

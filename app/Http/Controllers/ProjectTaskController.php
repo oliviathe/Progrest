@@ -114,4 +114,67 @@ class ProjectTaskController extends Controller
             'avatarPath', 'teamMembers', 'displayLimit', 'extraMembers', 'completedTasks', 
             'totalTasks', 'progress'));
     }
+
+    public function update(Request $request, Task $task){
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+
+            'priority' => ['required', 'in:low,medium,high'],
+            'status' => ['required', 'in:pending,in_progress,completed,cancelled'],
+
+            'deadline' => ['nullable', 'date'],
+
+            'members' => ['array'],
+            'members.*' => ['exists:users,id'],
+
+            'go_collab_enabled' => ['boolean'],
+            'go_collab_description' => ['nullable', 'string'],
+            'go_collab_limit' => ['nullable', 'integer', 'min:1'],
+            'go_collab_reward' => ['nullable', 'integer', 'min:0'],
+
+            'collaborators' => ['array'],
+            'collaborators.*.id' => ['exists:users,id'],
+        ]);
+
+        $task->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'priority' => $validated['priority'],
+            'status' => $validated['status'],
+            'deadline' => $validated['deadline'] ?? null,
+
+            'go_collab_enabled' => $request->boolean('go_collab_enabled'),
+            'go_collab_description' => $validated['go_collab_description'] ?? null,
+            'go_collab_limit' => $validated['go_collab_limit'] ?? null,
+            'go_collab_reward' => $validated['go_collab_reward'] ?? 0,
+        ]); 
+
+        // Cek member keseluruhan (assigned member)
+
+        $task->users()->sync(
+            $validated['members'] ?? []
+        );
+
+        // Cek member collaborator 
+
+        $task->collaborators()->detach();
+
+        if (!empty($validated['collaborators'])) {
+            $pivot = [];
+            foreach ($validated['collaborators'] as $user) {
+                $pivot[$user['id']] = [
+                    'status' => 'pending',
+                    'reward_earned' => 0,
+                    'joined_at' => now(),
+                ];
+            }
+            $task->collaborators()->attach($pivot);
+        }
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }

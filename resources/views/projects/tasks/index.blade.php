@@ -499,7 +499,7 @@
                                                     class="flex items-center gap-1 text-hyperlink hover:opacity-80 transition text-sm font-medium"
                                                 >
                                                     <span
-                                                        class="cursor-pointer"
+                                                        class="cursor-pointer font-montserrat"
                                                         x-text="showMembers
                                                             ? 'Hide'
                                                             : `View all (${task.members.length})`">
@@ -916,11 +916,252 @@
                                 </template>
                             </div>
                         </div>
-                        
+
+                        {{-- GO COLLAB --}}
+                        <div>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">
+                                Go Collaboration
+                            </p>
+
+                            <div
+                                class="mt-1 bg-surface rounded-2xl px-4 py-3"
+                                x-data="{ showCollab: false }"
+                            >
+                                {{-- SUMMARY --}}
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center"
+                                        >
+                                            <x-lucide-users
+                                                class="w-5 h-5 text-primary"
+                                            />
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span
+                                                    class="font-montserrat text-sm font-semibold text-text-primary"
+                                                >
+                                                    Go Collaboration
+                                                </span>
+                                                <span
+                                                    class="px-2 py-0.5 rounded-full text-xs font-semibold"
+                                                    :class="task.go_collab_enabled
+                                                        ? 'bg-green-100 text-green-700'
+                                                        : 'bg-gray-200 text-gray-600'"
+                                                    x-text="task.go_collab_enabled ? 'Enabled' : 'Disabled'"
+                                                ></span>
+                                            </div>
+                                            <template x-if="task.go_collab_enabled">
+                                                <p
+                                                    class="text-xs text-text-secondary mt-0.5"
+                                                    x-text="`${task.go_collab_reward} Credits • Max ${task.go_collab_limit} collaborators`"
+                                                ></p>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    {{-- Expand --}}
+                                    <button
+                                        @click="showCollab = !showCollab"
+                                        class="flex items-center gap-1 text-hyperlink text-sm font-medium hover:opacity-80 transition font-montserrat cursor-pointer"
+                                    >
+                                        <span
+                                            x-text="showCollab ? 'Hide' : 'View Details'"
+                                        ></span>
+                                        <x-lucide-chevron-down
+                                            class="w-4 h-4 transition-transform duration-200 cursor-pointer"
+                                            ::class="{ 'rotate-180': showCollab }"
+                                        />
+                                    </button>
+                                </div>
+
+                                {{-- DETAILS --}}
+                                <div
+                                    x-show="showCollab"
+                                    x-collapse
+                                    class="mt-5 border-t-2 border-border pt-4 space-y-5"
+                                >
+                                    {{-- Description --}}
+                                    <div>
+                                        <p
+                                            class="font-montserrat font-semibold text-xs text-text-primary mb-2"
+                                        >
+                                            Description
+                                        </p>
+                                        <template x-if="!editing">
+                                            <div
+                                                class="rounded-xl bg-background px-4 py-3"
+                                            >
+                                                <p
+                                                    class="text-sm text-text-primary font-montserrat whitespace-pre-line"
+                                                    x-text="task.go_collab_description || 'No description provided.'"
+                                                ></p>
+                                            </div>
+                                        </template>
+                                        <template x-if="editing">
+                                            <textarea
+                                                x-model="task.go_collab_description"
+                                                rows="3"
+                                                class="w-full rounded-xl bg-background text-text-primary px-4 py-3 resize-none outline-none border-2 border-border focus:border-primary"
+                                            ></textarea>
+                                        </template>
+                                    </div>
+
+                                    {{-- GRID --}}
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        {{-- Reward --}}
+                                        <div>
+                                            <p
+                                                class="font-montserrat font-semibold text-xs text-text-primary mb-2"
+                                            >
+                                                Credit Reward
+                                            </p>
+                                            <template x-if="!editing">
+                                                <div class="bg-background rounded-xl px-4 py-3 text-text-primary">
+                                                    <span
+                                                        class="font-montserrat text-sm text-text-primary"
+                                                        x-text="task.go_collab_reward
+                                                            ? task.go_collab_reward + ' Credits'
+                                                            : 'Undefined'"
+                                                    ></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="editing">
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    x-model="task.go_collab_reward"
+                                                    class="w-full rounded-xl border-2 border-border text-text-primary bg-background px-4 py-2.5 outline-none focus:border-primary"
+                                                >
+                                            </template>
+                                        </div>
+
+                                        {{-- Maximum Collaborators --}}
+                                        <div>
+                                            <p
+                                                class="font-montserrat font-semibold text-xs text-text-primary mb-2"
+                                            >
+                                                Maximum Collaborators
+                                            </p>
+                                            <template x-if="!editing">
+                                                <div class="bg-background rounded-xl px-4 py-3">
+                                                    <span
+                                                        class="font-montserrat text-sm text-text-primary"
+                                                        x-text="task.go_collab_limit ?? 'Undefined'"
+                                                    ></span>
+
+                                                </div>
+
+                                            </template>
+
+                                            <template x-if="editing">
+
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    x-model="task.go_collab_limit"
+                                                    class="w-full rounded-xl border-2 border-border text-text-primary bg-background px-4 py-2.5 outline-none focus:border-primary"
+                                                >
+
+                                            </template>
+
+                                        </div>
+
+                                    </div>
+
+                                    {{-- Participants --}}
+                                    <div>
+
+                                        <div class="flex items-center justify-between mb-2">
+
+                                            <p
+                                                class="font-montserrat font-semibold text-xs text-text-primary"
+                                            >
+                                                Current Participants
+                                            </p>
+
+                                            <span
+                                                class="text-xs text-text-secondary"
+                                                x-text="task.go_collab_limit != null
+                                                    ? `${task.members?.length ?? 0} / ${task.go_collab_limit}`
+                                                    : ''"
+                                                {{-- x-text="`${task.collaborators?.length ?? 0} / ${task.go_collab_limit}`" --}}
+                                            ></span>
+                                        </div>
+
+                                        <div
+                                            class="bg-background rounded-xl p-3 max-h-48 overflow-y-auto space-y-2"
+                                        >
+                                            <template
+                                                x-for="user in task.collaborators"
+                                                :key="user.id"
+                                            >
+                                                <div
+                                                    class="flex items-center justify-between rounded-lg px-2 py-2 hover:bg-surface transition"
+                                                >
+                                                    <div class="flex items-center gap-3">
+                                                        <img
+                                                            :src="user.avatar || '/images/profile.jpg'"
+                                                            class="w-8 h-8 rounded-full object-cover"
+                                                        >
+                                                        <div>
+                                                            <p
+                                                                class="text-sm font-semibold text-text-primary"
+                                                                x-text="user.name"
+                                                            ></p>
+                                                            <p
+                                                                class="text-xs text-text-secondary"
+                                                                x-text="user.pivot.status === 'declined' ? 
+                                                                    'Declined' : (user.pivot.status === 'completed' ? 
+                                                                        'Completed' : 'In Progress')"
+                                                            ></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex items-center gap-2">
+                                                        <!-- hadiah -->
+                                                        <template x-if="!editing">
+                                                            <span
+                                                                class="text-xs font-semibold text-primary"
+                                                                x-text="user.pivot.reward_earned + ' pts'"
+                                                            ></span>
+                                                        </template>
+
+                                                        <!-- Hapus collaborator -->
+                                                        <template x-if="editing">
+                                                            <button
+                                                                type="button"
+                                                                @click="removeCollaborator(user.id)"
+                                                                class="w-8 h-8 rounded-full hover:bg-red-50 dark:hover:bg-red-500/15
+                                                                    flex items-center justify-center transition-colors"
+                                                            >
+                                                                <x-lucide-x class="w-4 h-4 text-red-500"/>
+                                                            </button>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                            <template
+                                                x-if="!task.collaborators || task.collaborators.length === 0"
+                                            >
+
+                                                <p
+                                                    class="text-sm text-center text-text-secondary font-montserrat py-2"
+                                                >
+                                                    No collaborators yet.
+                                                </p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {{-- FOOTER --}}
-                    <div class="border-t-2 border-border px-6 py-4 flex justify-between gap-3 shrink-0">
+                    <div class="border-t-2 border-border px-6 py-4 flex justify-between font-montserrat gap-3 shrink-0">
                         <div>
                             <template x-if="!editing">
                                 <button
@@ -935,7 +1176,7 @@
                                 <div class="flex gap-2">
                                     <button
                                         @click="saveTask()"
-                                        class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
+                                        class="bg-quartiary text-white px-5 py-2 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
                                     >
                                         Save Changes
                                     </button>
@@ -949,22 +1190,13 @@
                                 </div>
                             </template>
                         </div>
-                        <div>
-                            <template x-if="!editing">
-                                <button
-                                    class="bg-primary text-white px-5 py-2.5 rounded-2xl hover:bg-primary-hover transition cursor-pointer"
-                                >
-                                    Go Collab:
-                                    <strong x-text="task.go_collab ? 'ON' : 'OFF'"></strong>
-                                </button>
-                            </template>
-                            <button
-                                @click="close()"
-                                class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
-                            >
-                                Close
-                            </button>
-                        </div>
+                        
+                        <button
+                            @click="close()"
+                            class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
+                        >
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>
