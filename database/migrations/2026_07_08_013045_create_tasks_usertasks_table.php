@@ -28,6 +28,7 @@ return new class extends Migration
                 'completed',
                 'cancelled'
             ])->default('pending');
+            $table->string('image')->default('/images/default-task-image.png');
             $table->date('deadline')->nullable(); 
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate(); 
             $table->boolean('is_completed')->default(false); 
