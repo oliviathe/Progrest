@@ -58,7 +58,7 @@
 
             <!-- PROFILE INFO -->
             <div class="pt-6.5 ml-54">
-                <h1 class="font-parkinsans text-3xl font-bold text-text-primary">
+                <h1 class="font-montserrat text-3xl font-bold text-text-primary">
                     {{ auth()->user()->username }}
                 </h1>
                 <p class="font-montserrat text-lg text-text-secondary mt-px">
@@ -76,7 +76,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-folder-git class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
+                        <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Projects Joined
@@ -87,7 +87,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-clipboard-list class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['tasks_completed'] }}</span>
+                        <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['tasks_completed'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Tasks Completed
@@ -98,7 +98,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-users class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['collaborations'] }}</span>
+                        <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['collaborations'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Collaborations
@@ -109,7 +109,7 @@
                         <div class="bg-primary p-2 rounded-xl flex items-center justify-center">
                             <x-lucide-star class="w-4 h-4 text-text-contrast"/>
                         </div>
-                        <span class="font-parkinsans text-3xl font-bold text-text-primary">{{ $stats['points'] }}</span>
+                        <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['points'] }}</span>
                     </div>
                     <span class="text-text-secondary">
                         Total Points
@@ -128,7 +128,7 @@
             <div class="flex flex-col flex-1 min-h-0">
 
                 <div class="flex justify-between items-center mb-5 shrink-0">
-                    <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
+                    <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
                         More About Me
                     </h2>
                     <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
@@ -168,11 +168,11 @@
 
             <div class="flex items-center justify-between mb-5">
 
-                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
+                <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
                     Tasks Helped
                 </h2>
 
-                <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
+                <div class="bg-primary text-white px-3 py-1 rounded-lg font-montserrat font-bold text-2xl leading-none">
                     {{ $tasksHelped->count() }}
                 </div>
 
@@ -192,7 +192,7 @@
                                 <div class="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
-                                <h3 class="font-parkinsans text-xl font-bold leading-tight">
+                                <h3 class="font-montserrat text-xl font-bold leading-tight">
                                     {{ $task->project?->title ?? 'No project' }}
                                 </h3>
                             </div>
@@ -246,11 +246,11 @@
 
             <div class="flex items-center justify-between mb-5">
 
-                <h2 class="font-parkinsans text-2xl font-semibold text-text-primary">
+                <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
                     Tasks Created
                 </h2>
 
-                <div class="bg-primary text-white px-3 py-1 rounded-lg font-parkinsans font-bold text-2xl leading-none">
+                <div class="bg-primary text-white px-3 py-1 rounded-lg font-montserrat font-bold text-2xl leading-none">
                     {{ $tasksCreated->count() }}
                 </div>
 
@@ -270,7 +270,7 @@
                                 <div class="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
-                                <h3 class="font-parkinsans text-xl font-bold leading-tight">
+                                <h3 class="font-montserrat text-xl font-bold leading-tight">
                                     {{ $task->project?->title ?? 'No project' }}
                                 </h3>
                             </div>
@@ -344,7 +344,7 @@
                 <div class="flex items-center gap-3 text-white">
                     <x-lucide-pencil class="w-6 h-6" />
 
-                    <h2 class="font-parkinsans text-2xl font-bold">
+                    <h2 class="font-montserrat text-2xl font-bold">
                         Edit Profile
                     </h2>
                 </div>
@@ -574,7 +574,7 @@
 
                         <button
                             type="submit"
-                            class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-8 py-3 rounded-full flex items-center gap-2 font-parkinsans text-xl font-bold"
+                            class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-8 py-3 rounded-full flex items-center gap-2 font-montserrat text-xl font-bold"
                         >
                             <x-lucide-save class="w-5 h-5" />
                             Save

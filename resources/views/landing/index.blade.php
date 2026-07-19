@@ -7,7 +7,7 @@
     <link rel="icon" href="images/progrest_p_logo_green.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&family=Parkinsans:wght@400..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -57,7 +57,7 @@
             ⚙︎ Designed for teams. Built for progress.
         </div>
 
-        <h1 class="font-parkinsans text-text-primary text-5xl md:text-6xl font-bold leading-tight mb-6">
+        <h1 class="font-montserrat text-text-primary text-5xl md:text-6xl font-bold leading-tight mb-6">
             Plan. Collaborate. <br>
             <span class="text-primary">Deliver Results.</span>
         </h1>
@@ -96,7 +96,7 @@
     <div class="px-5 py-15 flex flex-col items-center bg-no-repeat bg-cover gap-7 rounded-2xl" style="background-image: url('images/background_landing.jpg')">
         <img src="images/progrest_p_logo_white.png" alt="" class="h-38 w-auto">
         <div class="px-4 py-1 rounded-md bg-white text-primary font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
-        <h1 class="font-parkinsans text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
+        <h1 class="font-montserrat text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
                 "Make Progress and Let Others do the Rest"
         </h1>
     </div>
@@ -108,7 +108,7 @@
         Everything you need to deliver
     </p>
 
-    <h2 class="font-parkinsans text-3xl font-bold mb-12 text-text-primary">
+    <h2 class="font-montserrat text-3xl font-bold mb-12 text-text-primary">
         Powerful features for
         <span class="underline decoration-dotted decoration-5 underline-offset-5 text-primary">modern teams</span>
     </h2>
@@ -119,7 +119,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-brain-cog class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Smart Task Management</h3> 
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Smart Task Management</h3> 
             <p class="mt-4 font-montserrat text-text-secondary">
                 Organize tasks, set priorities, and track progress in real time.
             </p>
@@ -129,7 +129,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-handshake class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Team Collaboration</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Team Collaboration</h3>
             <p class="font-montserrat text-text-secondary mt-4">
                 Communicate, share files, and work together seamlessly.
             </p>
@@ -139,7 +139,7 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-parkinsans font-semibold text-lg mb-2 text-text-primary">Insights & Reports</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Insights & Reports</h3>
             <p class="font-montserrat text-text-secondary mt-4">
                 Get clear insights into progress, performance, and deadlines.
             </p>
@@ -163,7 +163,7 @@
                 <x-lucide-rocket class="h-8 w-8 text-primary"/>
             </div>
             <div>
-                <h2 class="font-parkinsans text-2xl font-bold mb-2 text-text-contrast">
+                <h2 class="font-montserrat text-2xl font-bold mb-2 text-text-contrast">
                     Ready to bring clarity to your projects?
                 </h2>
                 <p class="font-montserrat text-text-contrast opacity-90">
@@ -201,7 +201,7 @@
 
         <!-- Product -->
         <div>
-            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Product</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Product</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Dashboard</a></li>
                 <li><a href="#" class="hover:opacity-100">Projects</a></li>
@@ -211,7 +211,7 @@
 
         <!-- Company -->
         <div>
-            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Social Media</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Social Media</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Twitter</a></li>
                 <li><a href="#" class="hover:opacity-100">Facebook</a></li>
@@ -221,7 +221,7 @@
 
         <!-- Resources -->
         <div>
-            <h2 class="font-parkinsans font-semibold mb-3 text-text-contrast">Resources</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Resources</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Help Center</a></li>
                 <li><a href="#" class="hover:opacity-100">Privacy Policy</a></li>

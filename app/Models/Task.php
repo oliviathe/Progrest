@@ -12,15 +12,35 @@ class Task extends Model
         'description',
         'status',
         'deadline',
-        'is_completed', 
+        'is_completed',
         'priority',
         'project_id',
-    ]; 
+        'completed_at',
+    ];
 
     protected $casts = [
-        'deadline' => 'date', 
-        'is_completed' => 'boolean'
-    ]; 
+        'deadline' => 'date',
+        'is_completed' => 'boolean',
+        'completed_at' => 'datetime',
+    ];
+
+    /**
+     * Keep completed_at in sync with completion state, wherever a task is saved.
+     * Marking complete stamps the time (without overwriting an existing stamp);
+     * reopening a task clears it.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (Task $task) {
+            if ($task->isDirty('is_completed') || $task->isDirty('status')) {
+                $isDone = $task->is_completed || $task->status === 'completed';
+
+                $task->completed_at = $isDone
+                    ? ($task->completed_at ?? now())
+                    : null;
+            }
+        });
+    }
 
     public function project(){
         return $this->belongsTo(Project::class); 

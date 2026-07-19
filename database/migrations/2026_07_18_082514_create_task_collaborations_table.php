@@ -26,6 +26,8 @@ return new class extends Migration
 
             // Collaboration status
             $table->enum('status', [
+                'pending',
+                'accepted',
                 'declined',
                 'in_progress',
                 'completed'
