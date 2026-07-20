@@ -15,8 +15,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->longText('avatar')->nullable()->change();
-            $table->longText('banner')->nullable()->change();
+            $table->longText('avatar')
+                ->default('/images/profile.jpg')
+                ->nullable(false)
+                ->change();
+
+            $table->longText('banner')
+                ->default('/images/Checker_BG.png')
+                ->nullable(false)
+                ->change();
         });
     }
 

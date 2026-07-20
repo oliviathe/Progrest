@@ -7,8 +7,8 @@
 @php
     $currentUser = auth()->user();
 
-    $avatarUrl = $currentUser->avatar_url;
-    $bannerUrl = $currentUser->banner_url;
+    $avatarUrl = $currentUser->avatar;
+    $bannerUrl = $currentUser->banner;
 @endphp
 
 <div class="p-4 md:p-8 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">

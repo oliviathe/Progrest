@@ -1020,7 +1020,6 @@
 
                             <div
                                 class="mt-1 bg-surface rounded-2xl px-4 py-3"
-                                x-data="{ showCollab: false }"
                             >
                                 {{-- SUMMARY --}}
                                 <div class="flex items-center justify-between">
@@ -1099,53 +1098,6 @@
                                                             : 'translate-x-1'"
                                                     ></span>
                                                 </button>
-                                            </div>
-                                        </template>
-
-
-                                        {{-- Disable Warning Modal --}}
-                                        <template x-if="showDisableCollabWarning">
-                                            <div
-                                                class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm"
-                                            >
-                                                <div
-                                                    class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
-                                                    @click.away="showDisableCollabWarning = false"
-                                                >
-
-                                                    <h3 class="text-lg font-semibold text-text-primary font-montserrat">
-                                                        Disable Go Collaboration?
-                                                    </h3>
-
-                                                    <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
-                                                        Disabling Go Collaboration will remove this task from public collaboration.
-                                                        Existing collaborators may lose access, and pending requests may be cancelled.
-                                                    </p>
-
-                                                    <div class="flex justify-end gap-3 mt-6">
-
-                                                        <button
-                                                            type="button"
-                                                            @click="showDisableCollabWarning = false"
-                                                            class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
-                                                        >
-                                                            Cancel
-                                                        </button>
-
-                                                        <button
-                                                            type="button"
-                                                            @click="
-                                                                task.go_collab_enabled = false;
-                                                                showCollab = false;
-                                                                showDisableCollabWarning = false;
-                                                            "
-                                                            class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
-                                                        >
-                                                            Disable
-                                                        </button>
-
-                                                    </div>
-                                                </div>
                                             </div>
                                         </template>
                                     </div>
@@ -1337,7 +1289,9 @@
                         <template x-if="!editing">
                             <button
                                 type="button"
-                                @click="deleteTask()"
+                                @click="
+                                    showDeleteTaskWarning = true;
+                                "
                                 class="flex items-center justify-center gap-2
                                     rounded-xl
                                     px-5 py-3
@@ -1357,6 +1311,112 @@
                         </template>
 
                     </div>
+
+                    <template x-if="showDeleteTaskWarning">
+                        <div
+                            class="fixed inset-0 z-100 bg-black/40 flex items-center justify-center backdrop-blur-sm p-6"
+                            @click="showDeleteTaskWarning = false"
+                        >
+
+                            <div
+                                class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
+                                @click.stop
+                            >
+
+                                <h3 class="text-lg font-semibold text-text-primary font-montserrat">
+                                    Delete Task?
+                                </h3>
+
+                                <p
+                                    class="mt-3 text-sm text-text-secondary leading-6 font-montserrat"
+                                    x-text="`This task currently has ${(task.members ?? []).length} collaborator(s) assigned. Deleting this task will remove it from their workspace and all related progress will be lost. This action cannot be undone.`"
+                                ></p>
+
+                                <div class="flex justify-end gap-3 mt-6">
+
+                                    <button
+                                        type="button"
+                                        @click="showDeleteTaskWarning = false"
+                                        class="px-4 py-2 rounded-xl
+                                            bg-background
+                                            border-2 border-border
+                                            text-sm text-text-primary
+                                            font-montserrat
+                                            hover:bg-surface
+                                            cursor-pointer
+                                            transition"
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            showDeleteTaskWarning = false;
+                                            deleteTask();
+                                        "
+                                        class="px-4 py-2 rounded-xl
+                                            bg-red-500
+                                            text-white
+                                            text-sm
+                                            font-montserrat
+                                            hover:bg-red-accent
+                                            cursor-pointer
+                                            transition"
+                                    >
+                                        Delete Permanently
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    {{-- Disable Warning Modal --}}
+                    <template x-if="showDisableCollabWarning">
+                        <div
+                            class="fixed inset-0 z-100 bg-black/40 flex items-center justify-center backdrop-blur-sm"
+                            @click="showDisableCollabWarning = false"
+                        >
+                            <div
+                                class="bg-background rounded-2xl p-6 max-w-md w-full shadow-xl"
+                                @click.stop
+                            >
+
+                                <h3 class="text-lg font-semibold text-text-primary font-montserrat">
+                                    Disable Go Collaboration?
+                                </h3>
+
+                                <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
+                                    Disabling Go Collaboration will remove this task from public collaboration.
+                                    Existing collaborators may lose access, and pending requests may be cancelled.
+                                </p>
+
+                                <div class="flex justify-end gap-3 mt-6">
+
+                                    <button
+                                        type="button"
+                                        @click="showDisableCollabWarning = false"
+                                        class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        @click="
+                                            task.go_collab_enabled = false;
+                                            showCollab = false;
+                                            showDisableCollabWarning = false;
+                                        "
+                                        class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
+                                    >
+                                        Disable
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </template>
 
                     {{-- FOOTER --}}
                     <div class="border-t-2 border-border px-6 py-4 flex justify-between font-montserrat gap-3 shrink-0">

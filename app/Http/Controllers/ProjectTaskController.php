@@ -238,15 +238,15 @@ class ProjectTaskController extends Controller
         ]); 
 
         // Cek member keseluruhan (assigned member)
-
         $task->users()->sync(
             $validated['members'] ?? []
         );
 
         // Cek member collaborator 
-
         $pivot = []; 
         $enabled = $validated['go_collab_enabled'];
+
+        \Log::info($validated['collaborators'] ?? 'NOT SENT');
 
         if ($enabled) {
             $pivot = [];
@@ -270,7 +270,10 @@ class ProjectTaskController extends Controller
                     ];
                 }
             }
-            $task->collaborators()->sync($pivot);
+            if ($enabled && array_key_exists('collaborators', $validated)) {
+                // Jaga supaya enggak ada bug collaborator ilang waktu edit go collab details 
+                $task->collaborators()->sync($pivot);
+            }
         } else {
             $task->collaborators()->detach();
         }

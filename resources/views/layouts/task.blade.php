@@ -615,6 +615,7 @@
                 taskMembers: [],
 
                 showDisableCollabWarning: false,
+                showDeleteTaskWarning: false,
                 showCollab: false,
 
                 newImage: null,
@@ -643,6 +644,7 @@
 
                     this.show = true;
                     this.editing = false;
+                    this.showDeleteTaskWarning = false;
                     this.showDisableCollabWarning = false;
                 },
 
@@ -717,6 +719,10 @@
                             formData.append('members[]', member.id);
                         });
 
+                        this.task.collaborators.forEach((user, index) => {
+                            formData.append(`collaborators[${index}][id]`, user.id);
+                        });
+
                         if (this.newImage) {
                             formData.append('image', this.newImage);
                         }
@@ -786,9 +792,6 @@
                 },
 
                 deleteTask() {
-                    if (!confirm('Are you sure you want to delete this task?')) {
-                        return;
-                    }
 
                     fetch(`/tasks/${this.task.id}`, {
                         method: 'DELETE',

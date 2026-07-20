@@ -8,7 +8,7 @@
 <div class="p-4 md:p-8 pt-6 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
     <div id="dashboard-header" class="bg-background rounded-4xl p-6 mb-8 shadow-sm border border-border flex justify-between items-center">
         <div class="flex items-center gap-4">
-            <img src="{{ auth()->check() ? auth()->user()->avatar_url : asset('images/profile.jpg') }}" alt="Profile" class="w-14 h-14 rounded-full object-cover shadow-sm border-[3px] border-border">
+            <img src="{{ auth()->check() ? auth()->user()->avatar : asset('/images/profile.jpg') }}" alt="Profile" class="w-14 h-14 rounded-full object-cover shadow-sm border-[3px] border-border">
             <div>
                 <h1 class="font-montserrat text-2xl font-bold text-text-primary">
                     Welcome Back, <span class="text-primary">@auth {{ auth()->user()->username }} @endauth</span>
