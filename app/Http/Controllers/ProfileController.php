@@ -66,20 +66,20 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
-        foreach (['avatar' => 'profile image', 'banner' => 'banner'] as $field => $label) {
+        foreach (['avatar' => 'main.toast.avatar', 'banner' => 'main.toast.banner'] as $field => $labelKey) {
             $file = $request->file($field);
             if ($file !== null && ! $file->isValid()) {
                 return back()
                     ->withInput()
-                    ->withErrors([$field => "The {$label} is too large to upload. Please choose a smaller file."]);
+                    ->withErrors([$field => __('main.toast.file-too-large', ['label' => __($labelKey)])]);
             }
         }
 
         $validated = $request->validate([
             'username'   => 'required|string|max:30',
             'name'       => 'required|string|max:255',
-            'about'      => 'nullable|string|max:200',
-            'more_about' => 'nullable|string|max:2000',
+            'about'      => 'nullable|string|max:100',
+            'more_about' => 'nullable|string|max:255',
             'city'       => 'nullable|string|max:255',
             'country'    => 'nullable|string|max:255',
             'linkedin'   => 'nullable|string|max:30',
@@ -107,7 +107,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect('/profile')->with('success', 'Profile updated successfully!');
+        return redirect('/profile')->with('success', __('main.toast.profile-updated'));
     }
 
     /**

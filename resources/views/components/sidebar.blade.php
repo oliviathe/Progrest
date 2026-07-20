@@ -1,10 +1,10 @@
 @props(['menu'])
 
 <aside id="sidebar"
-    class="bg-background text-text-primary p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300 hidden md:flex z-40">
+    class="bg-background text-text-primary p-4 h-screen rounded-r-2xl shadow-r-xl flex flex-col gap-3 fixed transition-[width] duration-300 md:flex z-40">
 
     <button id="sidebar-toggle"
-        class="absolute top-4 right-5 p-2 text-text-primary rounded-lg hover:bg-tertiary w-10 rotate-0 hover:rotate-90 transition duration-300 focus:outline-none">
+        class="absolute top-4 right-5 p-2 text-text-primary rounded-lg hover:bg-tertiary w-10 rotate-0 hover:rotate-90 transition duration-300 focus:outline-none cursor-pointer">
         ☰
     </button>
 
@@ -16,14 +16,6 @@
         src="{{ asset('/images/progrest_p_logo_green.png') }}"
         class="hidden w-9 h-auto mt-13 mx-auto transition-all duration-300">
 
-    {{-- <div id="app-logo" class="bg-red-500 text-white p-4">
-        TEST LOGO
-    </div>
-
-    <div id="app-logo-p" class="bg-red-500 text-white p-4">
-        TEST LOGO
-    </div> --}}
-
     <div class="w-full h-px bg-border rounded-xl"></div>
 
     <div class="sidebar-profile flex gap-3 border-[1.5px] p-2 border-border rounded-xl shadow-sm items-center bg-background">
@@ -32,16 +24,16 @@
         </div>
         <div class="flex flex-col justify-center sidebar-text">
             <p class="font-montserrat font-bold text-text-primary text-sm">
-                @auth {{ auth()->user()->username }} @else Username @endauth
+                @auth {{ auth()->user()->username }} @else {{ __('main.preview.username') }} @endauth
             </p>
             <p class="font-montserrat -mt-px text-xs text-text-secondary">
-                @auth {{ auth()->user()->name }} @else Reeders Rere @endauth
+                @auth {{ auth()->user()->name }} @else {{ __('main.preview.name') }} @endauth
             </p>
         </div>
     </div>
 
     <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-text">
-        Menu
+        {{ __('main.sidebar.menu') }}
     </p>
 
     @foreach ($menu as $group)
@@ -49,9 +41,9 @@
             @php $isActive = request()->is(ltrim($item['path'], '/')); @endphp 
 
             <a href="{{ $item['path'] }}"
-               class="sidebar-item group w-full h-10 
-               {{ $isActive ? 'bg-tertiary shadow-sm ring-1 ring-border' : 'bg-background hover:bg-tertiary' }} 
-               transition duration-300 rounded-xl flex items-center gap-2 justify-start px-2">
+                class="sidebar-item group w-full h-10 
+                {{ $isActive ? 'bg-tertiary shadow-sm ring-1 ring-border' : 'bg-background hover:bg-tertiary' }} 
+                transition duration-300 rounded-xl flex items-center gap-2 justify-start px-2">
 
                 <div class="h-full w-2 -ml-2.25 
                     {{ $isActive ? 'bg-primary opacity-100' : 'opacity-0 group-hover:opacity-100' }} 
@@ -75,14 +67,14 @@
 
                 <span class="sidebar-text block py-2 font-montserrat font-semibold text-sm transition-colors
                     {{ $isActive ? 'text-primary' : 'text-text-primary group-hover:text-primary' }}">
-                    {{ $item['name'] }}
+                    {{ __('main.sidebar.nav.' . \Illuminate\Support\Str::slug($item['name'])) }}
                 </span>
             </a>
         @endforeach
     @endforeach
 
     <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-theme-title transition-all duration-300">
-        Theme
+        {{ __('main.sidebar.theme') }}
     </p>
 
     <div class="sidebar-theme w-full rounded-xl bg-background border-[1.5px] p-3 border-border flex flex-col gap-3 items-center">
@@ -90,25 +82,25 @@
         <div class="sidebar-text flex gap-3 items-center w-full justify-center">
             <x-lucide-palette class="w-5 h-5 text-primary"/>
             <div class="flex flex-col">
-                <p class="font-montserrat text-sm font-semibold text-text-primary">Select Theme</p>
-                <p class="font-montserrat text-[10px] text-text-secondary">Pick your desired theme</p>
+                <p class="font-montserrat text-sm font-semibold text-text-primary">{{ __('main.sidebar.select-theme') }}</p>
+                <p class="font-montserrat text-[10px] text-text-secondary">{{ __('main.sidebar.pick-theme') }}</p>
             </div>
         </div>
 
         <div class="sidebar-expanded-theme flex flex-row gap-2">
-            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="light">
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="light">
                 <x-lucide-sun class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">Light</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.light') }}</span>
             </button>
 
-            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="dark">
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="dark">
                 <x-lucide-moon class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">Dark</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.dark') }}</span>
             </button>
 
-            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none" data-theme="system">
+            <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="system">
                 <x-lucide-monitor class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">System</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.system') }}</span>
             </button>
         </div>
 
@@ -126,7 +118,7 @@
 
         <button
             type="submit"
-            class="sidebar-item group w-full h-10 bg-background border border-red-200 hover:bg-red-50 transition duration-300 rounded-xl flex items-center gap-2 px-2">
+            class="sidebar-item group w-full h-10 bg-background border border-red-200 hover:bg-red-50 transition duration-300 rounded-xl flex items-center gap-2 px-2 cursor-pointer">
 
             <div
                 class="h-full w-2 -ml-2.25 opacity-0 group-hover:opacity-100 bg-red-500 rounded-l-xl transition duration-300">
@@ -138,7 +130,7 @@
             </div>
 
             <span class="sidebar-text font-montserrat font-semibold text-sm text-red-500">
-                Log Out
+                {{ __('main.sidebar.logout') }}
             </span>
 
         </button>

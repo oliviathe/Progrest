@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Title</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-title') }}</p>
 
                             {{-- Task TITLE INPUT --}}
 
@@ -156,20 +156,20 @@
                                 x-model="task.title"
                                 name="title"
                                 type="text"
-                                placeholder="e.g. User Interface Refinement"
+                                placeholder="{{ __('main.ph.task-title-eg') }}"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             >
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Description</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-description') }}</p>
 
                             {{-- Task DESCRIPTION INPUT --}}
 
                             <textarea
                                 x-model="task.description"
                                 name="description"
-                                placeholder="Describe the overview and purpose of the task..."
+                                placeholder="{{ __('main.ph.task-desc') }}"
                                 class="w-full h-30 rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             ></textarea>
                         </div>
@@ -215,7 +215,7 @@
                                     type="text"
                                     x-model="assignedMemberQuery"
                                     @input="searchAssignedMembers()"
-                                    placeholder="Username or email..."
+                                    placeholder="{{ __('main.ph.username-email') }}"
                                     class="w-full rounded-xl
                                         border-2 border-border
                                         bg-background
@@ -585,6 +585,209 @@
                 }
             }
         }
+
+        function projectModal(projectData) {
+            return {
+
+                project: projectData,
+                menuOpen: false,
+                showEdit: false,
+                showDelete: false,
+                selectedMembers: [],
+                memberQuery: '',
+                memberSearchResults: [],
+
+                form: {
+                    title: projectData.title ?? '',
+                    description: projectData.description ?? '',
+                    deadline: projectData.deadline ?? '',
+                    accent: projectData.accent ?? '#0EA5A4',
+                    icon: projectData.icon ?? 'folder',
+                },
+
+                loading: false,
+
+                openEdit() {
+
+                    this.menuOpen = false;
+
+                    this.form = {
+                        title: this.project.title,
+                        description: this.project.description ?? '',
+                        deadline: this.project.deadline
+                            ? this.formatDate(this.project.deadline)
+                            : '',
+                        accent: this.project.accent,
+                        icon: this.project.icon,
+                    };
+
+                    console.log(this.form); 
+
+                    this.selectedMembers = (this.project.users ?? []).map(user => ({
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.avatar,
+                    }));
+
+                    this.memberQuery = '';
+                    this.memberSearchResults = [];
+
+                    this.showEdit = true;
+                },
+
+                openDelete() {
+                    this.menuOpen = false;
+                    this.showDelete = true;
+                },
+
+                closeAll() {
+                    this.showEdit = false;
+                    this.showDelete = false;
+                    this.menuOpen = false;
+                },
+
+                formatDate(date) {
+                    return new Date(date)
+                        .toISOString()
+                        .split('T')[0];
+                },
+
+                async searchMembers() {
+                    if (this.memberQuery.trim().length < 2) {
+                        this.memberSearchResults = [];
+                        return;
+                    }
+                    try {
+                        const response = await fetch(
+                            `/users/search?q=${encodeURIComponent(this.memberQuery)}`
+                        );
+                        const users = await response.json();
+                        this.memberSearchResults = users.filter(user => {
+                            if (user.id === this.project.leader_id) {
+                                return false;
+                            }
+                            return !this.selectedMembers.some(
+                                member => member.id === user.id
+                            );
+                        });
+                    }
+                    catch (error) {
+                        console.error(error);
+                    }
+                },
+
+                addMember(user) {
+                    if (
+                        this.selectedMembers.some(
+                            member => member.id === user.id
+                        )
+                    ) {
+                        return;
+                    }
+
+                    this.selectedMembers.push(user);
+                    this.memberQuery = '';
+                    this.memberSearchResults = [];
+                },
+
+                removeMember(memberId) {
+                    this.selectedMembers =
+                        this.selectedMembers.filter(
+                            member => member.id !== memberId
+                        );
+                },
+
+                async saveProject() {
+                    this.loading = true;
+                    try {
+                        const response = await fetch(
+                            `/projects/${this.project.id}`,
+                            {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json",
+                                    "X-CSRF-TOKEN":
+                                        document
+                                        .querySelector(
+                                            'meta[name="csrf-token"]'
+                                        )
+                                        .content,
+                                },
+                                body: JSON.stringify({
+                                    ...this.form,
+                                    members: this.selectedMembers.map(member => member.id),
+                                })
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Failed updating project"
+                            );
+                        }
+
+                        const data = await response.json();
+
+                        // update local UI immediately
+                        this.project = data.project;
+                        this.closeAll();
+
+                        // refresh to update Blade-rendered values
+                        window.location.reload();
+                    }
+                    catch(error) {
+                        console.error(error);
+                        alert(
+                            "Unable to update project."
+                        );
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                },
+
+                async deleteProject() {
+                    this.loading = true;
+                    try {
+                        const response = await fetch(
+                            `/projects/${this.project.id}`,
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "X-CSRF-TOKEN":
+                                        document
+                                        .querySelector(
+                                            'meta[name="csrf-token"]'
+                                        )
+                                        .content,
+                                }
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Failed deleting project"
+                            );
+                        }
+
+                        // redirect after deletion
+                        window.location.href = "/projects";
+                    }
+                    catch(error) {
+                        console.error(error);
+                        alert(
+                            "Unable to delete project."
+                        );
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                }
+            }
+        }
         
         function taskModal() {
             return {
@@ -615,6 +818,7 @@
                 taskMembers: [],
 
                 showDisableCollabWarning: false,
+                showDeleteTaskWarning: false,
                 showCollab: false,
 
                 newImage: null,
@@ -643,6 +847,7 @@
 
                     this.show = true;
                     this.editing = false;
+                    this.showDeleteTaskWarning = false;
                     this.showDisableCollabWarning = false;
                 },
 
@@ -717,6 +922,10 @@
                             formData.append('members[]', member.id);
                         });
 
+                        this.task.collaborators.forEach((user, index) => {
+                            formData.append(`collaborators[${index}][id]`, user.id);
+                        });
+
                         if (this.newImage) {
                             formData.append('image', this.newImage);
                         }
@@ -761,9 +970,9 @@
                 },
 
                 cancelEdit() {
-                    console.log(this.originalTask);
-                    console.log(this.task);
-                    console.log("Cancel clicked"); 
+                    // console.log(this.originalTask);
+                    // console.log(this.task);
+                    // console.log("Cancel clicked"); 
                     this.task = JSON.parse(this.originalTask);
 
                     this.assignedMembers = [...(this.originalTask.members ?? [])];
@@ -786,9 +995,6 @@
                 },
 
                 deleteTask() {
-                    if (!confirm('Are you sure you want to delete this task?')) {
-                        return;
-                    }
 
                     fetch(`/tasks/${this.task.id}`, {
                         method: 'DELETE',

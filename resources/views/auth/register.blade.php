@@ -63,16 +63,16 @@
                 {{-- Judul Register --}}
                 <div class="relative w-max mx-auto mb-3 mt-0">
                     <h1 class="text-5xl md:text-[3.5rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">
-                        Register
+                        {{ __('main.auth.register-title') }}
                     </h1>
                     <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-[4rem] md:text-[4.5rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
-                        Register
+                        {{ __('main.auth.register-title') }}
                     </span>
                 </div>
 
                 {{-- Deksipsi progrest --}}
                 <p class="text-text-secondary text-center text-sm mb-6 leading-relaxed">
-                    By creating a Progrest account, you can enhance your project planning management collaboratively with your peers.
+                    {{ __('main.auth.register-desc') }}
                 </p>
 
                 {{-- Form --}}
@@ -81,7 +81,7 @@
                     {{-- Username --}}
                     <div>
                         <label class="block text-sm font-bold text-text-primary mb-1">
-                            Username
+                            {{ __('main.auth.username') }}
                         </label>
 
                         <div class="relative">
@@ -89,7 +89,7 @@
                                 id="usernameInput" required
                                 type="text" name="username" 
                                 value="{{ old("username") }}"
-                                placeholder="Must be 4-8 characters & unique" 
+                                placeholder="{{ __('main.ph.reg-username') }}"
                                 class="placeholder-text-secondary/50 text-text-primary bg-background focus:bg-surface w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary text-sm transition-all"
                             >
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
@@ -104,7 +104,7 @@
                     {{-- Full Name --}}
                     <div>
                         <label class="block text-sm font-bold text-text-primary mb-1">
-                            Full Name
+                            {{ __('main.auth.full-name') }}
                         </label>
 
                         <div class="relative">
@@ -113,7 +113,7 @@
                                 id="nameInput" required
                                 type="text" name="name"
                                 value="{{ old("name") }}"
-                                placeholder="Must be 6-12 characters" 
+                                placeholder="{{ __('main.ph.reg-name') }}"
                                 class="placeholder-text-secondary/50 text-text-primary bg-background focus:bg-surface w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary text-sm transition-all"
                             >
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
@@ -129,7 +129,7 @@
                     {{-- EMAIL --}}
                     <div>
                         <label class="block text-sm font-bold text-text-primary mb-1">
-                            E-mail Address
+                            {{ __('main.auth.email') }}
                         </label>
 
                         <div class="relative">
@@ -138,7 +138,7 @@
                                 id="emailInput" required
                                 type="text" name="email"
                                 value="{{ old("email") }}"
-                                placeholder="Must be appropriate & unique" 
+                                placeholder="{{ __('main.ph.reg-email') }}"
                                 class="placeholder-text-secondary/50 text-text-primary bg-background focus:bg-surface w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary text-sm transition-all"
                             >
                             <div class="absolute right-4 top-1/2 -translate-y-1/2">
@@ -155,7 +155,7 @@
                     {{-- PASSWORD --}}
                     <div>
                         <label class="block text-sm font-bold text-text-primary mb-1">
-                            Password
+                            {{ __('main.auth.password') }}
                         </label>
 
                         <div class="relative">
@@ -164,7 +164,7 @@
                                 id="passwordInput" required
                                 type="password" name="password"
                                 value="{{ old("password") }}"
-                                placeholder="Must be 6-12 alphanumeric chars" 
+                                placeholder="{{ __('main.ph.reg-password') }}"
                                 class="placeholder-text-secondary/50 text-text-primary bg-background focus:bg-surface w-full border-2 border-gray-200 rounded-lg pl-4 pr-12 py-2.5  md:py-2 focus:outline-none focus:border-primary text-sm transition-all"
                             >
 
@@ -185,37 +185,37 @@
 
                         {{-- Arahan ke Login --}}
                         <div class="text-center text-sm text-text-secondary mt-3 mb-2">
-                            Already have an account?
+                            {{ __('main.auth.have-account') }}
                             <a href="/login" class="font-bold text-text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4">
-                                Sign In
+                                {{ __('main.auth.signin') }}
                             </a>
                         </div>
 
                         {{-- Tombol Register --}}
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             class="w-[80%] mx-auto block bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95"
                         >
-                            Register
+                            {{ __('main.auth.register-btn') }}
                         </button>
 
                         {{-- Or --}}
                         <div class="flex items-center justify-center gap-3 my-2 opacity-70">
                             <hr class="w-43.75 border-gray-300">
                             <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider whitespace-nowrap">
-                                OR
+                                {{ __('main.auth.or') }}
                             </span>
                             <hr class="w-43.75 border-gray-300">
                         </div>
 
                         {{-- Google --}}
                         <a href="/auth/google" class="w-[80%] mx-auto flex bg-background border-2 border-primary text-text-primary font-bold py-1.5 rounded-xl items-center justify-center gap-3 hover:bg-gray-50 transition-all shadow-sm active:scale-95">
-                            <img 
-                                src="images/Google_Icon.png" 
-                                alt="" 
+                            <img
+                                src="images/Google_Icon.png"
+                                alt=""
                                 class="w-4"
-                            > 
-                            Continue with Google
+                            >
+                            {{ __('main.auth.continue-google') }}
                         </a>
                     </div>
                 </form>

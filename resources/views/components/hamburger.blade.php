@@ -17,10 +17,10 @@
 
             <div id="mobile-profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-background border border-border rounded-xl shadow-lg p-4 text-center">
                 <p class="font-montserrat font-bold text-text-primary text-lg">
-                    @auth {{ auth()->user()->username }} @else Guest @endauth
+                    @auth {{ auth()->user()->username }} @else {{ __('main.preview.guest') }} @endauth
                 </p>
                 <p class="font-montserrat text-sm text-text-secondary">
-                    @auth {{ auth()->user()->name }} @else Visitor @endauth
+                    @auth {{ auth()->user()->name }} @else {{ __('main.preview.visitor') }} @endauth
                 </p>
             </div>
         </div>
@@ -57,7 +57,7 @@
 
                     <span class="font-montserrat text-sm font-semibold transition-colors
                         {{ $isActive ? 'text-primary' : 'text-text-primary group-hover:text-primary' }}">
-                        {{ $item['name'] }}
+                        {{ __('main.sidebar.nav.' . \Illuminate\Support\Str::slug($item['name'])) }}
                     </span>
                 </a>
             @endforeach
@@ -71,7 +71,7 @@
                     <x-lucide-palette class="w-4 h-4 text-text-secondary group-hover:text-primary transition-colors" />
                 </div>
                 <span class="font-montserrat text-sm font-semibold text-text-primary group-hover:text-primary transition-colors">
-                    Themes
+                    {{ __('main.sidebar.themes') }}
                 </span>
             </div>
 
@@ -95,7 +95,7 @@
                     <x-lucide-log-out class="w-4 h-4" />
                 </div>
                 <span class="font-montserrat text-sm font-semibold text-red-500 group-hover:text-red-600">
-                    Log Out
+                    {{ __('main.sidebar.logout') }}
                 </span>
 
             </button>

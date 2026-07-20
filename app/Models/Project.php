@@ -13,7 +13,7 @@ class Project extends Model
     protected $fillable = ['leader_id','title','description','icon','cover_image','capacity','accent','deadline', 'cover_image'];
 
     protected $casts = [
-        'deadline' => 'date'
+        'deadline' => 'date'    
     ];
     
     protected $appends = [

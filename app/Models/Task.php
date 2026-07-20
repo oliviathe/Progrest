@@ -17,6 +17,10 @@ class Task extends Model
         'image', 
         'project_id',
         'completed_at',
+        'go_collab_enabled',
+        'go_collab_description',
+        'go_collab_limit',
+        'go_collab_reward'
     ];
 
     protected $casts = [

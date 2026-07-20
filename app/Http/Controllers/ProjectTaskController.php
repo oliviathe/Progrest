@@ -14,7 +14,10 @@ class ProjectTaskController extends Controller
     public function index($id, Request $request) {
 
         $userId = auth()->id();
-        $project = Project::findOrFail($id); 
+        $project = Project::with([
+            'leader',
+            'users'
+        ])->findOrFail($id);
 
         $hasAccess =
             $project->leader_id === $userId ||
@@ -179,7 +182,7 @@ class ProjectTaskController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'Task created.');
+            ->with('success', __('main.toast.task-created'));
     }
 
     public function update(Request $request, Task $task){
@@ -235,15 +238,15 @@ class ProjectTaskController extends Controller
         ]); 
 
         // Cek member keseluruhan (assigned member)
-
         $task->users()->sync(
             $validated['members'] ?? []
         );
 
         // Cek member collaborator 
-
         $pivot = []; 
         $enabled = $validated['go_collab_enabled'];
+
+        \Log::info($validated['collaborators'] ?? 'NOT SENT');
 
         if ($enabled) {
             $pivot = [];
@@ -267,7 +270,10 @@ class ProjectTaskController extends Controller
                     ];
                 }
             }
-            $task->collaborators()->sync($pivot);
+            if ($enabled && array_key_exists('collaborators', $validated)) {
+                // Jaga supaya enggak ada bug collaborator ilang waktu edit go collab details 
+                $task->collaborators()->sync($pivot);
+            }
         } else {
             $task->collaborators()->detach();
         }

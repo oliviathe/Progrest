@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollabController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -67,6 +68,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store'])
         ->name('projects.store');
 
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])
+        ->name('projects.update');
+
+    Route::delete('/projects/{project}', [ProjectController::class, 'delete'])
+        ->name('projects.delete');
+
     Route::get('/profile', [ProfileController::class, 'index'])
         ->name('profile');
 
@@ -97,6 +104,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])
         ->middleware('auth')
         ->name('notifications.read');
+
+    Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
     
     Route::get('/collab', [CollabController::class, 'index']);
 

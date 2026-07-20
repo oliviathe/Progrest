@@ -27,28 +27,28 @@
         @if ($task->status === 'in_progress')
             <div class="text-pastel-yellow-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-yellow-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-[12px] font-semibold leading-none">In Progress</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">{{ __('main.task.in-progress') }}</span>
                 </div>
                 <x-lucide-clock class="w-6 h-6" />
             </div>
         @elseif ($task->status === 'pending')
             <div class="text-pastel-blue-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-blue-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-[12px] font-semibold leading-none">Pending</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">{{ __('main.task.pending') }}</span>
                 </div>
                 <x-lucide-hourglass class="w-6 h-6" />
             </div>
         @elseif ($task->status === 'completed')
             <div class="text-pastel-green-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-green-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-[12px] font-semibold leading-none">Completed</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">{{ __('main.task.completed') }}</span>
                 </div>
                 <x-lucide-circle-check-big class="w-6 h-6" />
             </div>
         @else
             <div class="text-pastel-red-text flex flex-row gap-2.5 items-center">
                 <div class="bg-pastel-red-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-[12px] font-semibold leading-none">Cancelled</span>
+                    <span class="font-montserrat text-[12px] font-semibold leading-none">{{ __('main.task.cancelled') }}</span>
                 </div>
                 <x-lucide-circle-x class="w-6 h-6" />
             </div>
@@ -75,13 +75,19 @@
 
     {{-- collaborator --}}
     <div class="mb-4 shrink-0">
-        <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborator</h3>
+        <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">{{ __('main.task.collaborator') }}</h3>
         <div class="flex items-center">
-            @foreach ($task->users->take(3) as $user)
-                <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs first:ml-0 -ml-2.5">
-            @endforeach
-            @if ($task->users->count() > 3)
-                <div class="w-8 h-8 rounded-full border-2 border-white bg-surface flex items-center justify-center text-xs font-semibold text-text-primary">+{{$task->users->count() - 3}}</div>
+            @if ($task->users->count() > 0)
+                @foreach ($task->users->take(3) as $user)
+                    <img src="{{ $user->avatar ? $user->avatar : '/images/profile.jpg' }}" class="w-8 h-8 rounded-full border-2 border-white object-cover shadow-2xs first:ml-0 -ml-2.5">
+                @endforeach
+                @if ($task->users->count() > 3)
+                    <div class="w-8 h-8 rounded-full border-2 border-white bg-surface flex items-center justify-center text-xs font-semibold text-text-primary">+{{$task->users->count() - 3}}</div>
+                @endif
+            @else
+                <div class="w-full h-8 rounded-xl bg-surface flex items-center justify-center text-[12px] font-montserrat italic text-text-secondary">
+                    {{ __('main.task.no-collaborators-assigned') }}
+                </div>
             @endif
         </div>
     </div>
@@ -91,9 +97,9 @@
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
             @if (!is_null($task->deadline))
-                <p class="font-montserrat text-text-secondary text-sm">Due {{ $task->deadline->format('d M Y') }}</p>
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due') }} {{ $task->deadline->format('d M Y') }}</p>
             @else
-                <p class="font-montserrat text-text-secondary text-sm">Due Date Not Set</p>
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due-not-set') }}</p>
             @endif
         </div>
 
@@ -139,7 +145,7 @@
             leader_id: {{ $project->leader->id }}
         })"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0 cursor-pointer">
-            View
+            {{ __('main.task.view') }}
         <x-lucide-eye class="w-4 h-4 text-text-secondary" />
     </button>
 

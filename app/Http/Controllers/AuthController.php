@@ -87,7 +87,7 @@ class AuthController extends Controller
             return redirect()->intended(route('dashboard'));
         }
 
-        return back()->with('error_message', 'Invalid Username/E-mail or Password.')->onlyInput('login');
+        return back()->with('error_message', __('main.toast.login-invalid'))->onlyInput('login');
     }
 
     public function logout(Request $request){
@@ -181,13 +181,13 @@ class AuthController extends Controller
 
         if (!$email) {
             return redirect()->route('forgot')
-                ->withErrors(['email' => 'Session expired. Please try again.']);
+                ->withErrors(['email' => __('main.toast.session-expired')]);
         }
 
         $storedOtp = Cache::get('otp_'.$email);
 
         if (!$storedOtp || $storedOtp != $request->otp) {
-            return back()->with('error_message', 'Invalid or expired OTP');
+            return back()->with('error_message', __('main.toast.otp-invalid'));
         }
 
         // clear OTP kalau udah sukses
@@ -217,7 +217,7 @@ class AuthController extends Controller
         }
         if (Hash::check($request->password, $user->password)) {
             return back()->withErrors([
-                'password' => 'New password cannot be the same as your old password.'
+                'password' => __('main.toast.password-same')
             ]);
         }
 

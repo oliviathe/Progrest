@@ -7,8 +7,8 @@
 @php
     $currentUser = auth()->user();
 
-    $avatarUrl = $currentUser->avatar_url;
-    $bannerUrl = $currentUser->banner_url;
+    $avatarUrl = $currentUser->avatar;
+    $bannerUrl = $currentUser->banner;
 @endphp
 
 <div class="p-4 md:p-8 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
@@ -26,7 +26,7 @@
                 class="absolute top-5 right-5 bg-primary hover:bg-primary-hover cursor-pointer text-white px-5 py-2 rounded-full font-montserrat font-semibold flex items-center gap-2 shadow-md"
             >
                 <x-lucide-pencil class="w-4 h-4" />
-                Edit Profile
+                {{__('main.profile.edit-profile')}}
             </button>
         </div>
         <!-- PROFILE CONTENT -->
@@ -46,7 +46,7 @@
             <div class="absolute right-10 top-6 flex flex-col items-start gap-2 text-text-secondary">
                 <div class="flex items-center gap-2">
                     <x-lucide-calendar class="w-4 h-4" />
-                    Joined {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
+                    {{__('main.profile.joined')}} {{ $u->created_at?->format('M Y') ?? 'Jan 2026' }}
                 </div>
                 @if ($place)
                     <div class="flex items-center gap-2">
@@ -64,7 +64,7 @@
                 <p class="font-montserrat text-lg text-text-secondary mt-px">
                     {{ auth()->user()->name }}
                 </p>
-                <p class="mt-2 max-w-lg font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: 'No bio yet.' }}</p>
+                <p class="mt-2 max-w-lg font-montserrat text-text-secondary whitespace-pre-line">{{ auth()->user()->about ?: __('main.profile.no-bio') }}</p>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['projects_joined'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Projects Joined
+                        {{__('main.profile.projects-joined')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -90,7 +90,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['tasks_completed'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Tasks Completed
+                        {{__('main.profile.tasks-completed')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -101,7 +101,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['collaborations'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Collaborations
+                        {{__('main.profile.collaborations')}}
                     </span>
                 </div>
                 <div class="flex flex-col items-center py-3 border-l border-border">
@@ -112,7 +112,7 @@
                         <span class="font-montserrat text-3xl font-bold text-text-primary">{{ $stats['points'] }}</span>
                     </div>
                     <span class="text-text-secondary">
-                        Total Points
+                        {{__('main.profile.total-points')}}
                     </span>
                 </div>
             </div>
@@ -129,12 +129,12 @@
 
                 <div class="flex justify-between items-center mb-5 shrink-0">
                     <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
-                        More About Me
+                        {{ __('main.profile.more-about') }}
                     </h2>
                     <x-lucide-lightbulb class="w-6 h-6 text-primary"/>
                 </div>
 
-                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line flex-1 min-h-0 overflow-y-auto pr-1">{{ auth()->user()->more_about ?: 'No description provided yet.' }}</p>
+                <p class="font-montserrat text-text-secondary leading-relaxed text-sm whitespace-pre-line flex-1 min-h-0 overflow-y-auto pr-1">{{ auth()->user()->more_about ?: __('main.profile.no-description') }}</p>
 
             </div>
 
@@ -142,9 +142,9 @@
 
                 @unless (auth()->user()->hide_email)
                     <div class="flex items-center gap-3 text-text-secondary">
-                        <x-lucide-mail class="w-5 h-5 text-primary" />
+                        <x-lucide-mail class="w-5 h-5 text-primary shrink-0" />
 
-                        <span class="font-montserrat text-sm">
+                        <span class="font-montserrat text-[12px] truncate">
                             {{ auth()->user()->email }}
                         </span>
                     </div>
@@ -154,7 +154,7 @@
                     <div class="flex items-center gap-3 text-text-secondary">
                         <x-lucide-linkedin class="w-5 h-5 text-primary" />
 
-                        <span class="font-montserrat text-sm">
+                        <span class="font-montserrat text-[12px]">
                             {{ auth()->user()->linkedin }}
                         </span>
                     </div>
@@ -169,7 +169,7 @@
             <div class="flex items-center justify-between mb-5">
 
                 <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
-                    Tasks Helped
+                    {{ __('main.profile.tasks-helped') }}
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-montserrat font-bold text-2xl leading-none">
@@ -193,7 +193,7 @@
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
                                 <h3 class="font-montserrat text-xl font-bold leading-tight">
-                                    {{ $task->project?->title ?? 'No project' }}
+                                    {{ $task->project?->title ?? __('main.profile.no-project') }}
                                 </h3>
                             </div>
                             <div class="px-2.5 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
@@ -233,7 +233,7 @@
                 @empty
 
                     <p class="font-montserrat text-sm text-text-secondary">
-                        No tasks helped with yet.
+                        {{ __('main.profile.no-tasks-helped') }}
                     </p>
 
                 @endforelse
@@ -247,7 +247,7 @@
             <div class="flex items-center justify-between mb-5">
 
                 <h2 class="font-montserrat text-2xl font-semibold text-text-primary">
-                    Tasks Created
+                    {{ __('main.profile.tasks-created') }}
                 </h2>
 
                 <div class="bg-primary text-white px-3 py-1 rounded-lg font-montserrat font-bold text-2xl leading-none">
@@ -271,7 +271,7 @@
                                     <x-lucide-list-todo class="w-4 h-4" />
                                 </div>
                                 <h3 class="font-montserrat text-xl font-bold leading-tight">
-                                    {{ $task->project?->title ?? 'No project' }}
+                                    {{ $task->project?->title ?? __('main.profile.no-project') }}
                                 </h3>
                             </div>
                             <div class="px-2.5 h-8 rounded-xl bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
@@ -311,7 +311,7 @@
                 @empty
 
                     <p class="font-montserrat text-sm text-text-secondary">
-                        No tasks created yet.
+                        {{ __('main.profile.no-tasks-created') }}
                     </p>
 
                 @endforelse
@@ -322,6 +322,57 @@
 
     </div>
 
+    {{-- Language Switch --}}
+
+    <div class="flex items-center justify-between rounded-4xl border border-border bg-background p-6 shadow-sm mt-8">
+        {{-- Left --}}
+        <div class="flex items-center gap-4 font-montserrat">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary">
+                <x-lucide-languages class="w-6 h-6 text-text-contrast" />
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-text-primary">
+                    {{ __('main.profile.language-pref') }}
+                </h3>
+                <p class="mt-1 text-sm text-text-secondary">
+                    {{ __('main.profile.language-hint') }}
+                </p>
+            </div>
+        </div>
+
+        {{-- Right --}}
+        <div class="flex items-center gap-3">
+            <span
+                class="text-sm font-semibold transition-colors
+                {{ app()->getLocale() == 'id'
+                    ? 'text-text-primary'
+                    : 'text-placeholder' }}">
+                ID
+            </span>
+            <label class="relative inline-flex cursor-pointer items-center">
+                <input
+                    type="checkbox"
+                    class="peer sr-only"
+                    {{ app()->getLocale() == 'en' ? 'checked' : '' }}
+                    onchange="window.location.href='{{ app()->getLocale() == 'en'
+                        ? route('language.switch', 'id')
+                        : route('language.switch', 'en') }}'"
+                >
+                <div class="h-7 w-14 rounded-full bg-secondary transition-all duration-300 peer-checked:bg-primary"></div>
+                <div
+                    class="absolute left-1 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow transition-all duration-300 peer-checked:translate-x-7">
+                    <i class="fa-solid fa-check text-[10px] text-secondary opacity-0 transition-opacity peer-checked:opacity-100"></i>
+                </div>
+            </label>
+            <span
+                class="text-sm font-semibold transition-colors
+                {{ app()->getLocale() == 'en'
+                    ? 'text-text-primary'
+                    : 'text-placeholder' }}">
+                EN
+            </span>
+        </div>
+    </div>
 </div>
 
 <!-- EDIT PROFILE MODAL -->
@@ -345,7 +396,7 @@
                     <x-lucide-pencil class="w-6 h-6" />
 
                     <h2 class="font-montserrat text-2xl font-bold">
-                        Edit Profile
+                        {{ __('main.profile.edit-profile') }}
                     </h2>
                 </div>
 
@@ -400,7 +451,7 @@
                             class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
-                            Upload Icon
+                            {{ __('main.profile.upload-icon') }}
                         </button>
 
                         <button
@@ -409,7 +460,7 @@
                             class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-5 py-2 rounded-full flex items-center gap-2 font-montserrat text-sm font-semibold"
                         >
                             <x-lucide-upload class="w-4 h-4" />
-                            Upload Banner
+                            {{ __('main.profile.upload-banner') }}
                         </button>
 
                     </div>
@@ -426,7 +477,7 @@
 
                     <div>
                         <label class="block mb-2 font-montserrat font-bold text-base">
-                            Username
+                            {{ __('main.profile.username') }}
                         </label>
 
                         <input
@@ -440,7 +491,7 @@
 
                     <div>
                         <label class="block mb-2 font-montserrat font-bold text-base">
-                            Full Name
+                            {{ __('main.profile.full-name') }}
                         </label>
 
                         <input
@@ -459,9 +510,9 @@
 
                     <div>
                         <label class="block mb-2 font-montserrat font-bold text-base">
-                            City
+                            {{ __('main.profile.city') }}
                             <span class="font-normal text-text-secondary">
-                                (optional)
+                                {{ __('main.profile.optional') }}
                             </span>
                         </label>
 
@@ -475,9 +526,9 @@
 
                     <div>
                         <label class="block mb-2 font-montserrat font-bold text-base">
-                            Country
+                            {{ __('main.profile.country') }}
                             <span class="font-normal text-text-secondary">
-                                (optional)
+                                {{ __('main.profile.optional') }}
                             </span>
                         </label>
 
@@ -496,9 +547,9 @@
 
                     <div class="flex items-end justify-between mb-2">
                         <label class="font-montserrat font-bold text-base">
-                            About Me
+                            {{ __('main.profile.about-me') }}
                             <span class="font-normal text-text-secondary">
-                                (max. 200 characters) (optional)
+                                {{ __('main.profile.about-hint') }}
                             </span>
                         </label>
                         <span data-counter-for="about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
@@ -517,16 +568,16 @@
 
                     <div class="flex items-end justify-between mb-2">
                         <label class="font-montserrat font-bold text-base">
-                            More About Me
+                            {{ __('main.profile.more-about') }}
                             <span class="font-normal text-text-secondary">
-                                (max. 2000 characters) (optional)
+                                {{ __('main.profile.more-about-hint') }}
                             </span>
                         </label>
                         <span data-counter-for="more_about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
                     </div>
 
                     <textarea
-                        rows="22"
+                        rows="6"
                         name="more_about"
                         class="w-full border-2 border-border rounded-xl p-4 resize-none"
                     >{{ old('more_about', $currentUser->more_about) }}</textarea>
@@ -539,9 +590,9 @@
                     <div class="w-[45%]">
 
                         <label class="block mb-2 font-montserrat font-bold text-base">
-                            LinkedIn
+                            {{ __('main.profile.linkedin') }}
                             <span class="font-normal text-text-secondary">
-                                (optional)
+                                {{ __('main.profile.optional') }}
                             </span>
                         </label>
 
@@ -567,7 +618,7 @@
                             >
 
                             <span class="font-montserrat text-base">
-                                Hide E-mail Address
+                                {{ __('main.profile.hide-email') }}
                             </span>
 
                         </label>
@@ -577,7 +628,7 @@
                             class="bg-primary hover:bg-primary-hover cursor-pointer transition text-white px-8 py-3 rounded-full flex items-center gap-2 font-montserrat text-xl font-bold"
                         >
                             <x-lucide-save class="w-5 h-5" />
-                            Save
+                            {{ __('main.profile.save') }}
                         </button>
 
                     </div>
@@ -636,9 +687,10 @@
     // live preview
     (function () {
         const KB = 1024;
+        const FILE_TOO_LARGE = @json(__('main.toast.file-too-large-client', ['label' => '%LABEL%', 'max' => '%MAX%']));
         const LIMITS = {
-            avatarInput: { maxBytes: 1024 * KB, label: 'Profile image', max: '1 MB' },
-            bannerInput: { maxBytes: 2048 * KB, label: 'Banner', max: '2 MB' },
+            avatarInput: { maxBytes: 1024 * KB, label: @json(__('main.toast.avatar')), max: '1 MB' },
+            bannerInput: { maxBytes: 2048 * KB, label: @json(__('main.toast.banner')), max: '2 MB' },
         };
 
         function showErrorToast(message) {
@@ -674,7 +726,7 @@
 
                 const limit = LIMITS[inputId];
                 if (limit && file.size > limit.maxBytes) {
-                    showErrorToast(`${limit.label} is too large (max ${limit.max}). Please choose a smaller file.`);
+                    showErrorToast(FILE_TOO_LARGE.replace('%LABEL%', limit.label).replace('%MAX%', limit.max));
                     this.value = '';            // clear so it is never submitted
                     return;
                 }

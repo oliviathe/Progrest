@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             // avatar may already exist via the Google auth migration; only add if missing
             if (! Schema::hasColumn('users', 'avatar')) {
-                $table->string('avatar')->nullable()->after('email');
+                $table->string('avatar')->default('/images/profile.jpg')->after('email');
             }
 
             if (! Schema::hasColumn('users', 'banner')) {
-                $table->string('banner')->nullable()->after('avatar');
+                $table->string('banner')->default('/images/Checker_BG.png')->after('avatar');
             }
 
             if (! Schema::hasColumn('users', 'about')) {

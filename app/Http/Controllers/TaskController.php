@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller{
@@ -18,5 +19,13 @@ class TaskController extends Controller{
         ];
         
         return view('projects.tasks.view-task', compact('menu', 'project_id', 'task_id')); 
+    }
+
+    public function delete(Task $task){
+        $task->delete();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 }

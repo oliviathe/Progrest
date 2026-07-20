@@ -27,7 +27,7 @@ class ProjectSeeder extends Seeder
             'description' => 'Mobile application that focuses on sea creatures education.',
             'accent' => '#7C2D8E',
             'icon' => 'fishing-hook', 
-            'deadline' => Carbon::parse('06/12/2026')
+            'deadline' => Carbon::parse('07/22/2026')
         ]); 
 
         $project2 = Project::create([
@@ -36,7 +36,7 @@ class ProjectSeeder extends Seeder
             'description' => 'MindSpace Mobile App for mental health and mood tracking.',
             'accent' => '#0056D2', 
             'icon' => 'heart-pulse',
-            'deadline' => Carbon::parse('06/15/2026')
+            'deadline' => Carbon::parse('07/15/2026')
         ]); 
             
         $project3 = Project::create([
@@ -45,7 +45,7 @@ class ProjectSeeder extends Seeder
             'description' => 'CookEase Mobile App for easy recipes and meal planning.',
             'accent' => '#1F5D3A', 
             'icon' => 'cooking-pot', 
-            'deadline' => Carbon::parse('06/19/2026')
+            'deadline' => Carbon::parse('08/19/2026')
         ]); 
             
         $project4 = Project::create([
@@ -54,7 +54,7 @@ class ProjectSeeder extends Seeder
             'description' => 'PetPal Mobile App for smart pet care management system.',
             'accent' => '#0EA5A4', 
             'icon' => 'cat', 
-            'deadline' => Carbon::parse('06/23/2026')
+            'deadline' => Carbon::parse('08/23/2026')
         ]); 
         
         $project5 = Project::create([
@@ -63,7 +63,7 @@ class ProjectSeeder extends Seeder
             'description' => 'TravelMate Mobile App for smart trip planning and itineraries.',
             'accent' => '#8B5A2B', 
             'icon' => 'backpack', 
-            'deadline' => Carbon::parse('06/28/2026')
+            'deadline' => Carbon::parse('07/28/2026')
         ]); 
         
         $project6 = Project::create([
@@ -72,7 +72,7 @@ class ProjectSeeder extends Seeder
             'description' => 'EcoTrack App for tracking and reducing daily carbon footprint.',
             'accent' => '#F35C75', 
             'icon' => 'trees', 
-            'deadline' => Carbon::parse('07/1/2026')
+            'deadline' => Carbon::parse('07/22/2026')
         ]); 
 
         $project1->users()->attach([
