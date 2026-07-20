@@ -11,9 +11,9 @@
             <img src="{{ auth()->check() ? auth()->user()->avatar : asset('/images/profile.jpg') }}" alt="Profile" class="w-14 h-14 rounded-full object-cover shadow-sm border-[3px] border-border">
             <div>
                 <h1 class="font-montserrat text-2xl font-bold text-text-primary">
-                    Welcome Back, <span class="text-primary">@auth {{ auth()->user()->username }} @endauth</span>
+                    {{ __('main.dash.welcome') }} <span class="text-primary">@auth {{ auth()->user()->username }} @endauth</span>
                 </h1>
-                <p class="font-montserrat text-sm text-text-secondary mt-0.5">Start making progress and collab</p>
+                <p class="font-montserrat text-sm text-text-secondary mt-0.5">{{ __('main.dash.subtitle') }}</p>
             </div>
         </div>
         
@@ -23,19 +23,19 @@
             </button>
             <div id="notif-dropdown" class="hidden absolute right-0 mt-3 w-72 bg-background border border-border shadow-lg rounded-2xl p-5 z-50 font-montserrat">
                 <div class="flex justify-between items-center mb-3 border-b border-border pb-2">
-                    <p class="font-bold text-sm text-text-primary">Notifications</p>
+                    <p class="font-bold text-sm text-text-primary">{{ __('main.dash.notifications') }}</p>
                     @if($unreadNotifications > 0)
                         <span
                             id="notification-badge"
                             class="text-xs bg-primary text-white px-2 py-0.5 rounded-full"
                         >
-                            {{ $unreadNotifications }} New
+                            {{ $unreadNotifications }} {{ __('main.dash.new') }}
                         </span>
                     @endif
                 </div>
                 @if($notifications->isEmpty())
                     <p class="text-xs text-text-secondary text-center py-4">
-                        You have no notifications.
+                        {{ __('main.dash.no-notifications') }}
                     </p>
                 @else
                     <div class="max-h-80 overflow-y-auto">
@@ -67,10 +67,10 @@
                     <div class="flex items-center gap-3">
                         <x-lucide-notepad-text class="w-7 h-7 text-white" />
                         <h2 class="text-2xl font-bold font-montserrat text-white">
-                            Account Statistics
+                            {{ __('main.dash.account-stats') }}
                         </h2>
                     </div>
-                    <button id="share-btn" class="focus:outline-none hover:opacity-70 transition-opacity cursor-pointer" title="Download Statistics">
+                    <button id="share-btn" class="focus:outline-none hover:opacity-70 transition-opacity cursor-pointer" title="{{ __('main.dash.download-stats') }}">
                         <x-lucide-share-2 class="w-5 h-5" />
                     </button>
                 </div>
@@ -80,29 +80,29 @@
                         <div class="flex items-center gap-1.5 text-primary font-montserrat font-semibold text-3xl">
                             <x-lucide-zap class="w-6 h-6 fill-current" /> {{ $statistics['login_streak']['current'] }}
                         </div>
-                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">Login Streak</p>
-                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['login_streak']['best'] }}</span> Best</p>
+                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">{{ __('main.dash.login-streak') }}</p>
+                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['login_streak']['best'] }}</span> {{ __('main.dash.best') }}</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
                         <div class="flex items-center gap-1.5 text-primary font-montserrat font-semibold text-3xl">
                             <x-lucide-file-text class="w-6 h-6" /> {{ $statistics['projects_completed'] }}
                         </div>
-                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">Projects</p>
-                        <p class="text-xs text-text-secondary font-montserrat mt-0.5">Completed</p>
+                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">{{ __('main.dash.projects') }}</p>
+                        <p class="text-xs text-text-secondary font-montserrat mt-0.5">{{ __('main.dash.completed') }}</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
                         <div class="flex items-center gap-1.5 text-primary font-montserrat font-semibold text-3xl">
                             <x-lucide-users class="w-6 h-6" /> {{ $statistics['collabs_completed'] }}
                         </div>
-                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">Collabs</p>
-                        <p class="text-xs text-text-secondary font-montserrat mt-0.5">Completed</p>
+                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">{{ __('main.dash.collabs') }}</p>
+                        <p class="text-xs text-text-secondary font-montserrat mt-0.5">{{ __('main.dash.completed') }}</p>
                     </div>
                     <div class="flex flex-col items-center justify-center pt-4 md:pt-0">
                         <div class="flex items-center gap-1.5 text-primary font-montserrat font-semibold text-3xl">
                             <x-lucide-coins class="w-6 h-6" /> {{ $statistics['points']['current'] }}
                         </div>
-                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">Points</p>
-                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> Highest</p>
+                        <p class="font-montserrat font-semibold text-text-primary text-sm mt-1">{{ __('main.dash.points') }}</p>
+                        <p class="text-xs text-text-secondary font-montserrat mt-0.5"><span class="font-bold text-text-primary">{{ $statistics['points']['highest'] }}</span> {{ __('main.dash.highest') }}</p>
                     </div>
                 </div>
             </div>
@@ -111,14 +111,14 @@
                 <div class="flex items-center gap-3 mb-4">
                     <x-lucide-bar-chart-3 class="w-7 h-7 text-primary" />
                     <h2 class="text-2xl font-bold font-montserrat text-text-primary">
-                        Task Contribution Statistics
+                        {{ __('main.dash.contribution-stats') }}
                     </h2>
                 </div>
                 <div class="bg-background rounded-3xl p-6 shadow-sm border border-border flex flex-col justify-between">
                     <div class="flex justify-end gap-3 mb-4" id="chart-tabs">
-                        <button data-range="weekly" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Weekly</button>
-                        <button data-range="monthly" class="chart-tab active bg-border shadow-sm text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Monthly</button>
-                        <button data-range="annually" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">Annually</button>
+                        <button data-range="weekly" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">{{ __('main.dash.weekly') }}</button>
+                        <button data-range="monthly" class="chart-tab active bg-border shadow-sm text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">{{ __('main.dash.monthly') }}</button>
+                        <button data-range="annually" class="chart-tab bg-surface border border-border text-text-primary text-xs font-montserrat font-bold px-4 py-1.5 rounded-full transition-colors focus:outline-none cursor-pointer">{{ __('main.dash.annually') }}</button>
                     </div>
                     
                     <div class="flex h-56 md:h-64">
@@ -156,7 +156,7 @@
             <div class="row flex items-center gap-3 mb-4">
                 <x-lucide-clock class="w-7 h-7 text-primary" />
                 <h2 class="text-2xl font-bold font-montserrat text-text-primary">
-                    Current Projects
+                    {{ __('main.dash.current-projects') }}
                 </h2>
             </div>
             <div class="flex flex-col gap-4">
@@ -178,7 +178,7 @@
                             <p class="font-montserrat text-sm text-text-primary mt-1.5 line-clamp-2 leading-relaxed">{{ $proj->description }}</p>
 
                             <div class="mt-5 flex items-center justify-between text-sm font-montserrat font-semibold text-text-primary mb-2">
-                                <span>Progress:</span>
+                                <span>{{ __('main.dash.progress') }}:</span>
                                 <span>{{ $proj->progress ?? 0 }}%</span>
                             </div>
                             <div class="w-full bg-border h-1.5 rounded-full overflow-hidden">
@@ -188,12 +188,12 @@
                     </a>
                 @empty
                     <div class="bg-background rounded-3xl p-6 text-center shadow-sm border border-border">
-                        <p class="font-montserrat text-sm text-text-secondary">No active projects yet.</p>
+                        <p class="font-montserrat text-sm text-text-secondary">{{ __('main.dash.no-projects') }}</p>
                     </div>
                 @endforelse
 
                 <a href="/projects" class="mt-1 w-full bg-primary hover:bg-primary-hover text-white py-2.5 rounded-full flex items-center justify-center gap-2 font-montserrat font-bold text-sm transition-colors shadow-md">
-                    <x-lucide-eye class="w-5 h-5" /> All Projects
+                    <x-lucide-eye class="w-5 h-5" /> {{ __('main.dash.all-projects') }}
                 </a>
             </div>
         </div>
@@ -203,10 +203,10 @@
         <div class="flex items-center gap-3 mb-2">
             <x-lucide-clipboard-clock class="w-7 h-7 text-primary" />
             <h2 class="text-2xl font-bold font-montserrat text-text-primary">
-                Task Reminder
+                {{ __('main.dash.task-reminder') }}
             </h2>
         </div>
-        <div class="font-montserrat text-base text-text-secondary mb-5">Keep your project on plan. Finish nearly overdue and past deadline tasks.</div>
+        <div class="font-montserrat text-base text-text-secondary mb-5">{{ __('main.dash.reminder-subtitle') }}</div>
 
         @forelse ($taskReminders as $task)
             @if ($loop->first)
@@ -272,7 +272,7 @@
                     <div class="flex flex-row items-center justify-between mt-4 mb-3 shrink-0">
                         <div class="flex flex-row gap-1.5 items-center">
                             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/>
-                            <p class="font-montserrat text-text-secondary text-sm">Due {{ $task['due_date'] }}</p>
+                            <p class="font-montserrat text-text-secondary text-sm">{{ __('main.dash.due') }} {{ $task['due_date'] }}</p>
                         </div>
                         <p class="font-montserrat text-xs font-bold whitespace-nowrap ml-2 {{ $isCritical ? 'text-red-accent' : 'text-yellow-accent' }}">
                             {{ $task['countdown'] }}
@@ -281,7 +281,7 @@
 
                     {{-- View button --}}
                     <div class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm group-hover:bg-surface transition-colors font-montserrat shrink-0">
-                        View
+                        {{ __('main.dash.view') }}
                         <x-lucide-eye class="w-4 h-4 text-text-secondary" />
                     </div>
                 </a>
@@ -290,7 +290,7 @@
             @endif
         @empty
             <div class="bg-background rounded-3xl p-6 text-center shadow-sm border border-border">
-                <p class="font-montserrat text-sm text-text-secondary">Nothing due in the next few days. You're all caught up.</p>
+                <p class="font-montserrat text-sm text-text-secondary">{{ __('main.dash.all-caught-up') }}</p>
             </div>
         @endforelse
     </div>

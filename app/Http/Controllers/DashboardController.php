@@ -186,17 +186,17 @@ class DashboardController extends Controller
 
             if ($daysLate > 0) {
                 $type = 'critical';
-                $urgency = 'Overdue';
-                $countdown = $daysLate . ' day' . ($daysLate > 1 ? 's' : '') . ' late';
+                $urgency = __('main.dash.overdue');
+                $countdown = trans_choice('main.dash.days-late', $daysLate, ['count' => $daysLate]);
             } elseif ($daysLate === 0) {
                 $type = 'warning';
-                $urgency = 'Due Soon';
-                $countdown = 'Due Today';
+                $urgency = __('main.dash.due-soon');
+                $countdown = __('main.dash.due-today');
             } else {
                 $days = abs($daysLate);
                 $type = 'warning';
-                $urgency = 'Due Soon';
-                $countdown = $days . ' day' . ($days > 1 ? 's' : '') . ' left';
+                $urgency = __('main.dash.due-soon');
+                $countdown = trans_choice('main.dash.days-left', $days, ['count' => $days]);
             }
 
             return [

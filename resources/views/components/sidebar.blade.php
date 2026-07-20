@@ -24,16 +24,16 @@
         </div>
         <div class="flex flex-col justify-center sidebar-text">
             <p class="font-montserrat font-bold text-text-primary text-sm">
-                @auth {{ auth()->user()->username }} @else Username @endauth
+                @auth {{ auth()->user()->username }} @else {{ __('main.preview.username') }} @endauth
             </p>
             <p class="font-montserrat -mt-px text-xs text-text-secondary">
-                @auth {{ auth()->user()->name }} @else Reeders Rere @endauth
+                @auth {{ auth()->user()->name }} @else {{ __('main.preview.name') }} @endauth
             </p>
         </div>
     </div>
 
     <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-text">
-        Menu
+        {{ __('main.sidebar.menu') }}
     </p>
 
     @foreach ($menu as $group)
@@ -67,14 +67,14 @@
 
                 <span class="sidebar-text block py-2 font-montserrat font-semibold text-sm transition-colors
                     {{ $isActive ? 'text-primary' : 'text-text-primary group-hover:text-primary' }}">
-                    {{ $item['name'] }}
+                    {{ __('main.sidebar.nav.' . \Illuminate\Support\Str::slug($item['name'])) }}
                 </span>
             </a>
         @endforeach
     @endforeach
 
     <p class="pt-3 font-montserrat text-xs uppercase tracking-wide font-semibold text-text-secondary opacity-80 sidebar-theme-title transition-all duration-300">
-        Theme
+        {{ __('main.sidebar.theme') }}
     </p>
 
     <div class="sidebar-theme w-full rounded-xl bg-background border-[1.5px] p-3 border-border flex flex-col gap-3 items-center">
@@ -82,25 +82,25 @@
         <div class="sidebar-text flex gap-3 items-center w-full justify-center">
             <x-lucide-palette class="w-5 h-5 text-primary"/>
             <div class="flex flex-col">
-                <p class="font-montserrat text-sm font-semibold text-text-primary">Select Theme</p>
-                <p class="font-montserrat text-[10px] text-text-secondary">Pick your desired theme</p>
+                <p class="font-montserrat text-sm font-semibold text-text-primary">{{ __('main.sidebar.select-theme') }}</p>
+                <p class="font-montserrat text-[10px] text-text-secondary">{{ __('main.sidebar.pick-theme') }}</p>
             </div>
         </div>
 
         <div class="sidebar-expanded-theme flex flex-row gap-2">
             <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="light">
                 <x-lucide-sun class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">Light</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.light') }}</span>
             </button>
 
             <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="dark">
                 <x-lucide-moon class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">Dark</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.dark') }}</span>
             </button>
 
             <button class="theme-btn flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-tertiary transition focus:outline-none cursor-pointer" data-theme="system">
                 <x-lucide-monitor class="w-6 h-6 text-text-secondary" />
-                <span class="font-montserrat text-sm text-text-secondary">System</span>
+                <span class="font-montserrat text-sm text-text-secondary">{{ __('main.sidebar.system') }}</span>
             </button>
         </div>
 
@@ -130,7 +130,7 @@
             </div>
 
             <span class="sidebar-text font-montserrat font-semibold text-sm text-red-500">
-                Log Out
+                {{ __('main.sidebar.logout') }}
             </span>
 
         </button>

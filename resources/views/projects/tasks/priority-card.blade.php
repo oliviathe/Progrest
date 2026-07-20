@@ -15,15 +15,15 @@
         <div class="mb-2 pr-6">
             @if ($priority == 'high')
                 <span class="font-montserrat font-medium text-white uppercase text-sm bg-red-accent px-3 py-[2.5px] rounded-lg text-[12px] tracking-wider leading-none">
-                    High
+                    {{ __('main.task.high') }}
                 </span>
             @elseif ($status == 'medium')
                 <span class="font-montserrat font-medium text-white uppercase text-sm bg-orange-accent px-3 py-[2.5px] rounded-lg text-[12px] tracking-wider leading-none">
-                    Medium
+                    {{ __('main.task.medium') }}
                 </span>
             @else
                 <span class="font-montserrat font-medium text-white uppercase text-sm bg-yellow-accent px-3 py-[2.5px] rounded-lg text-[12px] tracking-wider leading-none">
-                    Low
+                    {{ __('main.task.low') }}
                 </span>
             @endif
         </div>
@@ -31,15 +31,15 @@
         <div class="mb-2 pr-6">
             @if ($status == 'in_progress')
                 <span class="font-montserrat font-medium text-orange-accent uppercase text-sm">
-                    In Progress
+                    {{ __('main.task.in-progress') }}
                 </span>
             @elseif ($status == 'cancelled')
                 <span class="font-montserrat font-medium text-red-accent uppercase text-sm">
-                    Cancelled
+                    {{ __('main.task.cancelled') }}
                 </span>
             @elseif ($status == 'pending')
                 <span class="font-montserrat font-medium text-yellow-accent uppercase text-sm">
-                    Pending
+                    {{ __('main.task.pending') }}
                 </span>
             @endif
         </div>
@@ -51,15 +51,15 @@
         <div class="flex items-center justify-between mt-1">
             <div class="flex flex-row gap-1.5 items-center">
                 <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-                <p class="font-montserrat text-text-secondary text-sm">Due {{ $dueDate->format('d M Y') }}</p>
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due') }} {{ $dueDate->format('d M Y') }}</p>
             </div>
             <p class="font-montserrat text-xs font-bold whitespace-nowrap ml-2 {{ $daysLeft < 0 ? 'text-red-accent' : 'text-yellow-accent' }}">
                 @if($daysLeft < 0)
-                    {{ abs($daysLeft) }} days late
+                    {{ trans_choice('main.task.days-late', abs($daysLeft), ['count' => abs($daysLeft)]) }}
                 @elseif($daysLeft == 0)
-                    Due Today
+                    {{ __('main.task.due-today') }}
                 @else
-                    {{ $daysLeft }} days left
+                    {{ trans_choice('main.task.days-left', $daysLeft, ['count' => $daysLeft]) }}
                 @endif
             </p>
         </div>

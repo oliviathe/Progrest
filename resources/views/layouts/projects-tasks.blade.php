@@ -163,8 +163,8 @@
                         <x-lucide-folder-plus class="w-8 text-pastel-green-text"/>
                     </div>
                     <div class="flex flex-col text-text-secondary text-sm max-w-70">
-                        <p class="font-montserrat font-bold text-2xl text-text-primary">Create New Project</p>
-                        <p>Start a Project and Collab with Team Members!</p>
+                        <p class="font-montserrat font-bold text-2xl text-text-primary">{{ __('main.proj.create-new') }}</p>
+                        <p>{{ __('main.proj.create-new-subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -177,11 +177,11 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-folder-git-2 class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Project Details</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.proj.project-details') }}</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Project Title</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.proj.project-title') }}</p>
 
                             {{-- PROJECT TITLE INPUT --}}
 
@@ -189,7 +189,7 @@
                                 x-model="task.title"
                                 name="title"
                                 type="text"
-                                placeholder="e.g. AquaVerse"
+                                placeholder="{{ __('main.ph.project-title-eg') }}"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             >
 
@@ -201,7 +201,7 @@
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Project Description</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.proj.project-description') }}</p>
 
                             {{-- PROJECT DESCRIPTION INPUT --}}
 
@@ -212,7 +212,7 @@
                                 @input="
                                     description = description.replace(/(\S{30})/g, '$1 ');
                                 "
-                                placeholder="Describe your project goals, purpose, and plans..."
+                                placeholder="{{ __('main.ph.project-desc') }}"
                                 class="w-full resize-none rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder [overflow-wrap:anywhere]"
                             ></textarea>
 
@@ -233,7 +233,7 @@
                                 <div class="shadow-2xl shadow-pastel-green-background">
                                     <x-lucide-palette class="w-5 text-pastel-green-text"/>
                                 </div>
-                                <p class="font-montserrat font-semibold text-[14px] text-text-primary">Project Theme</p>
+                                <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.proj.project-theme') }}</p>
                             </div>
 
                             {{-- HIDDEN INPUT --}}
@@ -359,7 +359,7 @@
                                     </div>
 
                                     <p class="font-montserrat font-semibold text-[14px] text-text-primary">
-                                        Project Icon
+                                        {{ __('main.proj.project-icon') }}
                                     </p>
                                 </div>
 
@@ -461,11 +461,11 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Timeline</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.proj.timeline') }}</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Due date (Optional)</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.proj.due-optional') }}</p>
 
                             <div class="relative">
 
@@ -505,7 +505,7 @@
                             </div>
 
                             <p class="font-montserrat text-[14px] font-semibold text-text-primary">
-                                Members
+                                {{ __('main.proj.members') }}
                             </p>
 
 
@@ -516,7 +516,7 @@
                         <div class="flex flex-col gap-1">
 
                             <p class="font-montserrat text-[12px] font-semibold text-text-primary">
-                                Search users
+                                {{ __('main.proj.search-users') }}
                             </p>
 
                             <div class="relative">
@@ -527,7 +527,7 @@
 
                                 <input
                                     type="text"
-                                    placeholder="Search by username or email..."
+                                    placeholder="{{ __('main.ph.search-user-email') }}"
                                     x-model="query"
                                     @input="search()"
                                     class="w-full rounded-lg border-[1.5px] border-text-primary/50 bg-background py-2.5 pl-11 pr-3 text-sm text-text-primary"
@@ -692,27 +692,46 @@
 
                             <div class="text-pastel-yellow-text flex flex-row gap-3">
                                 <div class="bg-pastel-yellow-background px-3 rounded-lg">
-                                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold">In Progress</span>
+                                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold">{{ __('main.proj.in-progress') }}</span>
                                 </div>
                                 <x-lucide-clock class="w-7" />
                             </div>
                         </div>
 
                         <div class="pr-2 flex flex-col">
-                            <h2 x-text="task.title || 'Untitled Project'"
+                            <h2 x-text="task.title || '{{ __('main.preview.untitled-project') }}'"
                                 class="text-text-primary text-xl font-semibold font-parkinsans"></h2>
-                            <p x-text="task.description || 'Your project description goes here...'"
+                            <p x-text="task.description || '{{ __('main.preview.project-desc') }}'"
                                 class="text-text-primary text-sm mt-1 leading-snug"></p>
                         </div>
 
                         <div class="mb-3.25 mt-4.5">
                             <div class="flex justify-between items-center mb-2">
-                                <h3 class="text-text-primary font-semibold font-parkinsans text-sm">Progress</h3>
+                                <h3 class="text-text-primary font-semibold font-parkinsans text-sm">{{ __('main.proj.progress') }}</h3>
                                 <span class="text-text-primary font-semibold font-parkinsans text-sm">0%</span>
                             </div>
                             <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden"></div>
                         </div>
 
+<<<<<<< HEAD
+                        <div class="flex flex-row items-center justify-between mb-3">
+                            <div class="flex flox-row gap-1.5">
+                                <x-lucide-calendar class="w-3 text-text-secondary"/> 
+                                <p class="text-text-secondary text-sm">
+                                    <span x-show="remainingDays != null">
+                                        {{ __('main.proj.due-in-short') }}
+                                        <span x-text="remainingDays"></span> {{ __('main.proj.days') }}
+                                    </span>
+                                    <span x-show="remainingDays === null">
+                                        {{ __('main.proj.no-due-date') }}
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="flex flox-row gap-1.5">
+                                <x-lucide-message-circle class="w-3 text-text-secondary"/> 
+                                <p class="text-text-secondary text-sm">10</p>
+                            </div>
+=======
                         <div class="flex flox-row gap-1.5">
                             <x-lucide-calendar class="w-3 text-text-secondary"/> 
                             <p class="text-text-secondary text-sm">
@@ -724,6 +743,7 @@
                                     No due date
                                 </span>
                             </p>
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                         </div>
 
                     </div>
@@ -735,7 +755,7 @@
                         text-sm mb-1.5"
                     >
                         <x-lucide-rocket class="w-5 text-text-contrast"/>
-                        Create Project
+                        {{ __('main.proj.create') }}
                     </button>
 
                 </form>

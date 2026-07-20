@@ -11,8 +11,8 @@
 
     <div class="bg-primary rounded-b-4xl px-8 py-6 flex flex-col lg:flex-row gap-4 justify-between shadow-md">
         <div>
-            <h1 class="font-montserrat text-white text-4xl font-bold">Projects</h1>
-            <h3 class="font-montserrat text-white/80 text-md mt-2">Which project will you progress on today?</h3>
+            <h1 class="font-montserrat text-white text-4xl font-bold">{{ __('main.proj.title') }}</h1>
+            <h3 class="font-montserrat text-white/80 text-md mt-2">{{ __('main.proj.subtitle') }}</h3>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-end items-center">
@@ -39,7 +39,7 @@
                 <input type="text"
                     name="search"
                     value="{{ request('search') }}" 
-                    placeholder="Search project..."
+                    placeholder="{{ __('main.ph.search-project-dot') }}"
                     class="w-80 md:w-90 py-2 rounded-xl text-white text-md bg-white/10 font-montserrat pl-12 focus:outline-none transition-all duration-300"
                     onchange="this.form.submit()"
                 >
@@ -48,7 +48,7 @@
 
             {{-- CREATE PROJECT PANEL --}}
             <button onclick="openPanel()" class="bg-quartiary rounded-full px-6 py-2 h-fit flex items-center shadow-sm gap-2 hover:bg-quartiary-hover active:scale-95 text-sm md:text-base whitespace-nowrap cursor-pointer">
-                <span class="font-montserrat text-white text-md">Create Project</span>
+                <span class="font-montserrat text-white text-md">{{ __('main.proj.create') }}</span>
                 <div class="bg-primary rounded-full text-white p-0.5 flex items-center justify-center shrink-0">
                     <x-lucide-plus class="w-5 stroke-[2.5px]" />
                 </div>
@@ -69,7 +69,7 @@
                 </div>
                 <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $activeProjects }}</p>
             </div>
-            <p class="text-text-primary text-sm font-montserrat">Active Projects</p>
+            <p class="text-text-primary text-sm font-montserrat">{{ __('main.proj.active-projects') }}</p>
         </div>
         
         {{-- Projects Completed --}}
@@ -81,7 +81,7 @@
                 </div>
                 <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $projectsDone }}</p>
             </div>
-            <p class="text-text-primary text-sm font-montserrat">Projects Done</p>
+            <p class="text-text-primary text-sm font-montserrat">{{ __('main.proj.projects-done') }}</p>
         </div>
 
         {{-- Projects Led --}}
@@ -93,7 +93,7 @@
                 </div>
                 <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $projectsLed }}</p>
             </div>
-            <p class="text-text-primary text-sm font-montserrat">Projects Led</p>
+            <p class="text-text-primary text-sm font-montserrat">{{ __('main.proj.projects-led') }}</p>
         </div>
 
         {{-- Team Members --}}
@@ -105,7 +105,7 @@
                 </div>
                 <p class="text-text-primary text-3xl font-montserrat font-semibold">{{ $teamMembers }}</p>
             </div>
-            <p class="text-text-primary text-sm font-montserrat">Team Members</p>
+            <p class="text-text-primary text-sm font-montserrat">{{ __('main.proj.team-members') }}</p>
         </div>
     </div>
 
@@ -113,7 +113,7 @@
 
     <div class="px-8">
         <div class="flex justify-between items-center">
-            <h1 class="font-montserrat text-text-primary text-2xl font-bold">All Projects</h1>
+            <h1 class="font-montserrat text-text-primary text-2xl font-bold">{{ __('main.proj.all-projects') }}</h1>
             
             <div class="relative gap-4">
 
@@ -147,17 +147,17 @@
                         
                         <option value="deadline" class="outline-none"
                             {{ request('sort') === 'deadline' ? 'selected' : '' }}>
-                            Due Date
+                            {{ __('main.proj.sort-due') }}
                         </option>
 
                         <option value="alphabetical"
                             {{ request('sort') === 'alphabetical' ? 'selected' : '' }}>
-                            Alphabetical
+                            {{ __('main.proj.sort-alpha') }}
                         </option>
 
                         <option value="progress"
                             {{ request('sort') === 'progress' ? 'selected' : '' }}>
-                            Progress
+                            {{ __('main.proj.sort-progress') }}
                         </option>
                     </select>
 
