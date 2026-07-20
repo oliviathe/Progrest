@@ -47,15 +47,15 @@
                         </a>
                     </div>
                     <div class="relative w-max">
-                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">Forgot Password</h1>
+                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">{{ __('main.auth.forgot-title') }}</h1>
                         <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-3xl md:text-[3rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
-                            Forgot Password
+                            {{ __('main.auth.forgot-title') }}
                         </span>
                     </div>
                 </div>
 
                 <p class="text-text-secondary text-center text-sm md:text-sm mb-3 lg:mb-5 leading-relaxed">
-                    Enter your email address to receive a verification code for resetting your password.
+                    {{ __('main.auth.forgot-desc') }}
                 </p>
 
                 <form action="/forgot" method="POST" class="space-y-4">
@@ -63,7 +63,7 @@
 
                     <div class="group">
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">
-                            Email Address
+                            {{ __('main.auth.email-address') }}
                         </label>
 
                         <div class="relative">
@@ -71,7 +71,7 @@
                                 type="email"
                                 name="email"
                                 required
-                                placeholder="Enter your email address"
+                                placeholder="{{ __('main.ph.forgot-email') }}"
                                 class="text-text-primary w-full border-2 border-gray-200 rounded-lg pl-4 pr-10 md:pr-12 py-2.5 md:py-2 focus:outline-none focus:border-primary text-xs md:text-sm transition-all placeholder-text-secondary/50 bg-background focus:bg-surface">
 
                             <div class="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
@@ -82,8 +82,13 @@
 
                     <button
                         type="submit"
+<<<<<<< HEAD
+                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                        {{ __('main.auth.send-otp') }}
+=======
                         class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-semibold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
                         Send Verification OTP
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                     </button>
 
                 </form>

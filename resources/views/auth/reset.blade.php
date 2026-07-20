@@ -55,16 +55,16 @@
 
                     <div class="relative w-max">
                         <h1 class="text-3xl md:text-[2.3rem] font-bold text-primary font-montserrat">
-                            Reset Password
+                            {{ __('main.auth.reset-title') }}
                         </h1>
                         <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[115%] text-3xl md:text-[2.7rem] font-redacted opacity-90 pointer-events-none text-center">
-                            Reset Password
+                            {{ __('main.auth.reset-title') }}
                         </span>
                     </div>
                 </div>
 
                 <p class="text-text-secondary text-center text-sm mb-5 leading-relaxed">
-                    Create a new password for your account. The new password must be different from the previous one.
+                    {{ __('main.auth.reset-desc') }}
                 </p>
 
                 <form action="/reset-password" method="POST" class="space-y-4">
@@ -72,7 +72,7 @@
 
                     <div>
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">
-                            New Password
+                            {{ __('main.auth.new-password') }}
                         </label>
 
                         <div class="relative">
@@ -81,7 +81,7 @@
                                 name="password"
                                 required
                                 minlength="8"
-                                placeholder="Enter new password"
+                                placeholder="{{ __('main.ph.new-password') }}"
                                 class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-20 py-2.5 focus:outline-none focus:border-primary text-xs md:text-sm bg-background text-text-primary">
 
                             <button type="button"
@@ -98,7 +98,7 @@
 
                     <div>
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-1">
-                            Confirm Password
+                            {{ __('main.auth.confirm-password') }}
                         </label>
 
                         <div class="relative">
@@ -107,7 +107,7 @@
                                 name="password_confirmation"
                                 required
                                 minlength="8"
-                                placeholder="Confirm new password"
+                                placeholder="{{ __('main.ph.confirm-password') }}"
                                 class="w-full border-2 border-gray-200 rounded-lg pl-4 pr-20 py-2.5 focus:outline-none focus:border-primary text-xs md:text-sm bg-background text-text-primary">
 
                             <button type="button"
@@ -123,8 +123,13 @@
                     </div>
 
                     <button type="submit"
+<<<<<<< HEAD
+                        class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5 rounded-xl shadow-md active:scale-95 transition-all">
+                        {{ __('main.auth.reset-btn') }}
+=======
                         class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-semibold py-2.5 rounded-xl shadow-md active:scale-95 transition-all cursor-pointer">
                         Reset Password
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                     </button>
                 </form>
 

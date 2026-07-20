@@ -4,10 +4,10 @@
 <div class="p-4 md:p-8 pt-6 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
     
     <div class="bg-green-800 rounded-2xl p-4 mb-8">
-        <input type="text" placeholder="Search Project" class="text-white placeholder:text-gray-300 bg-green-800">
+        <input type="text" placeholder="{{ __('main.ph.search-project') }}" class="text-white placeholder:text-gray-300 bg-green-800">
     </div>
 
-    <h1 class="text-text-primary text-4xl font-extrabold mb-6 text-black">Trending Now</h1>
+    <h1 class="text-text-primary text-4xl font-extrabold mb-6 text-black">{{ __('main.collab.trending') }}</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
@@ -20,8 +20,8 @@
             <img src="{{ $project->cover_url }}" class="w-full h-32 object-cover rounded-lg mb-4">
             
             <div class="flex justify-between text-xs text-gray-500 mb-4 font-semibold">
-                <span>Joined: {{ $project->users_count }}/{{ $project->capacity ?? '∞' }}</span>
-                <span>Due: {{ optional($project->deadline)->format('d M Y') ?? 'None' }}</span>
+                <span>{{ __('main.collab.joined') }}: {{ $project->users_count }}/{{ $project->capacity ?? '∞' }}</span>
+                <span>{{ __('main.collab.due') }}: {{ optional($project->deadline)->format('d M Y') ?? __('main.collab.none') }}</span>
             </div>
             
             <div class="flex items-center justify-between">
@@ -32,7 +32,7 @@
             </div>
 
             <button class="mt-4 w-full py-1.5 text-text-primary border-2 border-gray-300 rounded-full text-sm font-bold flex justify-center items-center gap-1 hover:bg-gray-50">
-                VIEW
+                {{ __('main.collab.view') }}
             </button>
         </div>
         @endforeach

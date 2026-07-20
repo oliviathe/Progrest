@@ -11,14 +11,14 @@
         @if ($progress < 100)
             <div class="text-pastel-yellow-text flex flex-row gap-4 items-center">
                 <div class="bg-pastel-yellow-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold leading-none">In Progress</span>
+                    <span class="font-montserrat text-pastel-yellow-text text-[12px] font-semibold leading-none">{{ __('main.proj.in-progress') }}</span>
                 </div>
                 <x-lucide-clock class="w-6" />
             </div>
         @else
             <div class="text-pastel-green-text flex flex-row gap-4 items-center">
                 <div class="bg-pastel-green-background px-3 py-1 rounded-lg flex items-center justify-center">
-                    <span class="font-montserrat text-pastel-green-text text-[12px] font-semibold leading-none">Completed</span>
+                    <span class="font-montserrat text-pastel-green-text text-[12px] font-semibold leading-none">{{ __('main.proj.completed') }}</span>
                 </div>
                 <x-lucide-circle-check-big class="w-6" />
             </div>
@@ -32,7 +32,7 @@
 
     <div class="mb-4 mt-4 shrink-0">
         <div class="flex justify-between items-center mb-2">
-            <h3 class="text-text-primary font-semibold font-montserrat text-sm">Progress</h3>
+            <h3 class="text-text-primary font-semibold font-montserrat text-sm">{{ __('main.proj.progress') }}</h3>
             <span class="text-text-primary font-semibold font-montserrat text-sm">{{ $progress }}%</span>
         </div>
         <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
@@ -41,7 +41,7 @@
     </div>
 
     <div class="mb-4 shrink-0">
-        <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">Collaborators</h3>
+        <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">{{ __('main.proj.collaborators') }}</h3>
         <div class="flex items-center -space-x-2">
             @foreach ($collaborators->take(3) as $user)
                 <img src="{{$user->avatar ? $user->avatar : '/images/profile.jpg'}}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
@@ -59,6 +59,28 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+    <div class="flex flex-row items-center justify-between mb-3 shrink-0">
+        <div class="flex flex-row gap-1.5 items-center">
+            <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
+            @if (is_null($days_remaining))
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.proj.no-due') }}</p>
+            @elseif ($days_remaining < 0)
+                @php
+                    $days_overdue = $days_remaining * -1
+                @endphp
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.proj.overdue-after', ['count' => $days_overdue]) }}</p>
+            @elseif ($days_remaining == 0)
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.proj.due-today') }}</p>
+            @else
+                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.proj.due-in', ['count' => $days_remaining]) }}</p>
+            @endif
+        </div>
+        <div class="flex flex-row gap-1.5 items-center">
+            <x-lucide-message-circle class="w-3.5 h-3.5 text-text-secondary"/> 
+            <p class="font-montserrat text-text-secondary text-sm">10</p>
+        </div>
+=======
     <div class="flex flex-row gap-1.5 items-center mb-3">
         <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
         @if (is_null($days_remaining))
@@ -73,12 +95,13 @@
         @else
             <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
         @endif
+>>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
     </div>
 
     <a href="{{ route('projects.tasks', $id) }}"
         onclick="console.log('Continue clicked');"
         class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm hover:bg-surface transition-colors font-montserrat shrink-0">
-            Continue
+            {{ __('main.proj.continue') }}
             <x-lucide-eye class="w-5 h-5" />
     </a>
 </div>
