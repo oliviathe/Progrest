@@ -82,13 +82,9 @@
 
                     <button
                         type="submit"
-<<<<<<< HEAD
                         class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         {{ __('main.auth.send-otp') }}
-=======
-                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-semibold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
-                        Send Verification OTP
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
+
                     </button>
 
                 </form>

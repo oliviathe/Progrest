@@ -549,11 +549,7 @@
                         <label class="font-montserrat font-bold text-base">
                             {{ __('main.profile.about-me') }}
                             <span class="font-normal text-text-secondary">
-<<<<<<< HEAD
                                 {{ __('main.profile.about-hint') }}
-=======
-                                (max. 100 characters) (optional)
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                             </span>
                         </label>
                         <span data-counter-for="about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>
@@ -574,11 +570,7 @@
                         <label class="font-montserrat font-bold text-base">
                             {{ __('main.profile.more-about') }}
                             <span class="font-normal text-text-secondary">
-<<<<<<< HEAD
                                 {{ __('main.profile.more-about-hint') }}
-=======
-                                (max. 255 characters) (optional)
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                             </span>
                         </label>
                         <span data-counter-for="more_about" class="hidden font-montserrat text-sm font-semibold text-red-600"></span>

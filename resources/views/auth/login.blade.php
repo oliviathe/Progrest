@@ -120,13 +120,9 @@
                         {{ __('main.auth.no-account') }} <a href="/register" class="font-bold text-text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4">{{ __('main.auth.get-progrest') }}</a>
                     </div>
 
-<<<<<<< HEAD
                     <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         {{ __('main.auth.login-btn') }}
-=======
-                    <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
-                        Log In
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
+
                     </button>
 
                     <div class="flex items-center opacity-70">

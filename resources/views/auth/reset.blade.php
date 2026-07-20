@@ -123,13 +123,8 @@
                     </div>
 
                     <button type="submit"
-<<<<<<< HEAD
                         class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5 rounded-xl shadow-md active:scale-95 transition-all">
                         {{ __('main.auth.reset-btn') }}
-=======
-                        class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-semibold py-2.5 rounded-xl shadow-md active:scale-95 transition-all cursor-pointer">
-                        Reset Password
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                     </button>
                 </form>
 

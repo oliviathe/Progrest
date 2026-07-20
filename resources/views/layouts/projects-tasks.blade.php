@@ -713,7 +713,6 @@
                             <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden"></div>
                         </div>
 
-<<<<<<< HEAD
                         <div class="flex flex-row items-center justify-between mb-3">
                             <div class="flex flox-row gap-1.5">
                                 <x-lucide-calendar class="w-3 text-text-secondary"/> 
@@ -731,19 +730,6 @@
                                 <x-lucide-message-circle class="w-3 text-text-secondary"/> 
                                 <p class="text-text-secondary text-sm">10</p>
                             </div>
-=======
-                        <div class="flex flox-row gap-1.5">
-                            <x-lucide-calendar class="w-3 text-text-secondary"/> 
-                            <p class="text-text-secondary text-sm">
-                                <span x-show="remainingDays != null">
-                                    Due in 
-                                    <span x-text="remainingDays"></span> days
-                                </span>
-                                <span x-show="remainingDays === null">
-                                    No due date
-                                </span>
-                            </p>
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
                         </div>
 
                     </div>

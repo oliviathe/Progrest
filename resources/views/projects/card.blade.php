@@ -59,7 +59,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <div class="flex flex-row items-center justify-between mb-3 shrink-0">
         <div class="flex flex-row gap-1.5 items-center">
             <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
@@ -80,22 +79,6 @@
             <x-lucide-message-circle class="w-3.5 h-3.5 text-text-secondary"/> 
             <p class="font-montserrat text-text-secondary text-sm">10</p>
         </div>
-=======
-    <div class="flex flex-row gap-1.5 items-center mb-3">
-        <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-        @if (is_null($days_remaining))
-            <p class="font-montserrat text-text-secondary text-sm">No Due Date Set</p>
-        @elseif ($days_remaining < 0)
-            @php
-                $days_overdue = $days_remaining * -1
-            @endphp
-            <p class="font-montserrat text-text-secondary text-sm">Overdue after {{ $days_overdue }} days</p>
-        @elseif ($days_remaining == 0)
-            <p class="font-montserrat text-text-secondary text-sm">Due Today</p>
-        @else
-            <p class="font-montserrat text-text-secondary text-sm">Due in {{ $days_remaining }} days</p>
-        @endif
->>>>>>> ebd9291bf24d6466db48d97cdd3de924f3079919
     </div>
 
     <a href="{{ route('projects.tasks', $id) }}"
