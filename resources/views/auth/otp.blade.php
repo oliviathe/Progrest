@@ -89,13 +89,13 @@
                     @endif
 
                     <button type="submit"
-                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-semibold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
                         Verify OTP
                     </button>
 
                     <div class="text-center text-xs md:text-sm text-text-secondary">
                         Didn't receive the OTP?
-                        <button type="button" class="font-bold text-primary hover:text-primary-hover hover:underline transition">
+                        <button type="button" class="font-bold text-primary hover:text-primary-hover hover:underline transition cursor-pointer">
                             Resend OTP
                         </button>
                     </div>

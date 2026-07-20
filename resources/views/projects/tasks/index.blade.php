@@ -5,7 +5,9 @@
 @section('content')
 
     {{-- PROJECT HEADER --}}
-    <div class="bg-primary rounded-b-[2.5rem] shadow-lg overflow-hidden">
+    <div 
+        x-data="projectModal(@js($project))"
+        class="bg-primary rounded-b-[2.5rem] shadow-lg overflow-hidden">
         <div class="px-7 py-8">
 
             {{-- Bagian atas --}}
@@ -76,9 +78,7 @@
                     </form>
 
                     {{-- Buttons --}}
-                    <div
-                        x-data="{ open: false }"
-                        class="flex items-center gap-3"
+                    <div class="flex items-center gap-3"
                     >
                         {{-- Create Task --}}
                         <button
@@ -111,7 +111,7 @@
                         <div class="relative">
 
                             <button
-                                @click="open = !open"
+                                @click="menuOpen = !menuOpen"
                                 class="w-11 h-11
                                     rounded-2xl
                                     bg-white/10
@@ -126,8 +126,8 @@
 
                             {{-- Dropdown --}}
                             <div
-                                x-show="open"
-                                @click.outside="open = false"
+                                x-show="menuOpen"
+                                @click.outside="menuOpen = false"
                                 x-transition
                                 x-cloak
                                 class="absolute right-0 mt-2
@@ -141,6 +141,7 @@
 
                                 {{-- Edit --}}
                                 <button
+                                    @click="openEdit()"
                                     class="w-full flex items-center gap-3
                                         px-4 py-3
                                         text-sm
@@ -154,6 +155,7 @@
 
                                 {{-- Delete --}}
                                 <button
+                                    @click="openDelete()"
                                     class="w-full flex items-center gap-3
                                         px-4 py-3
                                         text-sm
@@ -220,7 +222,7 @@
                                         class="w-10 h-10 rounded-full border-2 border-primary object-cover">
                                 @endforeach
 
-                                @if($extraMembers)
+                                @if($extraMembers > 0)
                                     <div
                                         class="w-10 h-10 rounded-full bg-white
                                             flex items-center justify-center
@@ -324,6 +326,733 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        {{-- EDIT PROJECT MODAL --}}
+        <div
+            x-show="showEdit"
+            x-cloak
+            x-transition.opacity
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 shadow-2xl backdrop-blur-sm p-6"
+        >
+
+            {{-- Green Accent --}}
+            <div
+                class="absolute -top-24 left-3/4
+                    h-64 w-86 -translate-x-1/2
+                    rounded-full
+                    bg-emerald-300/15
+                    blur-3xl"
+            ></div>
+
+            <div
+                @click.outside="closeAll()"
+                class="bg-background rounded-3xl shadow-xl
+                    w-full max-w-2xl
+                    max-h-[90vh]
+                    flex flex-col
+                    overflow-hidden"
+            >
+
+                {{-- HEADER --}}
+                <div
+                    class="flex items-center justify-between
+                        px-6 py-5
+                        border-b-2 border-border
+                        shrink-0"
+                >
+
+                    <div class="flex items-center gap-3 font-montserrat">
+
+                        <div
+                            class="flex justify-center items-center
+                                w-10 h-10
+                                rounded-2xl
+                                border-2
+                                border-pastel-green-text
+                                bg-pastel-green-background
+                                shadow-[0_10px_30px_rgba(0,0,0,0.12)]"
+                        >
+
+                            <x-lucide-folder-open
+                                class="w-6 h-6 text-pastel-green-text"
+                            />
+                        </div>
+
+                        <div>
+                            <h1
+                                class="font-montserrat
+                                    text-2xl
+                                    font-bold
+                                    text-text-primary"
+                            >
+                                Edit Project
+                            </h1>
+                            <p
+                                class="text-sm
+                                    text-text-secondary"
+                            >
+                                Update project information
+                            </p>
+                        </div>
+                    </div>
+
+                    <button
+                        @click="closeAll()"
+                        class="w-12 h-12
+                            rounded-full
+                            hover:bg-surface
+                            flex items-center justify-center
+                            hover:rotate-90
+                            transition
+                            duration-300
+                            z-101
+                            cursor-pointer"
+                    >
+                        <x-lucide-x
+                            class="w-5 h-5 text-text-primary"
+                        />
+                    </button>
+                </div>
+
+                {{-- BODY --}}
+                <div
+                    class="flex-1 overflow-y-auto
+                        px-6 py-5
+                        space-y-5"
+                >
+                    {{-- PROJECT TITLE --}}
+                    <div>
+                        <p
+                            class="font-montserrat
+                                font-semibold
+                                text-[12px]
+                                text-text-primary"
+                        >
+                            Project Title
+                        </p>
+
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                px-5 py-3
+                                mt-1"
+                        >
+                            <input
+                                type="text"
+                                x-model="form.title"
+                                placeholder="Enter project title..."
+                                class="w-full
+                                    bg-transparent
+                                    outline-none
+                                    text-sm
+                                    font-montserrat
+                                    text-text-primary
+                                    placeholder:text-text-secondary"
+                            >
+                        </div>
+                    </div>
+
+                    {{-- DESCRIPTION --}}
+                    <div>
+                        <p
+                            class="font-montserrat
+                                font-semibold
+                                text-[12px]
+                                text-text-primary"
+                        >
+                            Description
+                        </p>
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                px-5 py-3
+                                mt-1"
+                        >
+
+                            <textarea
+                                x-model="form.description"
+                                rows="3"
+                                class="w-full
+                                    bg-transparent
+                                    resize-none
+                                    overflow-hidden
+                                    outline-none
+                                    text-sm
+                                    leading-7
+                                    font-montserrat
+                                    text-black
+                                    placeholder:text-text-secondary"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    {{-- Divider --}}
+                    <div
+                        class="border-t-2
+                            border-border"
+                    ></div>
+
+                    {{-- APPEARANCE --}}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        {{-- PROJECT THEME --}}
+                        <div
+                            class="space-y-4
+                                p-5
+                                rounded-2xl
+                                bg-surface"
+                        >
+
+                            <div class="flex items-center gap-2">
+                                <div class="shadow-lg shadow-pastel-green-background">
+                                    <x-lucide-palette
+                                        class="w-5 text-pastel-green-text"
+                                    />
+                                </div>
+                                <p
+                                    class="font-montserrat
+                                        font-semibold
+                                        text-sm
+                                        text-text-primary"
+                                >
+                                    Project Theme
+                                </p>
+                            </div>
+
+                            <div
+                                class="grid
+                                    grid-cols-3
+                                    sm:grid-cols-4
+                                    gap-4
+                                    justify-items-center"
+                            >
+
+                                @php
+                                    $themes = [
+                                        ['#0EA5A4','bg-cyan','ring-cyan/20'],
+                                        ['#8B5A2B','bg-brown','ring-brown/20'],
+                                        ['#7C2D8E','bg-purple','ring-purple/20'],
+                                        ['#0056D2','bg-blue','ring-blue/20'],
+                                        ['#F35C75','bg-pink','ring-pink/20'],
+                                        ['#1F5D3A','bg-green','ring-green/20'],
+                                        ['#F38D08','bg-orange','ring-orange/20'],
+                                        ['#FFEB99','bg-yellow','ring-yellow/20'],
+                                        ['#000000','bg-black','ring-black/20'],
+                                        ['#0F766E','bg-teal','ring-teal/20'],
+                                        ['#84CC16','bg-lime','ring-lime/20'],
+                                        ['#E11D48','bg-rose','ring-rose/20'],
+                                    ];
+                                @endphp
+
+                                @foreach($themes as [$value,$bg,$ring])
+                                    <button
+                                        type="button"
+                                        @click="form.accent='{{ $value }}'"
+
+                                        :class="form.accent==='{{ $value }}'
+                                            ? 'ring-4 ring-offset-2 {{ $ring }}'
+                                            : ''"
+                                        class="w-9 h-9
+                                            rounded-full
+                                            {{ $bg }}
+                                            flex items-center justify-center
+                                            transition-all
+                                            cursor-pointer"
+                                    >
+                                        <x-lucide-check
+                                            x-show="form.accent==='{{ $value }}'"
+                                            class="w-4 text-text-contrast"
+                                        />
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- PROJECT ICON --}}
+                        <div
+                            class="space-y-4
+                                p-5
+                                rounded-2xl
+                                bg-surface"
+                        >
+
+                            <div class="flex items-center gap-2">
+                                <div class="shadow-lg shadow-pastel-green-background">
+                                    <x-lucide-loader-pinwheel
+                                        class="w-5 text-pastel-green-text"
+                                    />
+                                </div>
+                                <p
+                                    class="font-montserrat
+                                        font-semibold
+                                        text-sm
+                                        text-text-primary"
+                                >
+                                    Project Icon
+                                </p>
+                            </div>
+
+                            @php
+                                $icons = [
+                                    'folder',
+                                    'clock',
+                                    'book-open',
+                                    'chart-column',
+                                    'trees',
+                                    'calendar',
+                                    'backpack',
+                                    'camera',
+                                    'shopping-cart',
+                                    'gamepad-2',
+                                    'cat',
+                                    'cooking-pot',
+                                ];
+                            @endphp
+
+                            <div
+                                class="grid
+                                    grid-cols-3
+                                    sm:grid-cols-4
+                                    gap-4
+                                    justify-items-center"
+                            >
+                                @foreach($icons as $icon)
+                                    <button
+                                        type="button"
+                                        @click="form.icon='{{ $icon }}'"
+                                        :class="form.icon==='{{ $icon }}'
+                                            ? 'bg-quartiary text-white'
+                                            : 'bg-background text-text-secondary'"
+                                        class="w-11 h-11
+                                            rounded-xl
+                                            border border-border
+                                            hover:bg-secondary
+                                            transition
+                                            flex items-center justify-center
+                                            cursor-pointer"
+                                    >
+                                        <x-dynamic-component
+                                            :component="'lucide-'.$icon"
+                                            class="w-5 h-5"
+                                        />
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- DEADLINE --}}
+                    <div>
+                        <p
+                            class="font-montserrat
+                                font-semibold
+                                text-[12px]
+                                text-text-primary"
+                        >
+                            Project Deadline
+                        </p>
+
+                        <div class="relative mt-1">
+                            <x-lucide-calendar
+                                class="absolute
+                                    right-4
+                                    top-1/2
+                                    -translate-y-1/2
+                                    w-4 h-4
+                                    text-text-secondary
+                                    pointer-events-none"
+                            />
+                            <input
+                                type="date"
+                                x-model="form.deadline"
+                                class="date-input
+                                    w-full
+                                    rounded-2xl
+                                    border-2 border-border
+                                    bg-background
+                                    px-5 py-3
+                                    pr-12
+                                    text-sm
+                                    text-text-primary
+                                    outline-none
+                                    focus:border-primary"
+                            >
+                        </div>
+                    </div> 
+                    
+                    {{-- Bg. Display Member --}}
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <div class="shadow-lg shadow-pastel-blue-background">
+                                <x-lucide-users class="w-5 text-primary"/>
+                            </div>
+                            <div>
+                                <p class="font-montserrat font-semibold text-sm text-text-primary">
+                                    Team Members
+                                </p>
+                                <p class="text-xs text-text-secondary">
+                                    Manage members in this project.
+                                </p>
+                            </div>
+                        </div>
+
+                        {{-- Bag. Peroject Leader --}}
+                        <div class="bg-surface rounded-2xl p-4">
+                            <p class="text-xs font-semibold text-text-primary mb-3">
+                                Project Leader
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <img
+                                        :src="project.leader.avatar || '/images/profile.jpg'"
+                                        class="w-10 h-10 rounded-full object-cover"
+                                    >
+                                    <div>
+                                        <p
+                                            class="font-semibold text-sm text-text-primary"
+                                            x-text="project.leader.name"
+                                        ></p>
+                                        <p class="text-xs text-emerald-600">
+                                            Project Leader
+                                        </p>
+                                    </div>
+                                </div>
+                                <x-lucide-crown
+                                    class="w-5 h-5 text-yellow-500"
+                                />
+                            </div>
+                        </div>
+
+                        {{-- Search Members --}}
+                        <div class="bg-surface rounded-2xl p-4 space-y-4">
+
+                            {{-- Header --}}
+                            <div class="flex items-center gap-2">
+                                <div class="shadow-lg shadow-pastel-green-background">
+                                    <x-lucide-user-plus class="w-5 text-primary"/>
+                                </div>
+
+                                <div>
+                                    <p class="font-montserrat font-semibold text-sm text-text-primary">
+                                        Add Members
+                                    </p>
+
+                                    <p class="text-xs text-text-secondary">
+                                        Search by username or email to invite collaborators.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {{-- Search --}}
+                            <div class="space-y-2">
+
+                                <p class="text-xs font-semibold text-text-primary font-montserrat">
+                                    Search Users
+                                </p>
+
+                                <div class="relative">
+
+                                    <x-lucide-search
+                                        class="absolute left-4 top-1/2 -translate-y-1/2
+                                            w-4 h-4 text-text-secondary"
+                                    />
+
+                                    <input
+                                        type="text"
+                                        x-model="memberQuery"
+                                        @input="searchMembers()"
+                                        placeholder="Username or email..."
+                                        class="w-full
+                                            rounded-xl
+                                            border-2 border-border
+                                            bg-background
+                                            py-2.5 pl-11 pr-10
+                                            text-sm
+                                            text-text-primary
+                                            outline-none
+                                            focus:border-primary
+                                            font-montserrat"
+                                    >
+
+                                    {{-- Clear --}}
+                                    <button
+                                        x-show="memberQuery.length"
+                                        type="button"
+                                        @click="
+                                            memberQuery = '';
+                                            memberSearchResults = [];
+                                        "
+                                        class="absolute
+                                            right-3
+                                            top-1/2
+                                            -translate-y-1/2
+                                            rounded-full
+                                            p-1
+                                            hover:bg-surface
+                                            transition
+                                            cursor-pointer"
+                                    >
+                                        <x-lucide-x class="w-4 h-4 text-text-secondary"/>
+                                    </button>
+
+                                </div>
+
+                                {{-- Search Results --}}
+                                <div
+                                    x-show="memberSearchResults.length"
+                                    x-transition
+                                    class="rounded-xl
+                                        border border-border
+                                        bg-background
+                                        shadow-lg
+                                        overflow-hidden"
+                                >
+
+                                    <template
+                                        x-for="user in memberSearchResults"
+                                        :key="user.id"
+                                    >
+
+                                        <button
+                                            type="button"
+                                            @click="addMember(user)"
+                                            class="w-full
+                                                flex
+                                                items-center
+                                                gap-3
+                                                px-4
+                                                py-3
+                                                hover:bg-surface
+                                                transition
+                                                cursor-pointer"
+                                        >
+
+                                            <img
+                                                :src="user.avatar || '/images/profile.jpg'"
+                                                class="w-9 h-9 rounded-full object-cover"
+                                            >
+
+                                            <div class="flex-1 text-left">
+
+                                                <p
+                                                    class="font-semibold text-sm text-text-primary"
+                                                    x-text="user.name"
+                                                ></p>
+
+                                                <p
+                                                    class="text-xs text-text-secondary"
+                                                    x-text="user.email"
+                                                ></p>
+
+                                            </div>
+
+                                            <div
+                                                class="w-8 h-8
+                                                    rounded-full
+                                                    bg-primary/10
+                                                    flex
+                                                    items-center
+                                                    justify-center"
+                                            >
+                                                <x-lucide-plus class="w-4 h-4 text-primary"/>
+                                            </div>
+
+                                        </button>
+
+                                    </template>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{-- Current Members --}}
+                        <div class="bg-surface rounded-2xl p-4 space-y-3">
+
+                            <div class="flex items-center justify-between">
+
+                                <p class="text-xs font-semibold text-text-primary">
+                                    Project Members
+                                </p>
+
+                                <span
+                                    class="text-xs text-text-secondary"
+                                    x-text="selectedMembers.length + ' members'"
+                                ></span>
+
+                            </div>
+
+                            <div class="space-y-2 max-h-64 overflow-y-auto">
+
+                                <template
+                                    x-for="member in selectedMembers"
+                                    :key="member.id"
+                                >
+
+                                    <div
+                                        class="flex items-center justify-between
+                                            rounded-xl
+                                            bg-background
+                                            border border-border
+                                            px-3 py-2"
+                                    >
+
+                                        <div class="flex items-center gap-3">
+
+                                            <img
+                                                :src="member.avatar || '/images/profile.jpg'"
+                                                class="w-10 h-10 rounded-full object-cover"
+                                            >
+
+                                            <div>
+
+                                                <p
+                                                    class="font-semibold text-sm text-text-primary"
+                                                    x-text="member.name"
+                                                ></p>
+
+                                                <p
+                                                    class="text-xs text-text-secondary"
+                                                    x-text="member.email"
+                                                ></p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            x-show="member.id != project.leader_id"
+                                            type="button"
+                                            @click="removeMember(member.id)"
+                                            class="w-8
+                                                h-8
+                                                rounded-full
+                                                hover:bg-red-50
+                                                dark:hover:bg-red-500/10
+                                                transition
+                                                cursor-pointer"
+                                        >
+                                            <x-lucide-x class="w-4 h-4 text-red-500 mx-auto"/>
+                                        </button>
+
+                                    </div>
+
+                                </template>
+
+                                <template x-if="selectedMembers.length === 0">
+
+                                    <div
+                                        class="rounded-xl
+                                            border-2
+                                            border-dashed
+                                            border-border
+                                            py-8
+                                            text-center"
+                                    >
+
+                                        <x-lucide-users
+                                            class="w-8 h-8 mx-auto text-text-secondary mb-2"
+                                        />
+
+                                        <p class="text-sm text-text-secondary">
+                                            No project members.
+                                        </p>
+
+                                    </div>
+
+                                </template>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {{-- FOOTER --}}
+                    <div class="border-t-2 border-border px-6 py-4 flex justify-end gap-3 shrink-0">
+
+                        <button
+                            type="button"
+                            @click="closeAll()"
+                            class="px-5 py-2.5
+                                rounded-2xl
+                                border-2 border-border
+                                bg-background
+                                text-text-primary
+                                font-semibold
+                                font-montserrat
+                                hover:bg-surface
+                                transition
+                                cursor-pointer"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="button"
+                            @click="saveProject()"
+                            class="px-5 py-2.5
+                                rounded-2xl
+                                bg-quartiary
+                                text-white
+                                font-semibold
+                                font-montserrat
+                                hover:bg-quartiary-hover
+                                transition
+                                cursor-pointer"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div> 
+    
+        {{-- DELETE PROJECT MODAL --}}
+        <div
+            x-show="showDelete"
+            x-transition.opacity
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-5 backdrop-blur-sm">
+
+
+            <div
+                @click.outside="closeAll()"
+                class="bg-background rounded-3xl p-6 w-full max-w-md font-montserrat">
+
+
+                <h2 class="text-xl font-bold mb-3">
+                    Delete Project?
+                </h2>
+
+
+                <p class="mb-6 text-gray-400">
+                    This action cannot be undone.
+                </p>
+
+
+                <div class="flex gap-3 font-montserrat">
+
+                    <button
+                        @click="closeAll()"
+                        class="flex-1 border rounded-xl py-3 cursor-pointer hover:bg-surface">
+                        Cancel
+                    </button>
+
+
+                    <button
+                        @click="deleteProject()"
+                        class="flex-1 bg-red-500 text-white rounded-xl py-3 hover:bg-red-accent cursor-pointer">
+                        Delete
+                    </button>
+
+                </div>
+
+
+            </div>
+
         </div>
     </div>
 

@@ -82,7 +82,7 @@
 
                     <button
                         type="submit"
-                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                        class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-semibold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
                         Send Verification OTP
                     </button>
 

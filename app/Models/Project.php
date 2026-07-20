@@ -10,14 +10,10 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     use HasFactory; 
-    protected $fillable = ['leader_id','title','description','icon','cover_image','capacity','accent','deadline'];
+    protected $fillable = ['leader_id','title','description','icon','accent','deadline'];
 
     protected $casts = [
-        'deadline' => 'date'
-    ];
-    
-    protected $appends = [
-        'cover_url',
+        'deadline' => 'date'    
     ];
 
     public function getCoverUrlAttribute(): string

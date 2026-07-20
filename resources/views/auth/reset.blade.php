@@ -123,7 +123,7 @@
                     </div>
 
                     <button type="submit"
-                        class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-bold py-2.5 rounded-xl shadow-md active:scale-95 transition-all">
+                        class="w-full bg-primary hover:bg-primary-hover text-text-contrast font-semibold py-2.5 rounded-xl shadow-md active:scale-95 transition-all cursor-pointer">
                         Reset Password
                     </button>
                 </form>

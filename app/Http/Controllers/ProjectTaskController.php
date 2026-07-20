@@ -14,7 +14,10 @@ class ProjectTaskController extends Controller
     public function index($id, Request $request) {
 
         $userId = auth()->id();
-        $project = Project::findOrFail($id); 
+        $project = Project::with([
+            'leader',
+            'users'
+        ])->findOrFail($id);
 
         $hasAccess =
             $project->leader_id === $userId ||
@@ -48,13 +51,13 @@ class ProjectTaskController extends Controller
 
         // Masih statik 
         $avatarPath = asset('images/profile.jpg');   
-        $teamMembers = [
-            $avatarPath,
-            $avatarPath,
-            $avatarPath,
-            $avatarPath,
-            $avatarPath
-        ];
+        
+        $teamMembers = $project->users
+            ->pluck('avatar')
+            ->map(fn ($avatar) => $avatar ?: asset('images/profile.jpg'))
+            ->values()
+            ->all();
+
         $displayLimit = 3;
         $extraMembers = count($teamMembers) - $displayLimit; 
 

@@ -585,6 +585,209 @@
                 }
             }
         }
+
+        function projectModal(projectData) {
+            return {
+
+                project: projectData,
+                menuOpen: false,
+                showEdit: false,
+                showDelete: false,
+                selectedMembers: [],
+                memberQuery: '',
+                memberSearchResults: [],
+
+                form: {
+                    title: projectData.title ?? '',
+                    description: projectData.description ?? '',
+                    deadline: projectData.deadline ?? '',
+                    accent: projectData.accent ?? '#0EA5A4',
+                    icon: projectData.icon ?? 'folder',
+                },
+
+                loading: false,
+
+                openEdit() {
+
+                    this.menuOpen = false;
+
+                    this.form = {
+                        title: this.project.title,
+                        description: this.project.description ?? '',
+                        deadline: this.project.deadline
+                            ? this.formatDate(this.project.deadline)
+                            : '',
+                        accent: this.project.accent,
+                        icon: this.project.icon,
+                    };
+
+                    console.log(this.form); 
+
+                    this.selectedMembers = (this.project.users ?? []).map(user => ({
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.avatar,
+                    }));
+
+                    this.memberQuery = '';
+                    this.memberSearchResults = [];
+
+                    this.showEdit = true;
+                },
+
+                openDelete() {
+                    this.menuOpen = false;
+                    this.showDelete = true;
+                },
+
+                closeAll() {
+                    this.showEdit = false;
+                    this.showDelete = false;
+                    this.menuOpen = false;
+                },
+
+                formatDate(date) {
+                    return new Date(date)
+                        .toISOString()
+                        .split('T')[0];
+                },
+
+                async searchMembers() {
+                    if (this.memberQuery.trim().length < 2) {
+                        this.memberSearchResults = [];
+                        return;
+                    }
+                    try {
+                        const response = await fetch(
+                            `/users/search?q=${encodeURIComponent(this.memberQuery)}`
+                        );
+                        const users = await response.json();
+                        this.memberSearchResults = users.filter(user => {
+                            if (user.id === this.project.leader_id) {
+                                return false;
+                            }
+                            return !this.selectedMembers.some(
+                                member => member.id === user.id
+                            );
+                        });
+                    }
+                    catch (error) {
+                        console.error(error);
+                    }
+                },
+
+                addMember(user) {
+                    if (
+                        this.selectedMembers.some(
+                            member => member.id === user.id
+                        )
+                    ) {
+                        return;
+                    }
+
+                    this.selectedMembers.push(user);
+                    this.memberQuery = '';
+                    this.memberSearchResults = [];
+                },
+
+                removeMember(memberId) {
+                    this.selectedMembers =
+                        this.selectedMembers.filter(
+                            member => member.id !== memberId
+                        );
+                },
+
+                async saveProject() {
+                    this.loading = true;
+                    try {
+                        const response = await fetch(
+                            `/projects/${this.project.id}`,
+                            {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Accept": "application/json",
+                                    "X-CSRF-TOKEN":
+                                        document
+                                        .querySelector(
+                                            'meta[name="csrf-token"]'
+                                        )
+                                        .content,
+                                },
+                                body: JSON.stringify({
+                                    ...this.form,
+                                    members: this.selectedMembers.map(member => member.id),
+                                })
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Failed updating project"
+                            );
+                        }
+
+                        const data = await response.json();
+
+                        // update local UI immediately
+                        this.project = data.project;
+                        this.closeAll();
+
+                        // refresh to update Blade-rendered values
+                        window.location.reload();
+                    }
+                    catch(error) {
+                        console.error(error);
+                        alert(
+                            "Unable to update project."
+                        );
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                },
+
+                async deleteProject() {
+                    this.loading = true;
+                    try {
+                        const response = await fetch(
+                            `/projects/${this.project.id}`,
+                            {
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "X-CSRF-TOKEN":
+                                        document
+                                        .querySelector(
+                                            'meta[name="csrf-token"]'
+                                        )
+                                        .content,
+                                }
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Failed deleting project"
+                            );
+                        }
+
+                        // redirect after deletion
+                        window.location.href = "/projects";
+                    }
+                    catch(error) {
+                        console.error(error);
+                        alert(
+                            "Unable to delete project."
+                        );
+                    }
+                    finally {
+                        this.loading = false;
+                    }
+                }
+            }
+        }
         
         function taskModal() {
             return {
@@ -767,9 +970,9 @@
                 },
 
                 cancelEdit() {
-                    console.log(this.originalTask);
-                    console.log(this.task);
-                    console.log("Cancel clicked"); 
+                    // console.log(this.originalTask);
+                    // console.log(this.task);
+                    // console.log("Cancel clicked"); 
                     this.task = JSON.parse(this.originalTask);
 
                     this.assignedMembers = [...(this.originalTask.members ?? [])];

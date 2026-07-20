@@ -156,4 +156,63 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
+
+    public function update(Request $request, Project $project) {
+        $validated = $request->validate([
+            'title' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+
+            'description' => [
+                'nullable',
+                'string'
+            ],
+
+            'deadline' => [
+                'nullable',
+                'date'
+            ],
+            'accent' => ['required','string'],
+            'icon' => ['required','string'],
+        ]);
+
+
+        $project->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'deadline' => $request->deadline,
+            'accent' => $request->accent,
+            'icon' => $request->icon,
+        ]);
+
+        $project->users()->sync(
+            collect($request->members ?? [])
+                ->push($project->leader_id)
+                ->unique()
+                ->values()
+        );
+
+        $project->load([
+            'leader',
+            'users',
+        ]);
+
+        return response()->json([
+            'message' => 'Project updated successfully',
+            'project' => $project
+        ]);
+    }
+
+    public function delete(Project $project){
+
+        $project->tasks()->delete();
+        $project->users()->detach();
+        $project->delete();
+
+        return response()->json([
+            'message' => 'Project deleted successfully'
+        ]);
+    }
 }

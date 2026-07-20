@@ -68,6 +68,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store'])
         ->name('projects.store');
 
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])
+        ->name('projects.update');
+
+    Route::delete('/projects/{project}', [ProjectController::class, 'delete'])
+        ->name('projects.delete');
+
     Route::get('/profile', [ProfileController::class, 'index'])
         ->name('profile');
 

@@ -120,7 +120,7 @@
                         Don't have an account? <a href="/register" class="font-bold text-text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4">Get Progrest Now</a>
                     </div>
 
-                    <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                    <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base cursor-pointer">
                         Log In
                     </button>
 

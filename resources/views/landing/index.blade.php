@@ -72,7 +72,7 @@
                 Get Started Free
             </a>
 
-            <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition">
+            <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition cursor-pointer">
                 See How It Works
             </button>
         </div>
