@@ -100,7 +100,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('auth')
         ->name('notifications.read');
 
-    Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
-    
     Route::get('/collab', [CollabController::class, 'index']);
 });
+
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');

@@ -129,8 +129,8 @@
                         <x-lucide-folder-plus class="w-8 text-pastel-green-text"/>
                     </div>
                     <div class="flex flex-col text-text-secondary text-sm max-w-70">
-                        <p class="font-montserrat font-bold text-2xl text-text-primary">Create New Task</p>
-                        <p>Create a New Task and Assign Team Members</p>
+                        <p class="font-montserrat font-bold text-2xl text-text-primary">{{ __('main.task.create-new-task') }}</p>
+                        <p>{{ __('main.task.create-new-task-subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-folder-git-2 class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Task Details</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.task.task-details') }}</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
@@ -188,11 +188,11 @@
 
                             <div>
                                 <p class="font-montserrat text-sm font-semibold text-text-primary">
-                                    Assigned Members
+                                    {{ __('main.task.assigned-members') }}
                                 </p>
 
                                 <p class="text-xs text-text-secondary font-montserrat">
-                                    Add or remove members assigned to this task.
+                                    {{ __('main.task.manage-members-hint') }}
                                 </p>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                         <div class="space-y-1">
 
                             <p class="text-xs font-semibold text-text-primary font-montserrat">
-                                Search users
+                                {{ __('main.task.search-users') }}
                             </p>
 
                             <div class="relative">
@@ -301,7 +301,7 @@
                         <div class="space-y-2">
 
                             <p class="text-xs font-semibold text-text-primary">
-                                Assigned Members
+                                {{ __('main.task.assigned-members') }}
                             </p>
 
                             <template
@@ -335,7 +335,7 @@
                                                 x-show="member.id == {{ $project->leader_id }}"
                                                 class="text-xs text-emerald-600"
                                             >
-                                                Project Leader
+                                                {{ __('main.task.project-leader') }}
                                             </p>
 
                                         </div>
@@ -380,11 +380,11 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Timeline</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.task.timeline') }}</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Due date (Optional)</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.due-optional') }}</p>
 
                             <div class="relative">
 
@@ -416,11 +416,11 @@
                             <div class="shadow-2xl shadow-pastel-green-background">
                                 <x-lucide-calendar-clock class="w-5 text-pastel-green-text"/>
                             </div>
-                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">Details</p>
+                            <p class="font-montserrat font-semibold text-[14px] text-text-primary">{{ __('main.task.details') }}</p>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Status</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-status') }}</p>
 
                             <div class="relative">
 
@@ -444,7 +444,7 @@
                                         :class="status === 'pending' ? 'text-white' : 'text-black'"
                                         class="relative z-10 px-6 py-2 cursor-pointer text-center">
                                         <input type="radio" name="status" value="pending" class="hidden font-montserrat" checked>
-                                        Pending
+                                        {{ __('main.task.pending') }}
                                     </label>
 
                                     <label
@@ -452,14 +452,14 @@
                                         :class="status === 'in_progress' ? 'text-white' : 'text-black'"
                                         class="relative z-10 px-6 py-2 cursor-pointer text-center">
                                         <input type="radio" name="status" value="in_progress" class="hidden font-montserrat">
-                                        In Progress
+                                        {{ __('main.task.in-progress') }}
                                     </label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Priority</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-priority') }}</p>
 
                             <div class="relative">
 
@@ -492,7 +492,7 @@
                                         :class="priority === 'low' ? 'text-white' : 'text-black'"
                                         class="relative z-10 cursor-pointer py-2 text-center">
                                         <input type="radio" name="priority" value="low" class="hidden font-montserrat">
-                                        Low
+                                        {{ __('main.task.low') }}
                                     </label>
 
                                     <!-- Medium -->
@@ -501,7 +501,7 @@
                                         :class="priority === 'medium' ? 'text-white' : 'text-black'"
                                         class="relative z-10 cursor-pointer py-2 text-center">
                                         <input type="radio" name="priority" value="medium" class="hidden font-montserrat" checked>
-                                        Medium
+                                        {{ __('main.task.medium') }}
                                     </label>
 
                                     <!-- High -->
@@ -510,7 +510,7 @@
                                         :class="priority === 'high' ? 'text-white' : 'text-black'"
                                         class="relative z-10 cursor-pointer py-2 text-center">
                                         <input type="radio" name="priority" value="high" class="hidden font-montserrat">
-                                        High
+                                        {{ __('main.task.high') }}
                                     </label>
 
                                 </div>
@@ -527,7 +527,7 @@
                         text-sm mb-1.5"
                     >
                         <x-lucide-rocket class="w-5 text-text-contrast"/>
-                        Create Task
+                        {{ __('main.task.create') }}
                     </button>
 
                 </form>
