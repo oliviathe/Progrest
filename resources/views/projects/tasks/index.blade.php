@@ -57,7 +57,7 @@
                         <input
                             name="search"
                             value="{{ request('search') }}"
-                            placeholder="Search task..."
+                            placeholder="{{ __('main.ph.search-task') }}"
                             onchange="this.form.submit()"
                             class="w-70
                                 text-sm
@@ -104,7 +104,7 @@
                                 <x-lucide-plus class="w-5"/>
                             </div>
 
-                            Create Task
+                            {{ __('main.task.create') }}
                         </button>
 
                         {{-- Project Menu --}}
@@ -149,7 +149,7 @@
                                         hover:bg-white/5">
 
                                     <x-lucide-pencil class="w-4 h-4"/>
-                                    Edit Project
+                                    {{ __('main.task.edit-project') }}
                                 </button>
 
                                 {{-- Delete --}}
@@ -162,7 +162,7 @@
                                         hover:bg-red-500/10">
 
                                     <x-lucide-trash-2 class="w-4 h-4"/>
-                                    Delete Project
+                                    {{ __('main.task.delete-project') }}
                                 </button>
 
                             </div>
@@ -179,7 +179,7 @@
                     {{-- Project LEader --}}
                     <div class="relative">
                         <p class="text-white/80 uppercase tracking-wider font-montserrat text-xs">
-                            Project Leader
+                            {{ __('main.task.project-leader') }}
                         </p>
                         <div class="flex items-center mt-4">
                             <div
@@ -201,7 +201,7 @@
                                     {{ $project->leader->name }}
                                 </h4>
                                 <span class="text-white/60 text-sm">
-                                    Project Leader
+                                    {{ __('main.task.project-leader') }}
                                 </span>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                     {{-- MEMBERS --}}
                     <div>
                         <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
-                            Members
+                            {{ __('main.task.members') }}
                         </p>
                         <div class="flex items-center mt-4">
                             <div class="flex -space-x-4">
@@ -231,7 +231,7 @@
                             </div>
 
                             <span class="ml-4 text-white/50 text-sm">
-                                {{ count($teamMembers) }} Members
+                                {{ count($teamMembers) }} {{ __('main.task.members') }}
                             </span>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                     {{-- PROGRESS --}}
                     <div>
                         <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
-                            Progress
+                            {{ __('main.task.progress') }}
                         </p>
                         <div class="flex items-center mt-4">
 
@@ -267,7 +267,7 @@
                                     {{ $totalTasks }}
                                 </h4>
                                 <p class="text-white/60 text-sm">
-                                    Tasks Completed
+                                    {{ __('main.task.tasks-completed') }}
                                 </p>
                             </div>
                         </div>
@@ -276,7 +276,7 @@
                     {{-- DEADLINE --}}
                     <div>
                         <p class="text-white/80 uppercase tracking-wider text-xs font-montserrat">
-                            Due Date
+                            {{ __('main.task.due-date') }}
                         </p>
                         <div class="flex items-center mt-4">
                             <div
@@ -294,23 +294,21 @@
                                     </h4>
                                 @else
                                     <h4 class="text-white text-lg font-semibold font-montserrat">
-                                        Deadline Not Set
+                                        {{ __('main.task.deadline-not-set') }}
                                     </h4>
                                 @endif
                                 @if (!is_null($project->deadline))
                                     @if ($project->days_remaining < 0)
                                         <p class="text-red-accent font-semibold font-montserrat text-sm">
-                                            {{ $project->days_remaining * -1 }}
-                                            days overdue
+                                            {{ trans_choice('main.task.days-overdue', $project->days_remaining * -1, ['count' => $project->days_remaining * -1]) }}
                                         </p>
                                     @elseif ($project->days_remaining > 0)
                                         <p class="text-white/80 font-montserrat text-sm">
-                                            {{ $project->days_remaining }}
-                                            days remaining
+                                            {{ trans_choice('main.task.days-remaining', $project->days_remaining, ['count' => $project->days_remaining]) }}
                                         </p>
                                     @else
                                         <p class="text-yellow-300 font-montserrat text-sm">
-                                            Due Today
+                                            {{ __('main.task.due-today') }}
                                         </p>
                                     @endif
                                 @else
@@ -330,7 +328,7 @@
     {{-- PRIORITY TASKS --}}
     @if ($priorityTasks->isNotEmpty())
         <div x-data="{showTaskModal:false, showCreateModal:false}" class="p-8 py-6">
-            <h1 class="font-montserrat text-text-primary text-2xl font-bold">Top Priorities</h1>
+            <h1 class="font-montserrat text-text-primary text-2xl font-bold">{{ __('main.task.top-priorities') }}</h1>
             
             <div class="flex flex-nowrap overflow-x-auto gap-5 pt-4 pb-4">
                 @foreach ($priorityTasks as $task)
@@ -356,7 +354,7 @@
         <div class="px-8 pb-10" 
             x-data="taskModal()">
             <div class="flex flex-col sm:flex-row justify-between items-center">
-                <h1 class="font-montserrat text-text-primary text-2xl font-bold mb-3 sm:mb-0">All Tasks</h1>
+                <h1 class="font-montserrat text-text-primary text-2xl font-bold mb-3 sm:mb-0">{{ __('main.task.all-tasks') }}</h1>
                 
                 <div class="flex gap-4">
 
@@ -390,15 +388,15 @@
                             class="bg-background rounded-3xl px-3 shadow-sm font-montserrat text-sm text-text-primary hover:bg-surface transition-colors focus:outline-none"
                         >
                             <option value="priority" {{ request('sort', 'priority') == 'priority' ? 'selected' : '' }}>
-                                Priority
+                                {{ __('main.task.priority') }}
                             </option>
 
                             <option value="alphabetical" {{ request('sort') == 'alphabetical' ? 'selected' : '' }}>
-                                Alphabetical
+                                {{ __('main.task.alphabetical') }}
                             </option>
 
                             <option value="deadline" {{ request('sort') == 'deadline' ? 'selected' : '' }}>
-                                Deadline
+                                {{ __('main.task.deadline') }}
                             </option>
                         </select>
 
@@ -443,10 +441,10 @@
                             </div>
                             <div>
                                 <h1 class="font-montserrat text-2xl font-bold text-text-primary"
-                                    x-text="editing ? 'Edit Task' : 'Task Detail'">
+                                    x-text="editing ? '{{ __('main.task.edit-task') }}' : '{{ __('main.task.task-detail') }}'">
                                 </h1>
                                 <p class="text-text-secondary text-sm"
-                                    x-text="editing ? 'Update task information' : 'View task information'">
+                                    x-text="editing ? '{{ __('main.task.update-task-info') }}' : '{{ __('main.task.view-task-info') }}'">
                                 </p>
                             </div>
                         </div>
@@ -466,7 +464,7 @@
 
                         <div class="space-y-2">
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                Task Image
+                                {{ __('main.task.task-image') }}
                             </p>
 
                             <template x-if="!editing">
@@ -506,11 +504,11 @@
 
                                             <div>
                                                 <p class="font-semibold text-md text-text-primary">
-                                                    Replace Image
+                                                    {{ __('main.task.replace-image') }}
                                                 </p>
 
                                                 <p class="text-sm text-text-secondary mt-1">
-                                                    Upload a new image for this task.
+                                                    {{ __('main.task.upload-image-hint') }}
                                                 </p>
                                             </div>
 
@@ -522,7 +520,7 @@
                                             >
                                                 <x-lucide-upload class="w-4 h-4"/>
 
-                                                <span>Choose Image</span>
+                                                <span>{{ __('main.task.choose-image') }}</span>
 
                                                 <input
                                                     type="file"
@@ -533,7 +531,7 @@
                                             </label>
 
                                             <p class="text-[11px] text-text-secondary">
-                                                JPG, PNG or WebP • Max 4 MB
+                                                {{ __('main.task.image-formats') }}
                                             </p>
 
                                         </div>
@@ -546,7 +544,7 @@
                         {{-- Title --}}
                         <div>
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                Task Title
+                                {{ __('main.task.task-title') }}
                             </p>
                             <div class="bg-surface rounded-xl px-5 py-2 mt-1">
                                 <template x-if="!editing">
@@ -565,7 +563,7 @@
                         {{-- Description --}}
                         <div>
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                Description
+                                {{ __('main.task.description') }}
                             </p>
                             <div class="bg-surface rounded-xl px-5 py-3 mt-1">
                                 <template x-if="!editing"> 
@@ -597,7 +595,7 @@
                             {{-- Collaborator --}}
                                 <div>
                                     <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                        Collaborators
+                                        {{ __('main.task.collaborators') }}
                                     </p>
 
                                     <template x-if="!editing">
@@ -695,7 +693,7 @@
                                                                         x-show="member.id == task.leader_id"
                                                                         class="text-xs text-emerald-600"
                                                                     >
-                                                                        Project Leader
+                                                                        {{ __('main.task.project-leader') }}
                                                                     </p>
 
                                                                 </div>
@@ -730,11 +728,11 @@
 
                                                 <div>
                                                     <p class="font-montserrat text-sm font-semibold text-text-primary">
-                                                        Collaborators
+                                                        {{ __('main.task.collaborators') }}
                                                     </p>
 
                                                     <p class="text-xs text-text-secondary font-montserrat">
-                                                        Add or remove members assigned to this task.
+                                                        {{ __('main.task.manage-members-hint') }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -743,7 +741,7 @@
                                             <div class="space-y-1">
 
                                                 <p class="text-xs font-semibold text-text-primary font-montserrat">
-                                                    Search users
+                                                    {{ __('main.task.search-users') }}
                                                 </p>
 
                                                 <div class="relative">
@@ -757,7 +755,7 @@
                                                         type="text"
                                                         x-model="assignedMemberQuery"
                                                         @input="searchAssignedMembers()"
-                                                        placeholder="Username or email..."
+                                                        placeholder="{{ __('main.ph.username-email') }}"
                                                         class="w-full rounded-xl
                                                             border-2 border-border
                                                             bg-background
@@ -843,7 +841,7 @@
                                             <div class="space-y-2">
 
                                                 <p class="text-xs font-semibold text-text-primary">
-                                                    Assigned Members
+                                                    {{ __('main.task.assigned-members') }}
                                                 </p>
 
                                                 <template
@@ -877,7 +875,7 @@
                                                                     x-show="member.id == task.leader_id"
                                                                     class="text-xs text-emerald-600"
                                                                 >
-                                                                    Project Leader
+                                                                    {{ __('main.task.project-leader') }}
                                                                 </p>
 
                                                             </div>
@@ -910,7 +908,7 @@
                             {{-- Status --}}
                             <div>
                                 <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                    Status
+                                    {{ __('main.task.status') }}
                                 </p>
                                 <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
                                     <!-- View -->
@@ -934,12 +932,12 @@
                                             ></div>
                                             <span
                                                 x-text="task.status === 'completed'
-                                                    ? 'Completed'
+                                                    ? '{{ __('main.task.completed') }}'
                                                     : (task.status === 'in_progress'
-                                                        ? 'In Progress'
+                                                        ? '{{ __('main.task.in-progress') }}'
                                                         : (task.status === 'pending'
-                                                            ? 'Pending'
-                                                            : 'Cancelled'))"
+                                                            ? '{{ __('main.task.pending') }}'
+                                                            : '{{ __('main.task.cancelled') }}'))"
                                             ></span>
                                         </span>
                                     </template>
@@ -953,7 +951,7 @@
                                                 : 'bg-surface text-text-primary border-2 border-border'"
                                             class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
                                         >
-                                            Pending
+                                            {{ __('main.task.pending') }}
                                         </button>
                                         <button
                                             @click="task.status='in_progress'"
@@ -962,7 +960,7 @@
                                                 : 'bg-surface text-text-primary border-2 border-border'"
                                             class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
                                         >
-                                            In Progress
+                                            {{ __('main.task.in-progress') }}
                                         </button>
                                         <button
                                             @click="task.status='completed'"
@@ -971,7 +969,7 @@
                                                 : 'bg-surface text-text-primary border-2 border-border'"
                                             class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
                                         >
-                                            Completed
+                                            {{ __('main.task.completed') }}
                                         </button>
                                         <button
                                             @click="task.status='cancelled'"
@@ -980,7 +978,7 @@
                                                 : 'bg-surface text-text-primary border-2 border-border'"
                                             class="rounded-xl py-2 transition font-montserrat text-[12px] cursor-pointer"
                                         >
-                                            Cancelled
+                                            {{ __('main.task.cancelled') }}
                                         </button>
                                     </div>
                                 </div>
@@ -989,7 +987,7 @@
                             {{-- Deadline --}}
                             <div>
                                 <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                    Deadline
+                                    {{ __('main.task.deadline') }}
                                 </p>
                                 <template x-if="!editing">
                                     <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
@@ -1028,7 +1026,7 @@
                             {{-- Priority --}}
                             <div>
                                 <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                    Priority
+                                    {{ __('main.task.priority') }}
                                 </p>
                                 <template x-if="!editing">
                                     <div class="bg-surface rounded-2xl px-4 py-3 mt-1">
@@ -1039,7 +1037,7 @@
                                                 'bg-yellow-accent': task.priority == 'medium',
                                                 'bg-quartiary': task.priority == 'low'
                                             }"
-                                            x-text="task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low')"
+                                            x-text="task.priority === 'high' ? '{{ __('main.task.high') }}' : (task.priority === 'medium' ? '{{ __('main.task.medium') }}' : '{{ __('main.task.low') }}')"
                                         ></span>
                                     </div>
                                 </template>
@@ -1054,7 +1052,7 @@
                                                 : 'bg-background border-border text-text-primary'"
                                             class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
                                         >
-                                            High
+                                            {{ __('main.task.high') }}
                                         </button>
 
                                         <button
@@ -1065,7 +1063,7 @@
                                                 : 'bg-background border-border text-text-primary'"
                                             class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
                                         >
-                                            Medium
+                                            {{ __('main.task.medium') }}
                                         </button>
 
                                         <button
@@ -1076,7 +1074,7 @@
                                                 : 'bg-background border-border text-text-primary'"
                                             class="rounded-xl border-2 py-1.75 text-[12px] transition cursor-pointer"
                                         >
-                                            Low
+                                            {{ __('main.task.low') }}
                                         </button>
                                     </div>
                                 </template>
@@ -1086,7 +1084,7 @@
                         {{-- GO COLLAB --}}
                         <div>
                             <p class="font-montserrat font-semibold text-[12px] text-text-primary">
-                                Go Collaboration
+                                {{ __('main.task.go-collab') }}
                             </p>
 
                             <div
@@ -1107,20 +1105,20 @@
                                                 <span
                                                     class="font-montserrat text-sm font-semibold text-text-primary"
                                                 >
-                                                    Go Collaboration
+                                                    {{ __('main.task.go-collab') }}
                                                 </span>
                                                 <span
                                                     class="px-2 py-0.5 rounded-full text-xs font-semibold"
                                                     :class="task.go_collab_enabled
                                                         ? 'bg-green-100 text-green-700'
                                                         : 'bg-gray-200 text-gray-600'"
-                                                    x-text="task.go_collab_enabled ? 'Enabled' : 'Disabled'"
+                                                    x-text="task.go_collab_enabled ? '{{ __('main.task.enabled') }}' : '{{ __('main.task.disabled') }}'"
                                                 ></span>
                                             </div>
                                             <template x-if="task.go_collab_enabled">
                                                 <p
                                                     class="text-xs text-text-secondary mt-0.5"
-                                                    x-text="`${task.go_collab_reward} Credits • Max ${task.go_collab_limit} collaborators`"
+                                                    x-text="`${task.go_collab_reward} {{ __('main.task.credits') }} • {{ __('main.task.max') }} ${task.go_collab_limit} {{ __('main.task.collaborators-lc') }}`"
                                                 ></p>
                                             </template>
                                         </div>
@@ -1185,7 +1183,7 @@
                                         <p
                                             class="font-montserrat font-semibold text-xs text-text-primary mb-2"
                                         >
-                                            Description
+                                            {{ __('main.task.description') }}
                                         </p>
                                         <template x-if="!editing">
                                             <div
@@ -1193,7 +1191,7 @@
                                             >
                                                 <p
                                                     class="text-sm text-text-primary font-montserrat whitespace-pre-line"
-                                                    x-text="task.go_collab_description || 'No description provided.'"
+                                                    x-text="task.go_collab_description || '{{ __('main.task.no-description') }}'"
                                                 ></p>
                                             </div>
                                         </template>
@@ -1213,15 +1211,15 @@
                                             <p
                                                 class="font-montserrat font-semibold text-xs text-text-primary mb-2"
                                             >
-                                                Credit Reward
+                                                {{ __('main.task.credit-reward') }}
                                             </p>
                                             <template x-if="!editing">
                                                 <div class="bg-background rounded-xl px-4 py-3 text-text-primary">
                                                     <span
                                                         class="font-montserrat text-sm text-text-primary"
                                                         x-text="task.go_collab_reward
-                                                            ? task.go_collab_reward + ' Credits'
-                                                            : 'Undefined'"
+                                                            ? task.go_collab_reward + ' {{ __('main.task.credits') }}'
+                                                            : '{{ __('main.task.undefined') }}'"
                                                     ></span>
                                                 </div>
                                             </template>
@@ -1240,13 +1238,13 @@
                                             <p
                                                 class="font-montserrat font-semibold text-xs text-text-primary mb-2"
                                             >
-                                                Maximum Collaborators
+                                                {{ __('main.task.max-collaborators') }}
                                             </p>
                                             <template x-if="!editing">
                                                 <div class="bg-background rounded-xl px-4 py-3">
                                                     <span
                                                         class="font-montserrat text-sm text-text-primary"
-                                                        x-text="task.go_collab_limit ?? 'Undefined'"
+                                                        x-text="task.go_collab_limit ?? '{{ __('main.task.undefined') }}'"
                                                     ></span>
 
                                                 </div>
@@ -1276,7 +1274,7 @@
                                             <p
                                                 class="font-montserrat font-semibold text-xs text-text-primary"
                                             >
-                                                Current Participants
+                                                {{ __('main.task.current-participants') }}
                                             </p>
 
                                             <span
@@ -1310,9 +1308,9 @@
                                                             ></p>
                                                             <p
                                                                 class="text-xs text-text-secondary"
-                                                                x-text="user.pivot.status === 'declined' ? 
-                                                                    'Declined' : (user.pivot.status === 'completed' ? 
-                                                                        'Completed' : 'In Progress')"
+                                                                x-text="user.pivot.status === 'declined' ?
+                                                                    '{{ __('main.task.declined') }}' : (user.pivot.status === 'completed' ?
+                                                                        '{{ __('main.task.completed') }}' : '{{ __('main.task.in-progress') }}')"
                                                             ></p>
                                                         </div>
                                                     </div>
@@ -1348,7 +1346,7 @@
                                                 <p
                                                     class="text-sm text-center text-text-secondary font-montserrat py-2"
                                                 >
-                                                    No collaborators yet.
+                                                    {{ __('main.task.no-collaborators') }}
                                                 </p>
                                             </template>
                                         </div>
@@ -1377,7 +1375,7 @@
                             >
                                 <x-lucide-trash-2 class="w-4 h-4"/>
 
-                                Delete Task
+                                {{ __('main.task.delete-task') }}
                             </button>
                         </template>
 
@@ -1395,12 +1393,12 @@
                             >
 
                                 <h3 class="text-lg font-semibold text-text-primary font-montserrat">
-                                    Delete Task?
+                                    {{ __('main.task.delete-task-confirm') }}
                                 </h3>
 
                                 <p
                                     class="mt-3 text-sm text-text-secondary leading-6 font-montserrat"
-                                    x-text="`This task currently has ${(task.members ?? []).length} collaborator(s) assigned. Deleting this task will remove it from their workspace and all related progress will be lost. This action cannot be undone.`"
+                                    x-text="`{{ __('main.task.delete-task-desc-1') }} ${(task.members ?? []).length} {{ __('main.task.delete-task-desc-2') }}`"
                                 ></p>
 
                                 <div class="flex justify-end gap-3 mt-6">
@@ -1417,7 +1415,7 @@
                                             cursor-pointer
                                             transition"
                                     >
-                                        Cancel
+                                        {{ __('main.task.cancel') }}
                                     </button>
 
                                     <button
@@ -1435,7 +1433,7 @@
                                             cursor-pointer
                                             transition"
                                     >
-                                        Delete Permanently
+                                        {{ __('main.task.delete-permanently') }}
                                     </button>
                                 </div>
                             </div>
@@ -1454,12 +1452,11 @@
                             >
 
                                 <h3 class="text-lg font-semibold text-text-primary font-montserrat">
-                                    Disable Go Collaboration?
+                                    {{ __('main.task.disable-collab-confirm') }}
                                 </h3>
 
                                 <p class="mt-3 text-sm text-text-secondary leading-6 font-montserrat">
-                                    Disabling Go Collaboration will remove this task from public collaboration.
-                                    Existing collaborators may lose access, and pending requests may be cancelled.
+                                    {{ __('main.task.disable-collab-desc') }}
                                 </p>
 
                                 <div class="flex justify-end gap-3 mt-6">
@@ -1469,7 +1466,7 @@
                                         @click="showDisableCollabWarning = false"
                                         class="px-4 py-2 rounded-xl bg-background border-2 border-border text-sm text-text-primary font-montserrat hover:bg-surface cursor-pointer"
                                     >
-                                        Cancel
+                                        {{ __('main.task.cancel') }}
                                     </button>
 
                                     <button
@@ -1481,7 +1478,7 @@
                                         "
                                         class="px-4 py-2 rounded-xl bg-red-500 text-white text-sm font-montserrat hover:bg-red-accent cursor-pointer"
                                     >
-                                        Disable
+                                        {{ __('main.task.disable') }}
                                     </button>
 
                                 </div>
@@ -1497,7 +1494,7 @@
                                     @click="edit()"
                                     class="bg-quartiary text-white px-5 py-2.5 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
                                 >
-                                    Edit Task
+                                    {{ __('main.task.edit-task') }}
                                 </button>
                             </template>
 
@@ -1508,7 +1505,7 @@
                                         @click="save()"
                                         class="bg-quartiary text-white px-5 py-2 rounded-2xl hover:bg-quartiary-hover transition cursor-pointer"
                                     >
-                                        Save Changes
+                                        {{ __('main.task.save-changes') }}
                                     </button>
 
                                     <button
@@ -1516,7 +1513,7 @@
                                         @click="cancelEdit()"
                                         class="border-2 border-red-accent text-red-accent cursor-pointer px-5 py-2.5 rounded-2xl transition hover:bg-surface bg-background font-montserrat font-semibold"
                                     >
-                                        Cancel
+                                        {{ __('main.task.cancel') }}
                                     </button>
                                 </div>
                             </template>
@@ -1526,7 +1523,7 @@
                             @click="close()"
                             class="border border-gray-200 px-5 py-2.5 rounded-2xl hover:bg-surface transition text-text-primary cursor-pointer ml-2"
                         >
-                            Close
+                            {{ __('main.task.close') }}
                         </button>
                     </div>
                 </div>

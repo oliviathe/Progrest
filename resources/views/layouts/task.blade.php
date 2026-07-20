@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Title</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-title') }}</p>
 
                             {{-- Task TITLE INPUT --}}
 
@@ -156,20 +156,20 @@
                                 x-model="task.title"
                                 name="title"
                                 type="text"
-                                placeholder="e.g. User Interface Refinement"
+                                placeholder="{{ __('main.ph.task-title-eg') }}"
                                 class="w-full rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             >
                         </div>
 
                         <div class="flex flex-col gap-1">
-                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">Task Description</p>
+                            <p class="font-montserrat font-semibold text-[12px] text-text-primary">{{ __('main.task.task-description') }}</p>
 
                             {{-- Task DESCRIPTION INPUT --}}
 
                             <textarea
                                 x-model="task.description"
                                 name="description"
-                                placeholder="Describe the overview and purpose of the task..."
+                                placeholder="{{ __('main.ph.task-desc') }}"
                                 class="w-full h-30 rounded-lg border-[1.5px] border-text-primary/50 px-3 py-2 text-sm text-text-primary placeholder:text-placeholder"
                             ></textarea>
                         </div>
@@ -215,7 +215,7 @@
                                     type="text"
                                     x-model="assignedMemberQuery"
                                     @input="searchAssignedMembers()"
-                                    placeholder="Username or email..."
+                                    placeholder="{{ __('main.ph.username-email') }}"
                                     class="w-full rounded-xl
                                         border-2 border-border
                                         bg-background

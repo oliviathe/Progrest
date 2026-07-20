@@ -182,7 +182,7 @@ class ProjectTaskController extends Controller
 
         return redirect()
             ->back()
-            ->with('success', 'Task created.');
+            ->with('success', __('main.toast.task-created'));
     }
 
     public function update(Request $request, Task $task){

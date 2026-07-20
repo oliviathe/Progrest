@@ -53,15 +53,15 @@
                     </div>
 
                     <div class="relative w-max">
-                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">OTP Verification</h1>
+                        <h1 class="text-3xl md:text-[2.3rem] text-center font-bold text-primary font-montserrat tracking-wide leading-none">{{ __('main.auth.otp-title') }}</h1>
                         <span class="text-text-primary absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-[-45%] w-[115%] text-3xl md:text-[3rem] font-redacted opacity-90 pointer-events-none leading-none text-center">
-                            OTP Verification
+                            {{ __('main.auth.otp-title') }}
                         </span>
                     </div>
                 </div>
 
                 <p class="text-text-secondary text-center text-sm md:text-sm mb-3 lg:mb-5 leading-relaxed">
-                    Enter the 6-digit verification code sent to your email address.
+                    {{ __('main.auth.otp-desc') }}
                 </p>
 
                 <form action="/otp" method="POST" class="space-y-4">
@@ -71,7 +71,7 @@
 
                     <div>
                         <label class="block text-xs md:text-sm font-bold text-text-primary mb-3 text-center">
-                            Verification Code
+                            {{ __('main.auth.verification-code') }}
                         </label>
 
                         <div class="flex justify-center gap-2 md:gap-3">
@@ -90,13 +90,13 @@
 
                     <button type="submit"
                         class="text-text-contrast w-full bg-primary hover:bg-primary-hover font-bold py-2.5 md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
-                        Verify OTP
+                        {{ __('main.auth.verify-btn') }}
                     </button>
 
                     <div class="text-center text-xs md:text-sm text-text-secondary">
-                        Didn't receive the OTP?
+                        {{ __('main.auth.no-otp') }}
                         <button type="button" class="font-bold text-primary hover:text-primary-hover hover:underline transition">
-                            Resend OTP
+                            {{ __('main.auth.resend') }}
                         </button>
                     </div>
                 </form>

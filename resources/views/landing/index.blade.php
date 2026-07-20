@@ -22,9 +22,9 @@
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
-            <a href="{{ route('login') }}" class="text-text-primary font-montserrat">Sign In</a>
+            <a href="{{ route('login') }}" class="text-text-primary font-montserrat">{{ __('main.landing.signin') }}</a>
             <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold font-montserrat">
-                Get Started Free
+                {{ __('main.landing.get-started-free') }}
             </a>
         </div>
 
@@ -38,9 +38,9 @@
     <div id="mobile-menu"
         class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out flex flex-col items-center gap-4 px-10">
         
-        <a href="{{ route('login') }}" class="text-gray-600 py-2 font-montserrat">Sign In</a>
+        <a href="{{ route('login') }}" class="text-gray-600 py-2 font-montserrat">{{ __('main.landing.signin') }}</a>
         <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold mb-4 font-montserrat">
-            Get Started Free
+            {{ __('main.landing.get-started-free') }}
         </a>
     </div>
 
@@ -54,33 +54,32 @@
     <!-- kiri -->
     <div>
         <div class="font-montserrat text-white inline-block font-medium mb-4 px-6 py-3 bg-[#217750] rounded-2xl shadow-md">
-            ⚙︎ Designed for teams. Built for progress.
+            {{ __('main.landing.badge') }}
         </div>
 
         <h1 class="font-montserrat text-text-primary text-5xl md:text-6xl font-bold leading-tight mb-6">
-            Plan. Collaborate. <br>
-            <span class="text-primary">Deliver Results.</span>
+            {{ __('main.landing.hero-title-1') }} <br>
+            <span class="text-primary">{{ __('main.landing.hero-title-2') }}</span>
         </h1>
 
         <p class="font-montserrat text-lg text-text-secondary mb-8 max-w-lg">
-            Progrest helps teams plan, track, and complete projects with clarity.
-            Stay aligned, meet deadlines, and achieve more—together.
+            {{ __('main.landing.hero-desc') }}
         </p>
 
         <div class="flex gap-4 mb-6 text-md items-center">
             <a href="{{ route('register') }}" class="font-montserrat bg-primary hover:bg-primary-hover transition text-center text-white px-6 py-3 rounded-lg font-semibold shadow-md">
-                Get Started Free
+                {{ __('main.landing.get-started-free') }}
             </a>
 
             <button id="scroll-features" class="font-montserrat border-2 text-primary border-light-border bg-background  hover:bg-light-border-hover text-center px-6 py-3 rounded-lg font-medium shadow-md transition">
-                See How It Works
+                {{ __('main.landing.see-how') }}
             </button>
         </div>
 
         <div class="font-montserrat flex gap-6 text-sm text-text-secondary">
-            <span>✔ No credit card required</span>
-            <span>✔ Easy setup</span>
-            <span>✔ Free plan</span>
+            <span>{{ __('main.landing.perk-no-card') }}</span>
+            <span>{{ __('main.landing.perk-easy-setup') }}</span>
+            <span>{{ __('main.landing.perk-free-plan') }}</span>
         </div>
     </div>
 
@@ -95,9 +94,9 @@
 <section class="px-5 py-5 bg-background">
     <div class="px-5 py-15 flex flex-col items-center bg-no-repeat bg-cover gap-7 rounded-2xl" style="background-image: url('images/background_landing.jpg')">
         <img src="images/progrest_p_logo_white.png" alt="" class="h-38 w-auto">
-        <div class="px-4 py-1 rounded-md bg-white text-primary font-montserrat font-bold opacity-90">🗪 Our Slogan:</div>
+        <div class="px-4 py-1 rounded-md bg-white text-primary font-montserrat font-bold opacity-90">{{ __('main.landing.slogan-label') }}</div>
         <h1 class="font-montserrat text-4xl md:text-4xl font-semibold italic text-white w-7/8 text-center opacity-90">
-                "Make Progress and Let Others do the Rest"
+                {{ __('main.landing.slogan') }}
         </h1>
     </div>
 </section>
@@ -105,12 +104,12 @@
 <!-- Fiturs -->
 <section id="features" class="px-10 py-20 bg-linear-to-r from-background to-background-gradient text-center">
     <p class="text-secondary font-montserrat font-medium mb-2">
-        Everything you need to deliver
+        {{ __('main.landing.features-eyebrow') }}
     </p>
 
     <h2 class="font-montserrat text-3xl font-bold mb-12 text-text-primary">
-        Powerful features for
-        <span class="underline decoration-dotted decoration-5 underline-offset-5 text-primary">modern teams</span>
+        {{ __('main.landing.features-title-1') }}
+        <span class="underline decoration-dotted decoration-5 underline-offset-5 text-primary">{{ __('main.landing.features-title-2') }}</span>
     </h2>
 
     <div class="grid md:grid-cols-3 sm:grid-cols-1 gap-6">
@@ -119,9 +118,9 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-brain-cog class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Smart Task Management</h3> 
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">{{ __('main.landing.feature-1-title') }}</h3>
             <p class="mt-4 font-montserrat text-text-secondary">
-                Organize tasks, set priorities, and track progress in real time.
+                {{ __('main.landing.feature-1-desc') }}
             </p>
         </div>
 
@@ -129,9 +128,9 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-handshake class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Team Collaboration</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">{{ __('main.landing.feature-2-title') }}</h3>
             <p class="font-montserrat text-text-secondary mt-4">
-                Communicate, share files, and work together seamlessly.
+                {{ __('main.landing.feature-2-desc') }}
             </p>
         </div>
 
@@ -139,9 +138,9 @@
             <div class="p-3 bg-[#BDD7CB] inline-block rounded-2xl">
                 <x-lucide-file-chart-column-increasing class="w-6 h-6 text-[#217750]" />
             </div>
-            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">Insights & Reports</h3>
+            <h3 class="font-montserrat font-semibold text-lg mb-2 text-text-primary">{{ __('main.landing.feature-3-title') }}</h3>
             <p class="font-montserrat text-text-secondary mt-4">
-                Get clear insights into progress, performance, and deadlines.
+                {{ __('main.landing.feature-3-desc') }}
             </p>
         </div>
     </div>
@@ -164,16 +163,16 @@
             </div>
             <div>
                 <h2 class="font-montserrat text-2xl font-bold mb-2 text-text-contrast">
-                    Ready to bring clarity to your projects?
+                    {{ __('main.landing.cta-title') }}
                 </h2>
                 <p class="font-montserrat text-text-contrast opacity-90">
-                    Join teams already using Progrest to get things done.
+                    {{ __('main.landing.cta-desc') }}
                 </p>
             </div>
         </div>
 
         <a href="/register" class="font-montserrat bg-background text-primary px-6 py-3 rounded-xl font-semibold hover:bg-light-border-hover transition">
-            Get Started Free
+            {{ __('main.landing.get-started-free') }}
         </a>
 
     </div>
@@ -187,31 +186,31 @@
         <div class="flex flex-col gap-2 items-start">
             <img id="logo-footer" src="/images/progrest_logo_white.png" alt="" class="w-40 h-auto">
             <p class="font-montserrat text-sm opacity-80 text-text-contrast">
-                Make progress and let others do the rest.
+                {{ __('main.footer.tagline') }}
             </p>
 
             <!-- CTA -->
-            <a href="/register" 
-                class="font-montserrat inline-block px-4 py-1.5 mt-2 bg-background text-primary 
+            <a href="/register"
+                class="font-montserrat inline-block px-4 py-1.5 mt-2 bg-background text-primary
                         rounded-xl font-semibold hover:bg-light-border-hover
                         transition-transform duration-300">
-                    Get Started
+                    {{ __('main.landing.get-started') }}
             </a>
         </div>
 
         <!-- Product -->
         <div>
-            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Product</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">{{ __('main.footer.product') }}</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
-                <li><a href="#" class="hover:opacity-100">Dashboard</a></li>
-                <li><a href="#" class="hover:opacity-100">Projects</a></li>
-                <li><a href="#" class="hover:opacity-100">Collaboration</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.dashboard') }}</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.projects') }}</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.collaboration') }}</a></li>
             </ul>
         </div>
 
         <!-- Company -->
         <div>
-            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Social Media</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">{{ __('main.footer.social-media') }}</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
                 <li><a href="#" class="hover:opacity-100">Twitter</a></li>
                 <li><a href="#" class="hover:opacity-100">Facebook</a></li>
@@ -221,11 +220,11 @@
 
         <!-- Resources -->
         <div>
-            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">Resources</h2>
+            <h2 class="font-montserrat font-semibold mb-3 text-text-contrast">{{ __('main.footer.resources') }}</h2>
             <ul class="font-montserrat space-y-3 text-sm opacity-80 text-text-contrast">
-                <li><a href="#" class="hover:opacity-100">Help Center</a></li>
-                <li><a href="#" class="hover:opacity-100">Privacy Policy</a></li>
-                <li><a href="#" class="hover:opacity-100">Terms of Service</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.help-center') }}</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.privacy-policy') }}</a></li>
+                <li><a href="#" class="hover:opacity-100">{{ __('main.footer.terms') }}</a></li>
             </ul>
         </div>
 
@@ -233,9 +232,9 @@
 
     <!-- Bawah Footer -->
     <div class="font-montserrat text-text-contrast border-t border-white/20 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center text-sm opacity-70">
-        <p>© 2026 Progrest. All rights reserved.</p>
+        <p>{{ __('main.footer.rights') }}</p>
 
-        <p>Project Planner Platform</p> 
+        <p>{{ __('main.footer.platform') }}</p>
     </div>
 </footer>
 

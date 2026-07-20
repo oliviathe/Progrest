@@ -154,6 +154,6 @@ class ProjectController extends Controller
 
         $project->load('users');
 
-        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
+        return redirect()->route('projects.index')->with('success', __('main.toast.project-created'));
     }
 }
