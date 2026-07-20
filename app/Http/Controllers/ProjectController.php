@@ -64,9 +64,9 @@ class ProjectController extends Controller
         // Versi Collection 
 
         $projectsCol = Project::where(function ($query) use ($user) {
-            $query->where('leader_id', $user->id)
+            $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) use ($user) {
-                    $q->where('user_id', $user->id);
+                    $q->where('user_id', auth()->id());
                 });
         })
         ->with(['users', 'leader'])
@@ -214,5 +214,21 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Project deleted successfully'
         ]);
+    }
+    public function leave(Project $project)
+    {
+        // Leader nggak boleh keluar
+        if ($project->leader_id == auth()->id()) {
+            return back()->with(
+                'error',
+                'Project leader cannot leave the project.'
+            );
+        }
+    
+        $project->users()->detach(auth()->id());
+    
+        return redirect()
+            ->route('collab.index')
+            ->with('success', 'You left the collaboration.');
     }
 }

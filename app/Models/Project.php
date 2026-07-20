@@ -10,15 +10,22 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     use HasFactory; 
-    protected $fillable = ['leader_id','title','description','icon','accent','deadline'];
+    protected $fillable = ['leader_id','title','description','icon','cover_image','capacity','accent','deadline', 'cover_image'];
 
     protected $casts = [
         'deadline' => 'date'    
+    ];
+    
+    protected $appends = [
+        'cover_url',
     ];
 
     public function getCoverUrlAttribute(): string
 {
     if (! $this->cover_image) {
+        if ($this->cover_image) {
+            return asset('storage/' . $this->cover_image);
+        }
         return asset('images/project-cover.jpg');
     }
 

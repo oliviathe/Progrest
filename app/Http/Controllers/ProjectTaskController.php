@@ -50,14 +50,11 @@ class ProjectTaskController extends Controller
             ->get(); 
 
         // Masih statik 
-        $avatarPath = asset('images/profile.jpg');   
-        
         $teamMembers = $project->users
-            ->pluck('avatar')
-            ->map(fn ($avatar) => $avatar ?: asset('images/profile.jpg'))
-            ->values()
-            ->all();
-
+            ->map(function ($user) {
+                return $user->avatar ?: asset('images/profile.jpg');
+            })
+            ->toArray();
         $displayLimit = 3;
         $extraMembers = count($teamMembers) - $displayLimit; 
 
@@ -124,7 +121,7 @@ class ProjectTaskController extends Controller
         $allTasks = $query->get();
 
         return view('projects.tasks.index', compact('project', 'menu', 'priorityTasks', 'allTasks', 
-            'avatarPath', 'teamMembers', 'displayLimit', 'extraMembers', 'completedTasks', 
+            'teamMembers', 'displayLimit', 'extraMembers', 'completedTasks', 
             'totalTasks', 'progress'));
     }
 
