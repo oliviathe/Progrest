@@ -820,10 +820,33 @@
                 showDisableCollabWarning: false,
                 showDeleteTaskWarning: false,
                 showCollab: false,
+                showCompleteModal: false,
+                showSubmissionModal: false,
+                showReviewModal: false,
 
                 newImage: null,
 
                 originalTask: {},
+
+                // Task Submission 
+                submission: {
+                    id: null,
+                    task_id: null,
+                    title: '',
+                    submitter: '',
+                    submitted_at: '',
+                    proof_image: '',
+                    proof_link: '',
+                    notes: '',
+                    status: '',
+                },
+
+                submissionForm: {
+                    image: null,
+                    preview: '',
+                    link: '',
+                    notes: '',
+                },
 
                 open(task) {
                     // console.trace("open() called");
@@ -849,6 +872,83 @@
                     this.editing = false;
                     this.showDeleteTaskWarning = false;
                     this.showDisableCollabWarning = false;
+                },
+
+                openComplete(task) {
+                    this.task = structuredClone(task);
+                    this.submissionForm = {
+                        image: null,
+                        preview: '',
+                        link: '',
+                        notes: '',
+                    };
+                    this.showCompleteModal = true;
+                },
+
+                previewSubmissionImage(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    this.submissionForm.image = file;
+                    this.submissionForm.preview = URL.createObjectURL(file);
+                },
+
+                resetSubmission() {
+                    this.submissionForm = {
+                        image: null,
+                        preview: '',
+                        link: '',
+                        notes: '',
+                    };
+                },
+
+                async submitTask() {
+                    try {
+                        const formData = new FormData();
+                        if (this.submissionForm.image) {
+                            formData.append(
+                                'proof_image',
+                                this.submissionForm.image
+                            );
+                        }
+                        formData.append(
+                            'proof_link',
+                            this.submissionForm.link
+                        );
+                        formData.append(
+                            'notes',
+                            this.submissionForm.notes
+                        );
+                        const response = await fetch(
+                            `/tasks/${this.task.id}/submit`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': document
+                                        .querySelector('meta[name="csrf-token"]').content,
+                                    'Accept': 'application/json',
+                                },
+                                body: formData,
+                            }
+                        );
+                        const data = await response.json();
+                        if (!response.ok) {
+                            console.error(data);
+                            alert("Unable to submit task.");
+                            return;
+                        }
+                        this.closeComplete();
+                        location.reload();
+                    }
+                    catch(error) {
+                        console.error(error);
+                        alert("Unable to submit task.");
+                    }
+                }, 
+
+                closeComplete() {
+                    this.resetSubmission();
+                    this.showCompleteModal = false;
                 },
 
                 previewTaskImage(event) {
@@ -1019,6 +1119,104 @@
                         console.error(error);
                         alert('Failed to delete task.');
                     });
+                },
+
+                openSubmission(submission) {
+                    this.submission = structuredClone(submission);
+                    this.showSubmissionModal = true;
+                },
+
+                closeSubmission() {
+                    this.submission = {
+                        id: null,
+                        task_id: null,
+                        title: '',
+                        submitter: '',
+                        submitted_at: '',
+                        proof_image: '',
+                        proof_link: '',
+                        notes: '',
+                        status: '',
+                    };
+
+                    this.showSubmissionModal = false;
+                },
+
+                openReview(submission) {
+                    this.submission = structuredClone(submission);
+                    this.showReviewModal = true;
+                },
+
+                closeReview() {
+                    this.submission = {
+                        id: null,
+                        task_id: null,
+                        title: '',
+                        submitter: '',
+                        submitted_at: '',
+                        proof_image: '',
+                        proof_link: '',
+                        notes: '',
+                        status: '',
+                    };
+
+                    this.showReviewModal = false;
+                },
+
+                async approveSubmission() {
+                    try {
+                        const response = await fetch(
+                            `/submissions/${this.submission.id}/approve`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN':
+                                        document.querySelector(
+                                            'meta[name="csrf-token"]'
+                                        ).content,
+                                    'Accept': 'application/json',
+                                },
+                            }
+                        );
+                        const data = await response.json();
+                        if (!response.ok) {
+                            console.error(data);
+                            alert("Unable to approve submission.");
+                            return;
+                        }
+                        location.reload();
+                    } catch (error) {
+                        console.error(error);
+                        alert("Unable to approve submission.");
+                    }
+                },
+
+                async rejectSubmission() {
+                    try {
+                        const response = await fetch(
+                            `/submissions/${this.submission.id}/reject`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN':
+                                        document.querySelector(
+                                            'meta[name="csrf-token"]'
+                                        ).content,
+                                    'Accept': 'application/json',
+                                },
+                            }
+                        );
+                        const data = await response.json();
+                        if (!response.ok) {
+                            console.error(data);
+                            alert("Unable to reject submission.");
+                            return;
+                        }
+                        location.reload();
+                    } catch (error) {
+                        console.error(error);
+                        alert("Unable to reject submission.");
+                    }
                 },
 
                 close() {

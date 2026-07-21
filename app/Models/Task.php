@@ -59,8 +59,12 @@ class Task extends Model
         return $this->hasMany(TaskCollaboration::class);
     }
 
-    public function submission(){
-        return $this->hasOne(TaskSubmission::class);
+    public function activeSubmission(){
+        return $this->hasOne(TaskSubmission::class)->latestOfMany(); 
+    }
+
+    public function submissions(){
+        return $this->hasMany(TaskSubmission::class);
     }
 
     public function collaborators(){

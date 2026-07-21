@@ -9,17 +9,10 @@ class TaskSubmission extends Model{
     protected $fillable = [
         'task_id',
         'submitted_by',
-        'reviewed_by',
-
         'proof_image',
         'proof_link',
-        'note',
-
+        'notes',
         'status',
-        'review_comment',
-
-        'submitted_at',
-        'reviewed_at',
     ];
 
     protected $casts = [

@@ -36,7 +36,13 @@ class ProjectTaskController extends Controller
             ]
         ];
 
-        $priorityTasks = $project->tasks()->where('is_completed', false)->where('status', '!=' ,'cancelled')
+        $priorityTasks = $project->tasks()
+            ->with([
+                'users',
+                'collaborators',
+                'activeSubmission.submitter',
+            ])
+            ->where('is_completed', false)->where('status', '!=' ,'cancelled')
             ->whereDate('deadline', '<=', today())
             ->orderByRaw("
                 FIELD(priority,
@@ -70,14 +76,19 @@ class ProjectTaskController extends Controller
         $direction = $request->get('direction', 'desc'); 
 
         $query = $project->tasks()
-            ->orderByRaw("
-                CASE status
-                    WHEN 'in_progress' THEN 1
-                    WHEN 'pending' THEN 2
-                    WHEN 'completed' THEN 3
-                    WHEN 'cancelled' THEN 4
-                END
-            ");
+            ->with([
+            'users',
+            'collaborators',
+            'activeSubmission.submitter',
+        ])
+        ->orderByRaw("
+            CASE status
+                WHEN 'in_progress' THEN 1
+                WHEN 'pending' THEN 2
+                WHEN 'completed' THEN 3
+                WHEN 'cancelled' THEN 4
+            END
+        ");
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -144,13 +155,6 @@ class ProjectTaskController extends Controller
 
         $task = Task::create($validated);
         $task->users()->sync($request->members ?? []);
-
-        // $task->load('users');
-
-        // dd(
-        //     $task->users->pluck('id'),
-        //     auth()->id()
-        // );
 
         foreach ($task->project->users as $member) {
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\ProjectTaskController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskSubmissionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/projects/{project}', [ProjectController::class, 'delete'])
         ->name('projects.delete');
 
+    Route::prefix('tasks/{task}')->name('tasks.')->group(function () {
+        Route::post('/submit', [TaskSubmissionController::class, 'store'])->name('submit');
+    });
+
     Route::get('/profile', [ProfileController::class, 'index'])
         ->name('profile');
 
@@ -88,9 +93,9 @@ Route::middleware(['auth'])->group(function () {
     );
 
     Route::delete(
-    '/collab/{project}/leave',
-    [CollabController::class,'leave']
-    )->name('collab.leave');
+        '/collab/{project}/leave',
+        [CollabController::class,'leave']
+        )->name('collab.leave');
 
     Route::post('/projects/{project}/tasks', [ProjectTaskController::class, 'store'])
         ->name('projects.tasks.store'); 
@@ -100,6 +105,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('/tasks/{task}', [ProjectTaskController::class, 'update'])
         ->name('tasks.update');
+
+    Route::post(
+        '/submissions/{submission}/approve',
+        [TaskSubmissionController::class, 'approve']
+    );
+
+    Route::post(
+        '/submissions/{submission}/reject',
+        [TaskSubmissionController::class, 'reject']
+    );
 
     Route::post('/notifications/read', [NotificationController::class, 'markAllAsRead'])
         ->middleware('auth')

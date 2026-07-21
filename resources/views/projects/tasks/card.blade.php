@@ -1,4 +1,4 @@
-<div class="bg-background rounded-3xl p-5 shadow-sm relative pl-9 w-full flex flex-col h-full hover:shadow-md hover:-translate-y-0.5 transition-all">
+<div class="bg-background rounded-3xl p-5 shadow-sm relative pl-9 w-full flex flex-col hover:shadow-md hover:-translate-y-0.5 transition-all">
 
     @php
         $priorityLower = strtolower($task->priority);
@@ -57,7 +57,7 @@
     </div>
 
     {{-- TITLE --}}
-    <div class="pr-2 flex flex-col grow">
+    <div class="pr-2 flex flex-col">
         <h2 class="text-text-primary text-xl font-semibold font-montserrat leading-snug">
             {{ $task->title }}
         </h2>
@@ -149,17 +149,96 @@
         <x-lucide-eye class="w-4 h-4 text-text-secondary" />
     </button>
 
-    <button
-        @click="openComplete(
-            id: {{ $task->id }},
-            title: @js($task->title), 
-            description: @js($task->description),
-            priority: @js($task->priority),
-        )"
-        class="text-text-primary w-full py-1.5 border-2 border-gray-100 shadow-sm rounded-full flex items-center justify-center gap-2 font-semibold text-sm bg-mark-completed hover:bg-mark-completed/50 transition-colors font-montserrat shrink-0 cursor-pointer mt-3"
-    >
-        Mark as Complete
-        <x-lucide-check-circle class="w-4 h-4 inline text-text-secondary"/>
-    </button>
+    @php
+        $isLeader = auth()->id() === $project->leader_id;
+        $isAssigned = $task->users->contains(auth()->id());
+        $submission = $task->activeSubmission;
+    @endphp
 
+    @if($isLeader)
+        @if($submission && $submission->status === 'pending')
+            <button
+                @click="openReview({
+                    id: {{ $submission->id }},
+                    task_id: {{ $task->id }},
+                    title: @js($task->title),
+                    submitter: @js($submission->submitter->name),
+                    submitted_at: @js($submission->created_at?->format('d M Y')),
+                    proof_image: @js($submission->proof_image),
+                    proof_link: @js($submission->proof_link),
+                    notes: @js($submission->notes),
+                    status: @js($submission->status),
+                })"
+                class="w-full mt-3 py-2 rounded-full
+                    bg-orange-500 hover:bg-orange-600
+                    text-white font-semibold transition"
+            >
+                Review Submission
+            </button>
+
+        @elseif($submission)
+
+            <button
+                @click="openSubmission({
+                    id: {{ $submission->id }},
+                    title: @js($task->title),
+                    submitter: @js($submission->submitter->name),
+                    submitted_at: @js($submission->created_at?->format('d M Y')),
+                    proof_image: @js($submission->proof_image),
+                    proof_link: @js($submission->proof_link),
+                    notes: @js($submission->notes),
+                    status: @js($submission->status),
+                })"
+                class="w-full mt-3 py-2 rounded-full
+                    bg-primary hover:opacity-90
+                    text-white font-semibold transition"
+            >
+                View Submission
+            </button>
+
+        @endif
+
+    @elseif($isAssigned)
+            
+        @if(!$submission)
+            <button
+                @click="openComplete({
+                    id: {{ $task->id }},
+                    title: @js($task->title),
+                    description: @js($task->description),
+                    priority: @js($task->priority),
+                })"
+                class="text-text-primary w-full py-1.5 border-2 border-gray-100
+                    shadow-sm rounded-full flex items-center justify-center gap-2
+                    font-semibold text-sm bg-mark-completed
+                    hover:bg-mark-completed/50 transition-colors
+                    font-montserrat mt-3 cursor-pointer"
+            >
+                Mark as Completed
+                <x-lucide-check-circle class="w-4 h-4"/>
+            </button>
+
+        @else
+
+            <button
+                @click="openSubmission({
+                    id: {{ $submission->id }},
+                    title: @js($task->title),
+                    submitter: @js($submission->submitter->name),
+                    submitted_at: @js($submission->created_at?->format('d M Y')),
+                    proof_image: @js($submission->proof_image),
+                    proof_link: @js($submission->proof_link),
+                    notes: @js($submission->notes),
+                    status: @js($submission->status),
+                })"
+                class="w-full mt-3 py-2 rounded-full
+                    bg-primary hover:opacity-90
+                    text-white font-semibold transition"
+            >
+                View Submission
+            </button>
+
+        @endif
+
+    @endif
 </div>

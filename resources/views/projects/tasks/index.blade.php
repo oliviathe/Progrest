@@ -1079,7 +1079,7 @@
 
 
     {{-- TASKS LIST --}}
-    @if ($allTasks->isNotEmpty())
+    @if($allTasks->isNotEmpty())
         <div class="px-8 pb-10" 
             x-data="taskModal()">
             <div class="flex flex-col sm:flex-row justify-between items-center">
@@ -1133,7 +1133,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 items-start">
                 @foreach ($allTasks as $task)
                     @include('projects.tasks.card', [
                         'project' => $project,
@@ -2256,6 +2256,800 @@
                         </button>
                     </div>
                 </div>
+            </div>
+
+            {{-- SUBMIT TASK FOR REVIEW MODAL --}}
+            <div
+                x-show="showCompleteModal"
+                x-cloak
+                x-transition.opacity
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-6"
+            >
+
+                {{-- Green Accent --}}
+                <div
+                    class="absolute -top-24 left-3/4
+                        h-64 w-86
+                        -translate-x-1/2
+                        rounded-full
+                        bg-green-300/15
+                        blur-3xl"
+                ></div>
+
+                <div
+                    @click.outside="closeComplete()"
+                    class="bg-background
+                        rounded-3xl
+                        shadow-xl
+                        w-full
+                        max-w-2xl
+                        max-h-[90vh]
+                        flex
+                        flex-col
+                        overflow-hidden"
+                >
+
+                    {{-- HEADER --}}
+                    <div
+                        class="flex items-center justify-between
+                            px-6 py-5
+                            border-b-2 border-border
+                            shrink-0"
+                    >
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="flex justify-center items-center
+                                    w-10 h-10
+                                    rounded-2xl
+                                    border-2
+                                    border-green-600
+                                    bg-mark-completed
+                                    shadow-[0_10px_30px_rgba(34,197,94,.18)]"
+                            >
+                                <x-lucide-badge-check
+                                    class="w-5 h-5 text-green-600"
+                                />
+                            </div>
+
+                            <div>
+
+                                <h1
+                                    class="font-montserrat
+                                        text-2xl
+                                        font-bold
+                                        text-text-primary"
+                                >
+                                    Submit for Review
+                                </h1>
+
+                                <p
+                                    class="text-sm font-montserrat
+                                        text-text-secondary"
+                                >
+                                    Submit your completed work for leader verification.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <button
+                            @click="closeComplete()"
+                            class="w-12 h-12
+                                rounded-full
+                                hover:bg-surface
+                                flex
+                                items-center
+                                justify-center
+                                z-101
+                                transition
+                                duration-300
+                                cursor-pointer"
+                        >
+                            <x-lucide-x
+                                class="w-5 h-5 text-text-primary"
+                            />
+                        </button>
+
+                    </div>
+
+                    {{-- BODY --}}
+                    <div
+                        class="flex-1
+                            overflow-y-auto
+                            px-6
+                            py-5
+                            space-y-5"
+                    >
+
+                        {{-- Task --}}
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                p-5"
+                        >
+
+                            <p
+                                class="text-xs
+                                    font-semibold
+                                    uppercase
+                                    tracking-wider
+                                    text-text-secondary"
+                            >
+                                Task
+                            </p>
+
+                            <h2
+                                class="mt-2
+                                    text-xl
+                                    font-bold font-montserrat
+                                    text-text-primary"
+                                x-text="task.title"
+                            ></h2>
+
+                            <div
+                                class="flex
+                                    gap-2
+                                    mt-4"
+                            >
+
+                                <span
+                                    :class="
+                                        task.priority === 'high' ? 'bg-red-accent' : (task.priority === 'Medium' ? 'bg-yellow-accent' : 'bg-quartiary')
+                                    "
+                                    class="px-3
+                                        py-1
+                                        rounded-full
+                                        text-white leading-6
+                                        text-xs
+                                        font-montserrat
+                                        font-semibold
+                                        capitalize"
+                                    x-text="task.priority === 'high' ? 'Priority: High' : (task.priority === 'Medium' ? 'Priority: Medium' : 'Priority: Low')" 
+                                ></span>
+
+                                <span
+                                    class="px-3
+                                        py-1
+                                        flex items-center font-montserrat
+                                        rounded-full
+                                        bg-background
+                                        text-xs"
+                                    x-text="task.priority === 'high' ? '+30 Credit Point' : (task.priority === 'Medium' ? '+20 Credit Point' : '+10 Credit Point')"
+                                ></span>
+
+                            </div>
+
+                        </div>
+
+                        {{-- Team Submission --}}
+                        <div
+                            class="bg-mark-completed font-montserrat
+                                rounded-2xl
+                                p-5"
+                        >
+
+                            <div class="flex gap-4">
+
+                                <div
+                                    class="w-10
+                                        h-10
+                                        rounded-xl
+                                        bg-white/60
+                                        flex
+                                        items-center
+                                        justify-center
+                                        shrink-0"
+                                >
+                                    <x-lucide-users
+                                        class="w-5 h-5 text-green-700"
+                                    />
+                                </div>
+
+                                <div>
+
+                                    <h3
+                                        class="font-semibold
+                                            text-text-primary"
+                                    >
+                                        Team Submission
+                                    </h3>
+
+                                    <p
+                                        class="text-sm
+                                            text-text-secondary
+                                            mt-1
+                                            leading-6"
+                                    >
+                                        This submission represents the work of the entire
+                                        team. Once submitted, the task will enter
+                                        <strong>Pending Review</strong> until the project
+                                        leader approves or rejects it.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {{-- Divider --}}
+                        <div class="border-t-2 border-border"></div>
+
+                        {{-- Upload --}}
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                p-5 font-montserrat
+                                space-y-4"
+                        >
+
+                            <div class="flex items-center gap-2">
+
+                                <x-lucide-image-plus
+                                    class="w-5 h-5 text-green-600"
+                                />
+
+                                <h3
+                                    class="font-semibold
+                                        text-text-primary"
+                                >
+                                    Proof of Completion
+                                </h3>
+
+                            </div>
+
+                            <label
+                                class="border-2
+                                    border-dashed
+                                    border-border
+                                    rounded-2xl
+                                    h-60
+                                    cursor-pointer
+                                    hover:border-primary
+                                    transition
+                                    flex
+                                    flex-col
+                                    justify-center
+                                    items-center
+                                    bg-background
+                                    overflow-hidden"
+                            >
+
+                                <template x-if="!submissionForm.preview">
+
+                                    <div class="flex flex-col items-center">
+
+                                        <x-lucide-upload-cloud
+                                            class="w-12 h-12 text-text-secondary"
+                                        />
+
+                                        <p
+                                            class="mt-4
+                                                font-semibold
+                                                text-text-primary"
+                                        >
+                                            Click to upload an image
+                                        </p>
+
+                                        <p
+                                            class="text-sm
+                                                text-text-secondary"
+                                        >
+                                            PNG • JPG • JPEG
+                                        </p>
+
+                                    </div>
+
+                                </template>
+
+                                <template x-if="submissionForm.preview">
+
+                                    <img
+                                        :src="submissionForm.preview"
+                                        class="w-full h-full object-cover"
+                                    >
+
+                                </template>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    class="hidden"
+                                    @change="previewSubmissionImage"
+                                >
+
+                            </label>
+
+                        </div>
+
+                        {{-- Link --}}
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                p-5 font-montserrat
+                                space-y-4"
+                        >
+
+                            <div class="flex items-center gap-2">
+
+                                <x-lucide-link
+                                    class="w-5
+                                        h-5
+                                        text-green-600"
+                                />
+
+                                <h3
+                                    class="font-semibold
+                                        text-text-primary"
+                                >
+                                    Submission Link
+                                </h3>
+
+                            </div>
+
+                            <input
+                                type="url"
+                                x-model="submissionForm.link"
+                                placeholder="https://github.com/your-project"
+                                class="w-full
+                                    rounded-2xl
+                                    bg-background
+                                    px-5
+                                    py-3
+                                    outline-none
+                                    text-sm
+                                    border
+                                    border-border
+                                    focus:border-primary"
+                            >
+
+                            <p
+                                class="text-xs
+                                    text-text-secondary"
+                            >
+                                GitHub repository, Figma file, Google Drive,
+                                YouTube, Notion page, etc.
+                            </p>
+
+                        </div>
+
+                        {{-- Notes --}}
+                        <div
+                            class="bg-surface
+                                rounded-2xl
+                                p-5 font-montserrat
+                                space-y-4"
+                        >
+
+                            <div class="flex items-center gap-2">
+
+                                <x-lucide-square-pen
+                                    class="w-5
+                                        h-5
+                                        text-green-600"
+                                />
+
+                                <h3
+                                    class="font-semibold
+                                        text-text-primary"
+                                >
+                                    Additional Notes
+                                </h3>
+
+                            </div>
+
+                            <textarea
+                                rows="5"
+                                x-model="submissionForm.notes"
+                                placeholder="Describe what has been completed..."
+                                class="w-full
+                                    rounded-2xl
+                                    bg-background
+                                    px-5
+                                    py-4 text-sm
+                                    resize-none
+                                    outline-none
+                                    border
+                                    border-border
+                                    focus:border-primary"
+                            ></textarea>
+
+                        </div>
+
+                        {{-- Reminder --}}
+                        <div
+                            class="rounded-2xl
+                                border font-montserrat
+                                border-border
+                                bg-background
+                                p-5"
+                        >
+
+                            <div class="flex gap-3">
+
+                                <x-lucide-info
+                                    class="w-5
+                                        h-5
+                                        text-primary
+                                        shrink-0"
+                                />
+
+                                <p
+                                    class="text-sm
+                                        leading-6
+                                        text-text-secondary"
+                                >
+                                    After submission, collaborators will no longer be able
+                                    to submit another completion request until this one has
+                                    been reviewed by the project leader.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {{-- FOOTER --}}
+                    <div
+                        class="flex
+                            justify-end
+                            gap-3
+                            px-6
+                            py-5 font-montserrat
+                            border-t-2
+                            border-border
+                            shrink-0"
+                    >
+
+                        <button
+                            @click="closeComplete()"
+                            class="px-6
+                                py-3 border-2 border-border
+                                rounded-2xl
+                                hover:bg-surface 
+                                transition
+                                cursor-pointer"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            @click="submitTask()"
+                            :disabled="!submissionForm.image && !submissionForm.link"
+                            :class="(!submissionForm.image && !submissionForm.link)
+                                ? 'opacity-50 cursor-not-allowed'
+                                : ''"
+                            class="px-7
+                                py-3
+                                rounded-2xl
+                                bg-quartiary
+                                hover:bg-quartiary-hover
+                                text-white
+                                shadow-lg
+                                shadow-green-600/20
+                                transition
+                                cursor-pointer"
+                        >
+
+                            <div class="flex items-center gap-2">
+
+                                <x-lucide-send
+                                    class="w-4 h-4"
+                                />
+
+                                <span>
+                                    Submit for Review
+                                </span>
+
+                            </div>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {{-- Submission Modal --}}
+
+            <div
+                x-show="showSubmissionModal"
+                x-cloak
+                x-transition.opacity
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-6"
+            >
+
+                <!-- Accent Glow -->
+                <div
+                    class="absolute -top-24 left-3/4
+                        h-64 w-86 -translate-x-1/2
+                        rounded-full
+                        bg-blue-300/15
+                        blur-3xl"
+                ></div>
+
+                <div
+                    @click.outside="closeSubmission()"
+                    class="bg-background rounded-3xl shadow-xl
+                        w-full max-w-2xl
+                        max-h-[90vh]
+                        flex flex-col
+                        overflow-hidden"
+                >
+
+                    <!-- HEADER -->
+                    <div
+                        class="flex items-center justify-between
+                            px-6 py-5
+                            border-b-2 border-border
+                            shrink-0"
+                    >
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-10 h-10
+                                    rounded-2xl
+                                    flex items-center justify-center
+                                    border-2
+                                    border-blue-500
+                                    bg-blue-50
+                                    dark:bg-blue-500/10"
+                            >
+                                <x-lucide-file-check-2
+                                    class="w-5 h-5 text-blue-600"
+                                />
+                            </div>
+
+                            <div>
+                                <h2 class="text-2xl font-bold font-montserrat">
+                                    Submission Details
+                                </h2>
+
+                                <p class="text-sm text-text-secondary">
+                                    Review the submitted work.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <button
+                            @click="closeSubmission()"
+                            class="w-11 h-11
+                                rounded-full
+                                hover:bg-surface
+                                transition
+                                hover:rotate-90
+                                flex items-center justify-center
+                                cursor-pointer"
+                        >
+                            <x-lucide-x class="w-5 h-5"/>
+                        </button>
+
+                    </div>
+
+                    <!-- BODY -->
+                    <div
+                        class="flex-1 overflow-y-auto
+                            px-6 py-5
+                            space-y-6"
+                    >
+
+                        <!-- Task -->
+                        <div>
+                            <p class="text-xs font-semibold uppercase text-text-secondary">
+                                Task
+                            </p>
+
+                            <div
+                                class="mt-2
+                                    bg-surface
+                                    rounded-2xl
+                                    px-5 py-4"
+                            >
+                                <h3
+                                    class="font-bold text-lg"
+                                    x-text="submission.title"
+                                ></h3>
+                            </div>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="grid md:grid-cols-2 gap-4">
+
+                            <div
+                                class="bg-surface
+                                    rounded-2xl
+                                    p-5"
+                            >
+
+                                <div class="flex items-center gap-2 mb-3">
+                                    <x-lucide-user class="w-5 h-5 text-primary"/>
+
+                                    <p class="font-semibold">
+                                        Submitted By
+                                    </p>
+                                </div>
+
+                                <p
+                                    class="text-text-secondary"
+                                    x-text="submission.submitter"
+                                ></p>
+
+                            </div>
+
+                            <div
+                                class="bg-surface
+                                    rounded-2xl
+                                    p-5"
+                            >
+
+                                <div class="flex items-center gap-2 mb-3">
+                                    <x-lucide-calendar-days class="w-5 h-5 text-primary"/>
+
+                                    <p class="font-semibold">
+                                        Submitted At
+                                    </p>
+                                </div>
+
+                                <p
+                                    class="text-text-secondary"
+                                    x-text="submission.submitted_at"
+                                ></p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Proof Image -->
+                        <div>
+
+                            <div class="flex items-center gap-2 mb-3">
+                                <x-lucide-image class="w-5 h-5 text-primary"/>
+
+                                <p class="font-semibold">
+                                    Proof Image
+                                </p>
+                            </div>
+
+                            <template x-if="submission.proof_image">
+
+                                <img
+                                    :src="'/storage/' + submission.proof_image"
+                                    class="rounded-3xl
+                                        w-full
+                                        max-h-96
+                                        object-cover
+                                        border
+                                        border-border"
+                                >
+
+                            </template>
+
+                            <template x-if="!submission.proof_image">
+
+                                <div
+                                    class="rounded-2xl
+                                        bg-surface
+                                        py-10
+                                        text-center
+                                        text-text-secondary"
+                                >
+
+                                    No proof image provided.
+
+                                </div>
+
+                            </template>
+
+                        </div>
+
+                        <!-- Proof Link -->
+                        <div>
+
+                            <div class="flex items-center gap-2 mb-3">
+                                <x-lucide-link class="w-5 h-5 text-primary"/>
+
+                                <p class="font-semibold">
+                                    Submission Link
+                                </p>
+                            </div>
+
+                            <template x-if="submission.proof_link">
+
+                                <a
+                                    :href="submission.proof_link"
+                                    target="_blank"
+                                    class="block
+                                        rounded-2xl
+                                        bg-surface
+                                        px-5 py-4
+                                        text-primary
+                                        hover:underline
+                                        break-all"
+                                    x-text="submission.proof_link"
+                                ></a>
+
+                            </template>
+
+                            <template x-if="!submission.proof_link">
+
+                                <div
+                                    class="rounded-2xl
+                                        bg-surface
+                                        py-6
+                                        text-center
+                                        text-text-secondary"
+                                >
+
+                                    No submission link.
+
+                                </div>
+
+                            </template>
+
+                        </div>
+
+                        <!-- Notes -->
+                        <div>
+
+                            <div class="flex items-center gap-2 mb-3">
+                                <x-lucide-notebook-pen class="w-5 h-5 text-primary"/>
+
+                                <p class="font-semibold">
+                                    Notes
+                                </p>
+                            </div>
+
+                            <div
+                                class="rounded-2xl
+                                    bg-surface
+                                    px-5 py-4
+                                    min-h-28"
+                            >
+
+                                <p
+                                    class="leading-7 whitespace-pre-line text-text-secondary"
+                                    x-text="submission.notes || 'No notes provided.'"
+                                ></p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div
+                        class="border-t-2 border-border
+                            px-6 py-5
+                            flex justify-end"
+                    >
+
+                        <button
+                            @click="closeSubmission()"
+                            class="px-6 py-3
+                                rounded-2xl
+                                bg-surface
+                                hover:bg-border
+                                transition
+                                font-semibold
+                                cursor-pointer"
+                        >
+
+                            Close
+
+                        </button>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     @endif
