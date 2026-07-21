@@ -92,22 +92,14 @@
         </div>
     </div>
 
-    {{-- DUE DATE & COMMENTS ROW --}}
-    <div class="flex flex-row items-center justify-between mb-3 shrink-0">
-        <div class="flex flex-row gap-1.5 items-center">
-            <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
-            @if (!is_null($task->deadline))
-                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due') }} {{ $task->deadline->format('d M Y') }}</p>
-            @else
-                <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due-not-set') }}</p>
-            @endif
-        </div>
-
-        {{-- Added Comment Counter --}}
-        <div class="flex flex-row gap-1.5 items-center">
-            <x-lucide-message-circle class="w-3.5 h-3.5 text-text-secondary"/> 
-            <p class="font-montserrat text-text-secondary text-sm">{{ $commentsCount ?? 0 }}</p>
-        </div>
+    {{-- DUE DATE --}}
+    <div class="flex flex-row gap-1.5 items-center mb-3">
+        <x-lucide-calendar class="w-3.5 h-3.5 text-text-secondary"/> 
+        @if (!is_null($task->deadline))
+            <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due') }} {{ $task->deadline->format('d M Y') }}</p>
+        @else
+            <p class="font-montserrat text-text-secondary text-sm">{{ __('main.task.due-not-set') }}</p>
+        @endif
     </div>
 
     {{-- View button --}}

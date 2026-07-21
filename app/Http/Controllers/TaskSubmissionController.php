@@ -131,7 +131,17 @@ class TaskSubmissionController extends Controller{
             'is_completed' => true,
         ]);
 
-        $project = $task->project; 
+        $project = $task->project;
+
+        $hasIncompleteTasks = $project->tasks()
+            ->where('status', '!=', 'completed')
+            ->exists();
+
+        if (! $hasIncompleteTasks) {
+            $project->update([
+                'status' => 'completed',
+            ]);
+        }
 
         foreach ($project->users as $member) {
             if ($member->id === auth()->id()) {

@@ -194,7 +194,7 @@
                             </div>
 
                             <img
-                                src="{{ $project->leader->avatar_url ? $project->leader->avatar_url : '/images/profile.jpg' }}"
+                                src="{{ $project->leader->avatar ? $project->leader->avatar : '/images/profile.jpg' }}"
                                 class="ml-9 w-10 h-10 rounded-full object-cover border-2 border-white"
                             >
 
@@ -900,7 +900,7 @@
                                         <div class="flex items-center gap-3">
 
                                             <img
-                                                :src="member.avatar_url || '/images/profile.jpg'"
+                                                :src="member.avatar || '/images/profile.jpg'"
                                                 class="w-10 h-10 rounded-full object-cover"
                                             >
 
@@ -1340,7 +1340,7 @@
                                                     <div class="flex lg:hidden">
                                                         <template x-for="member in (task.members ?? []).slice(0,3)" :key="member.id">
                                                             <img
-                                                                :src="member.avatar_url ? member.avatar_url : '/images/profile.jpg'"
+                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
                                                                 class="w-8 h-8 shrink-0 min-w-8 rounded-full object-cover border-2 border-surface first:ml-1 -ml-2.5"
                                                             >
                                                         </template>
@@ -1357,7 +1357,7 @@
                                                     <div class="hidden lg:flex">
                                                         <template x-for="member in (task.members ?? []).slice(0,5)" :key="member.id">
                                                             <img
-                                                                :src="member.avatar_url ? member.avatar_url : '/images/profile.jpg'"
+                                                                :src="member.avatar ? member.avatar : '/images/profile.jpg'"
                                                                 class="w-8 h-8 min-w-8 shrink-0 rounded-full object-cover border-2 border-surface first:ml-0 -ml-2.5"
                                                             >
                                                         </template>
@@ -1409,7 +1409,7 @@
                                                         >
                                                             <div class="flex items-center gap-3">
                                                                 <img
-                                                                    :src="member.avatar_url ? member.avatar_url : '/images/profile.jpg'"
+                                                                    :src="member.avatar ? member.avatar : '/images/profile.jpg'"
                                                                     class="w-6 h-6 min-w-6 shrink-0 rounded-full object-cover"
                                                                 >
                                                                 <div>
@@ -1589,7 +1589,7 @@
                                                         <div class="flex items-center gap-3">
 
                                                             <img
-                                                                :src="member.avatar_url || '/images/profile.jpg'"
+                                                                :src="member.avatar || '/images/profile.jpg'"
                                                                 class="w-9 h-9 rounded-full object-cover"
                                                             >
 

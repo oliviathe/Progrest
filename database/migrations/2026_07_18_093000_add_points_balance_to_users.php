@@ -15,12 +15,12 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             if (! Schema::hasColumn('users', 'points')) {
                 // Current spendable balance.
-                $table->unsignedInteger('points')->default(0)->after('best_streak');
+                $table->unsignedInteger('points')->default(50)->after('best_streak');
             }
 
             if (! Schema::hasColumn('users', 'highest_points')) {
                 // High-water mark: the largest balance this account has ever held.
-                $table->unsignedInteger('highest_points')->default(0)->after('points');
+                $table->unsignedInteger('highest_points')->default(50)->after('points');
             }
         });
 

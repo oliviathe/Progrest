@@ -113,16 +113,15 @@
 
                     <div class="flex items-center">
                         <input type="checkbox" name="remember" id="remember" class="w-3.5 h-3.5 md:w-4 md:h-4 text-primary border-gray-300 rounded focus:ring-primary cursor-pointer bg-background">
-                        <label for="remember" class="ml-2 text-xs md:text-sm text-[#545454] cursor-pointer hover:text-primary transition-colors">{{ __('main.auth.remember') }}</label>
+                        <label for="remember" class="ml-2 text-xs md:text-sm text-text-secondary cursor-pointer transition-colors">{{ __('main.auth.remember') }}</label>
                     </div>
 
                     <div class="text-center text-xs md:text-sm text-text-secondary mt-5 mb-3">
                         {{ __('main.auth.no-account') }} <a href="/register" class="font-bold text-text-secondary hover:text-primary transition-colors underline decoration-1 underline-offset-4">{{ __('main.auth.get-progrest') }}</a>
                     </div>
 
-                    <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
+                    <button type="submit" class="text-text-contrast w-full bg-primary hover:bg-primary-hover cursor-pointer text-contrast font-bold py-2.5  md:py-2 rounded-xl transition-all shadow-md active:scale-95 text-sm md:text-base">
                         {{ __('main.auth.login-btn') }}
-
                     </button>
 
                     <div class="flex items-center opacity-70">

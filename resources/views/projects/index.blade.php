@@ -3,9 +3,6 @@
 @section('title', 'Projects')
 
 @section('content')
-    @php
-        $avatars = asset('images/profile.jpg')
-    @endphp
 
     {{-- HEADER --}}
 

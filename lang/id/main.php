@@ -210,7 +210,7 @@ return [
         "assigned-members" => "Anggota yang Ditugaskan",
         "status" => "Status",
         "pending" => "Tertunda",
-        "in-progress" => "Sedang Berlangsung",
+        "in-progress" => "Dikerjakan",
         "completed" => "Selesai",
         "cancelled" => "Dibatalkan",
         "high" => "Tinggi",
