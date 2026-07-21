@@ -1,5 +1,7 @@
 @extends('layouts.app') 
 
+@section('title', 'Collab')
+
 @section('content')
 <div class="p-4 md:p-8 pt-6 max-w-7xl mx-auto bg-linear-to-r from-surface to-background-gradient">
     
@@ -47,16 +49,6 @@
 
     </h1>
 
-    <button
-
-        onclick="openCreateModal()"
-
-        class="bg-primary text-white rounded-full px-6 py-3 font-semibold hover:opacity-90">
-
-        + Create Collaboration
-
-    </button>
-
 </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,6 +66,5 @@
 
 </div>
 @include('collab.popup.join-modal')
-@include('collab.popup.create-modal')
 @include('collab.script')
 @endsection

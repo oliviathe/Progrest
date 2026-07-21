@@ -1,32 +1,5 @@
 <script>
 
-const coverInput = document.getElementById("coverImage");
-
-if (coverInput) {
-
-    coverInput.addEventListener("change", function(e){
-
-        const file = e.target.files[0];
-
-        if(!file) return;
-
-        document.getElementById("coverPreview").src =
-            URL.createObjectURL(file);
-
-    });
-
-}
-
-function openCreateModal() {
-    document.getElementById("createCollabModal")
-        .classList.remove("hidden");
-}
-
-function closeCreateModal() {
-    document.getElementById("createCollabModal")
-        .classList.add("hidden");
-}
-
 function openJoinModal(
     id,
     title,
@@ -57,12 +30,7 @@ function closeJoinModal() {
 
 window.addEventListener("click", function(e){
 
-    const createModal = document.getElementById("createCollabModal");
     const joinModal = document.getElementById("joinCollabModal");
-
-    if(e.target === createModal){
-        closeCreateModal();
-    }
 
     if(e.target === joinModal){
         closeJoinModal();
@@ -139,14 +107,12 @@ function filterCards() {
 
 }
 
-searchInput.addEventListener(
-    "keyup",
-    filterCards
-);
+if (searchInput && filterInput) {
 
-filterInput.addEventListener(
-    "change",
-    filterCards
-);
+    searchInput.addEventListener("keyup", filterCards);
+
+    filterInput.addEventListener("change", filterCards);
+
+}
 
 </script>
