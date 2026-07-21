@@ -44,7 +44,7 @@
         <h3 class="text-text-primary font-semibold font-montserrat mb-2 text-sm">{{ __('main.proj.collaborators') }}</h3>
         <div class="flex items-center -space-x-2">
             @foreach ($collaborators->take(3) as $user)
-                <img src="{{$user->avatar ? $user->avatar : '/images/profile.jpg'}}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
+                <img src="{{$user->avatar_url ? $user->avatar_url : '/images/profile.jpg'}}" alt="Collaborator" class="w-8 h-8 rounded-full border-2 border-white object-cover relative z-0">
             @endforeach
             
             @php

@@ -35,22 +35,22 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'max:12', Password::min(8)
                 ->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
         ], [
-            'username.required' => 'Username is required', 
-            'username.min' => 'Username must be at least 4 characters',
-            'username.max' => 'Username cannot exceed 8 characters',
-            'username.unique' => 'This username is already taken', 
+            'username.required' => __('main.validation.username-required'),
+            'username.min' => __('main.validation.username-min'),
+            'username.max' => __('main.validation.username-max'),
+            'username.unique' => __('main.validation.username-unique'),
 
-            'name.required' => 'Name is required', 
-            'name.min' => 'Name must be at least 6 characters',
-            'name.max' => 'Name cannot exceed 12 characters',
+            'name.required' => __('main.validation.name-required'),
+            'name.min' => __('main.validation.name-min'),
+            'name.max' => __('main.validation.name-max'),
 
-            'email.required' => 'E-mail is required', 
-            'email.email' => 'Please enter a valid email address',
-            'email.unique' => 'E-mail is already taken', 
+            'email.required' => __('main.validation.email-required'),
+            'email.email' => __('main.validation.email-email'),
+            'email.unique' => __('main.validation.email-unique'),
 
-            'password.required' => 'Password is required.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password' => 'Password must include mixed case, numbers, & symbols.',
+            'password.required' => __('main.validation.password-required'),
+            'password.min' => __('main.validation.password-min'),
+            'password' => __('main.validation.password-complexity'),
         ]);
 
         $user = User::create([
@@ -71,8 +71,8 @@ class AuthController extends Controller
             'login' => 'required|string', // bisa username OR email
             'password' => 'required|string',
         ], [
-            'login.required' => 'Username or E-mail is required', 
-            'password.required' => 'Password is required'
+            'login.required' => __('main.validation.login-required'),
+            'password.required' => __('main.validation.password-required'),
         ]);
 
         // Kasih opsi login via username OR email

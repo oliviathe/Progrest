@@ -22,6 +22,10 @@
 
         <!-- Desktop -->
         <div class="hidden sm:flex gap-4 items-center">
+            <div class="flex items-center rounded-lg border border-border p-0.5 font-montserrat text-sm font-semibold">
+                <a href="{{ route('language.switch', 'en') }}" class="px-3 py-1 rounded-md transition-colors {{ app()->getLocale() == 'en' ? 'bg-primary text-white' : 'text-text-secondary hover:text-text-primary' }}">EN</a>
+                <a href="{{ route('language.switch', 'id') }}" class="px-3 py-1 rounded-md transition-colors {{ app()->getLocale() == 'id' ? 'bg-primary text-white' : 'text-text-secondary hover:text-text-primary' }}">ID</a>
+            </div>
             <a href="{{ route('login') }}" class="text-text-primary font-montserrat">{{ __('main.landing.signin') }}</a>
             <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold font-montserrat">
                 {{ __('main.landing.get-started-free') }}
@@ -42,6 +46,10 @@
         <a href="{{ route('register') }}" class="bg-primary hover:bg-primary-hover text-white px-5 py-2 rounded-lg font-semibold mb-4 font-montserrat">
             {{ __('main.landing.get-started-free') }}
         </a>
+        <div class="flex items-center rounded-lg border border-border p-0.5 mb-4 font-montserrat text-sm font-semibold">
+            <a href="{{ route('language.switch', 'en') }}" class="px-3 py-1 rounded-md transition-colors {{ app()->getLocale() == 'en' ? 'bg-primary text-white' : 'text-text-secondary hover:text-text-primary' }}">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" class="px-3 py-1 rounded-md transition-colors {{ app()->getLocale() == 'id' ? 'bg-primary text-white' : 'text-text-secondary hover:text-text-primary' }}">ID</a>
+        </div>
     </div>
 
 </nav>

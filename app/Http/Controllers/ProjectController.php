@@ -35,7 +35,7 @@ class ProjectController extends Controller
         $projects = Project::where(function ($query) {
             $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) {
-                    $q->where('user_id', auth()->id());
+                    $q->whereKey(auth()->id());
                 });
         });
 
@@ -66,7 +66,7 @@ class ProjectController extends Controller
         $projectsCol = Project::where(function ($query) use ($user) {
             $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) use ($user) {
-                    $q->where('user_id', auth()->id());
+                    $q->whereKey($user->id);
                 });
         })
         ->with(['users', 'leader'])
@@ -100,13 +100,13 @@ class ProjectController extends Controller
             'members.*' => 'exists:users,id',
         ], 
         [
-            'title.required' => 'Project title is required.',
-            'title.max' => 'Project title cannot exceed 15 characters.',
-            'description.required' => 'Project description is required.', 
-            'description.max' => 'Description cannot exceed 255 characters.',
-            'deadline.date' => 'Please choose a valid date.',
-            'members.array' => 'Invalid member list.',
-            'members.*.exists' => 'One or more selected users do not exist.',
+            'title.required' => __('main.validation.proj-title-required'),
+            'title.max' => __('main.validation.proj-title-max'),
+            'description.required' => __('main.validation.proj-desc-required'),
+            'description.max' => __('main.validation.proj-desc-max'),
+            'deadline.date' => __('main.validation.proj-deadline-date'),
+            'members.array' => __('main.validation.proj-members-array'),
+            'members.*.exists' => __('main.validation.proj-members-exists'),
         ]
         );
 

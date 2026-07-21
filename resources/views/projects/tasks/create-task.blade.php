@@ -12,7 +12,7 @@
         class="relative bg-white rounded-[32px] p-10 w-[700px] z-10"
     >
         <h1 class="text-4xl font-bold mb-8">
-            Create New Task
+            {{ __('main.task.create-new-task') }}
         </h1>
 
         <div class="flex justify-end gap-4 mt-8">
@@ -20,13 +20,13 @@
                 @click="showCreateModal = false"
                 class="px-8 py-3 border rounded-2xl"
             >
-                Cancel
+                {{ __('main.task.cancel') }}
             </button>
 
             <button
                 class="px-8 py-3 bg-green-800 text-white rounded-2xl"
             >
-                Create Task
+                {{ __('main.task.create') }}
             </button>
         </div>
     </div>

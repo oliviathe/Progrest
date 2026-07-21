@@ -8,7 +8,7 @@
 @endphp
 
 <div 
-    class="bg-background rounded-xl shadow-sm overflow-hidden p-4"
+    class="collab-card bg-background rounded-xl shadow-sm overflow-hidden p-4"
     data-title="{{ strtolower($project->title) }}"
     data-description="{{ strtolower($project->description) }}"
     data-leader="{{ strtolower($project->leader->name) }}"
@@ -66,7 +66,7 @@
     @if($isLeader)
 
         <button
-            class="mt-4 w-full py-2 rounded-full bg-blue-500 text-white">
+            class="mt-4 w-full py-2 rounded-full bg-blue-200 text-blue-700">
 
             OWNER
 
@@ -108,7 +108,7 @@
 
                 @js($project->leader->name),
 
-                '{{ $project->users_count }}/{{ $project->capacity }}',
+                '{{ $project->users_count }}',
 
                 '{{ $project->reward }}'
 
