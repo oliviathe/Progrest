@@ -139,6 +139,7 @@
 
     --color-hyperlink: #059669; 
     --color-mark-completed: #E4F7EC; 
+    --color-review-submission: #FEF2D8;
 }
 
 .dark {
@@ -188,6 +189,7 @@
 
     --color-hyperlink: #34D399; 
     --color-mark-completed: #1D3A2B; 
+    --color-review-submission: #4A3B12;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -222,6 +224,7 @@
 
         --color-hyperlink: #34D399; 
         --color-mark-completed: #1D3A2B; 
+        --color-review-submission: #4A3B12;
     }
 }
 

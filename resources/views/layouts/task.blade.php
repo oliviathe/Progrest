@@ -822,7 +822,7 @@
                 showCollab: false,
                 showCompleteModal: false,
                 showSubmissionModal: false,
-                showReviewModal: false,
+                reviewMode: false,
 
                 newImage: null,
 
@@ -835,6 +835,7 @@
                     title: '',
                     submitter: '',
                     submitted_at: '',
+                    submitter_avatar: '', 
                     proof_image: '',
                     proof_link: '',
                     notes: '',
@@ -1122,6 +1123,7 @@
                 },
 
                 openSubmission(submission) {
+                    this.reviewMode = false; 
                     this.submission = structuredClone(submission);
                     this.showSubmissionModal = true;
                 },
@@ -1133,6 +1135,7 @@
                         title: '',
                         submitter: '',
                         submitted_at: '',
+                        submitter_avatar: '', 
                         proof_image: '',
                         proof_link: '',
                         notes: '',
@@ -1140,27 +1143,13 @@
                     };
 
                     this.showSubmissionModal = false;
+                    this.reviewMode = false; 
                 },
 
                 openReview(submission) {
                     this.submission = structuredClone(submission);
-                    this.showReviewModal = true;
-                },
-
-                closeReview() {
-                    this.submission = {
-                        id: null,
-                        task_id: null,
-                        title: '',
-                        submitter: '',
-                        submitted_at: '',
-                        proof_image: '',
-                        proof_link: '',
-                        notes: '',
-                        status: '',
-                    };
-
-                    this.showReviewModal = false;
+                    this.reviewMode = true,
+                    this.showSubmissionModal = true;
                 },
 
                 async approveSubmission() {
@@ -1233,6 +1222,23 @@
                     this.taskMembers = [];
 
                     this.newImage = null;
+                    this.showCompleteModal = false;
+                    this.showSubmissionModal = false;
+
+                    this.resetSubmission();
+                    this.reviewMode = false;
+                    this.submission = {
+                        id: null,
+                        task_id: null,
+                        title: '',
+                        submitter: '',
+                        submitted_at: '',
+                        submitter_avatar: '', 
+                        proof_image: '',
+                        proof_link: '',
+                        notes: '',
+                        status: '',
+                    };
                 }
             }
         }

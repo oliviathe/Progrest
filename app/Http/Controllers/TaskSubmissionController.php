@@ -8,64 +8,20 @@ use App\Notifications\ActivityNotification;
 use Illuminate\Http\Request;
 
 class TaskSubmissionController extends Controller{
-    public function store(Request $request, Task $task){
-
-        // Jaga supaya cuma user yang terlibat sebagai kolabolator internal task aja 
-        abort_unless(
-            $task->users->contains(auth()->id()),
-            403
-        );
-
-        $request->validate([
-            'proof_image' => 'nullable|image|max:5120',
-            'proof_link'  => 'nullable|url|max:2048',
-            'notes'       => 'nullable|string|max:1000',
-        ]);
-
-        if (
-            !$request->hasFile('proof_image') &&
-            blank($request->proof_link)
-        ) {
-            return back()->withErrors([
-                'proof_image' => 'Upload an image or provide a link.',
-            ]);
-        }
-
-        $imagePath = null;
-
-        if ($request->hasFile('proof_image')) {
-            $imagePath = $request
-                ->file('proof_image')
-                ->store('task-submissions', 'public');
-        }
-
-        if ($task->submission) {
-            return response()->json([
-                'message' => 'This task already has a pending submission.'
-            ], 409);
-        }
-
-        TaskSubmission::create([
-            'task_id'       => $task->id,
-            'submitted_by'  => auth()->id(),
-            'proof_image'   => $imagePath,
-            'proof_link'    => $request->proof_link,
-            'notes'         => $request->notes,
-            'status'        => 'pending',
-        ]);
-
-        return back()->with(
-            'success',
-            'Task submitted for review.'
-        );
-    }
 
     public function submit(Request $request, Task $task){
         $user = auth()->user();
+        
+        $isAssigned = $task->users()
+            ->where('users.id', $user->id)
+            ->exists();
+
+        $isLeader = $task->project->leader_id === $user->id;
+
         abort_unless(
-            $task->users()->where('users.id', $user->id)->exists(),
+            $isAssigned || $isLeader,
             403,
-            'You are not assigned to this task.'
+            'You are not allowed to submit this task.'
         );
 
         if ($task->activeSubmission 
@@ -115,7 +71,7 @@ class TaskSubmissionController extends Controller{
 
         $submission = TaskSubmission::create([
             'task_id' => $task->id,
-            'user_id' => $user->id,
+            'submitted_by' => $user->id,
 
             'proof_image' => $proofImage,
             'proof_link' => $validated['proof_link'] ?? null,
@@ -149,6 +105,122 @@ class TaskSubmissionController extends Controller{
         return response()->json([
             'success' => true,
             'submission' => $submission,
+        ]);
+    }
+
+    public function approve(TaskSubmission $submission){
+        $user = auth()->user();
+        $task = $submission->task; 
+
+        $isLeader = $task->project->leader_id === $user->id;
+        
+        abort_unless(
+            $isLeader,
+            403,
+            'Only project leaders can review task submissions.'
+        );
+
+        $submission->update([
+            'status' => 'approved',
+            'reviewed_by' => auth()->id(),
+            'reviewed_at' => now(),
+        ]);
+
+        $submission->task->update([
+            'status' => 'completed',
+            'is_completed' => true,
+        ]);
+
+        $project = $task->project; 
+
+        foreach ($project->users as $member) {
+            if ($member->id === auth()->id()) {
+                continue;
+            }
+            $member->notify(
+                new ActivityNotification(
+                    title: 'Task Completed',
+                    message: '"'.$task->title.'" has been completed.',
+                    type: 'task_completed',
+                    projectId: $project->id,
+                    taskId: $task->id,
+                )
+            );
+        }
+
+        $submission->submitter->notify(
+            new ActivityNotification(
+                title: 'Submission Approved',
+                message: 'Your submission for "'.$task->title.'" was approved.',
+                type: 'task_completed',
+                projectId: $project->id,
+                taskId: $task->id,
+            )
+        );
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function reject(TaskSubmission $submission){
+        $user = auth()->user();
+        $task = $submission->task; 
+        
+        $isLeader = $task->project->leader_id === $user->id;
+        
+        abort_unless(
+            $isLeader,
+            403,
+            'Only project leaders can review task submissions.'
+        );
+
+        $submission->update([
+            'status' => 'rejected',
+            'reviewed_by' => auth()->id(),
+            'reviewed_at' => now(),
+        ]);
+
+        $submission->task->update([
+            'status' => 'in_progress',
+        ]);
+
+        // Jaga-jaga kalo proof image masih muncul/ketinggalan 
+        if ($submission->proof_image) {
+            \Storage::disk('public')->delete($submission->proof_image);
+        }
+
+        $project = $task->project; 
+
+        foreach ($project->users as $member) {
+            if ($member->id === auth()->id()) {
+                continue;
+            }
+            $member->notify(
+                new ActivityNotification(
+                    title: 'Task Rejected',
+                    message: '"'.$task->title.'" has been rejected for completion.',
+                    type: 'task_rejected',
+                    projectId: $project->id,
+                    taskId: $task->id,
+                )
+            );
+        }
+
+        $submission->submitter->notify(
+            new ActivityNotification(
+                title: 'Submission Rejected',
+                message: 'Your submission for "'.$task->title.'" was rejected.',
+                type: 'task_rejected',
+                projectId: $project->id,
+                taskId: $task->id,
+            )
+        );
+
+        $submission->delete();
+
+        return response()->json([
+            'success' => true,
         ]);
     }
 }

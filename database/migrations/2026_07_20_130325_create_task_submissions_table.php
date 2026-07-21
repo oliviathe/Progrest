@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('proof_image')->nullable();
             $table->string('proof_link')->nullable();
 
-            $table->text('note')->nullable();
+            $table->text('notes')->nullable();
 
             $table->enum('status', [
                 'pending',

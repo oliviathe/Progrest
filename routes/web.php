@@ -76,8 +76,18 @@ Route::middleware(['auth'])->group(function () {
         ->name('projects.delete');
 
     Route::prefix('tasks/{task}')->name('tasks.')->group(function () {
-        Route::post('/submit', [TaskSubmissionController::class, 'store'])->name('submit');
+        Route::post('/submit', [TaskSubmissionController::class, 'submit'])->name('submit');
     });
+
+    Route::post(
+        '/submissions/{submission}/approve',
+        [TaskSubmissionController::class, 'approve']
+    );
+
+    Route::post(
+        '/submissions/{submission}/reject',
+        [TaskSubmissionController::class, 'reject']
+    );
 
     Route::get('/profile', [ProfileController::class, 'index'])
         ->name('profile');

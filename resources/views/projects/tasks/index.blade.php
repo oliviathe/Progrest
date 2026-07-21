@@ -2416,6 +2416,7 @@
                                         flex items-center font-montserrat
                                         rounded-full
                                         bg-background
+                                        text-text-primary
                                         text-xs"
                                     x-text="task.priority === 'high' ? '+30 Credit Point' : (task.priority === 'Medium' ? '+20 Credit Point' : '+10 Credit Point')"
                                 ></span>
@@ -2600,6 +2601,8 @@
                                     px-5
                                     py-3
                                     outline-none
+                                    placeholder:text-placeholder
+                                    text-text-primary
                                     text-sm
                                     border
                                     border-border
@@ -2651,6 +2654,8 @@
                                     px-5
                                     py-4 text-sm
                                     resize-none
+                                    text-text-primary
+                                    placeholder:text-placeholder
                                     outline-none
                                     border
                                     border-border
@@ -2712,6 +2717,7 @@
                                 rounded-2xl
                                 hover:bg-surface 
                                 transition
+                                text-text-primary
                                 cursor-pointer"
                         >
                             Cancel
@@ -2764,12 +2770,13 @@
                 class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-6"
             >
 
-                <!-- Accent Glow -->
+                {{-- Green Accent --}}
                 <div
                     class="absolute -top-24 left-3/4
-                        h-64 w-86 -translate-x-1/2
+                        h-64 w-86
+                        -translate-x-1/2
                         rounded-full
-                        bg-blue-300/15
+                        bg-green-300/15
                         blur-3xl"
                 ></div>
 
@@ -2793,25 +2800,25 @@
                         <div class="flex items-center gap-3">
 
                             <div
-                                class="w-10 h-10
+                                class="flex justify-center items-center
+                                    w-10 h-10
                                     rounded-2xl
-                                    flex items-center justify-center
                                     border-2
-                                    border-blue-500
-                                    bg-blue-50
-                                    dark:bg-blue-500/10"
+                                    border-green-600
+                                    bg-mark-completed
+                                    shadow-[0_10px_30px_rgba(34,197,94,.18)]"
                             >
-                                <x-lucide-file-check-2
-                                    class="w-5 h-5 text-blue-600"
+                                <x-lucide-view
+                                    class="w-5 h-5 text-green-600"
                                 />
                             </div>
 
                             <div>
-                                <h2 class="text-2xl font-bold font-montserrat">
+                                <h2 class="text-2xl font-bold font-montserrat text-text-primary">
                                     Submission Details
                                 </h2>
 
-                                <p class="text-sm text-text-secondary">
+                                <p class="text-sm text-text-secondary font-montserrat">
                                     Review the submitted work.
                                 </p>
                             </div>
@@ -2824,6 +2831,7 @@
                                 rounded-full
                                 hover:bg-surface
                                 transition
+                                z-101 text-text-primary
                                 hover:rotate-90
                                 flex items-center justify-center
                                 cursor-pointer"
@@ -2836,12 +2844,12 @@
                     <!-- BODY -->
                     <div
                         class="flex-1 overflow-y-auto
-                            px-6 py-5
+                            px-6 py-5 font-montserrat
                             space-y-6"
                     >
 
                         <!-- Task -->
-                        <div>
+                        <div class="font-montserrat">
                             <p class="text-xs font-semibold uppercase text-text-secondary">
                                 Task
                             </p>
@@ -2853,7 +2861,7 @@
                                     px-5 py-4"
                             >
                                 <h3
-                                    class="font-bold text-lg"
+                                    class="font-semibold text-lg text-text-primary"
                                     x-text="submission.title"
                                 ></h3>
                             </div>
@@ -2871,15 +2879,21 @@
                                 <div class="flex items-center gap-2 mb-3">
                                     <x-lucide-user class="w-5 h-5 text-primary"/>
 
-                                    <p class="font-semibold">
+                                    <p class="font-semibold text-text-primary">
                                         Submitted By
                                     </p>
                                 </div>
 
-                                <p
-                                    class="text-text-secondary"
-                                    x-text="submission.submitter"
-                                ></p>
+                                <div class="flex items-center gap-3 bg-background rounded-xl p-2">
+                                    <img
+                                        :src="submission.submitter_avatar"
+                                        class="w-8 h-8 rounded-full object-cover"
+                                    >
+                                    <p
+                                        class="text-text-secondary"
+                                        x-text="submission.submitter"
+                                    ></p>
+                                </div>
 
                             </div>
 
@@ -2892,15 +2906,17 @@
                                 <div class="flex items-center gap-2 mb-3">
                                     <x-lucide-calendar-days class="w-5 h-5 text-primary"/>
 
-                                    <p class="font-semibold">
+                                    <p class="font-semibold text-text-primary">
                                         Submitted At
                                     </p>
                                 </div>
-
-                                <p
-                                    class="text-text-secondary"
-                                    x-text="submission.submitted_at"
-                                ></p>
+                                
+                                <div class="flex items-center gap-3 bg-background rounded-xl py-2 px-4 text-center mih-h-48">
+                                    <p
+                                        class="text-text-secondary"
+                                        x-text="submission.submitted_at"
+                                    ></p>
+                                </div>
 
                             </div>
 
@@ -2912,7 +2928,7 @@
                             <div class="flex items-center gap-2 mb-3">
                                 <x-lucide-image class="w-5 h-5 text-primary"/>
 
-                                <p class="font-semibold">
+                                <p class="font-semibold text-text-primary">
                                     Proof Image
                                 </p>
                             </div>
@@ -2955,7 +2971,7 @@
                             <div class="flex items-center gap-2 mb-3">
                                 <x-lucide-link class="w-5 h-5 text-primary"/>
 
-                                <p class="font-semibold">
+                                <p class="font-semibold text-text-primary">
                                     Submission Link
                                 </p>
                             </div>
@@ -3001,7 +3017,7 @@
                             <div class="flex items-center gap-2 mb-3">
                                 <x-lucide-notebook-pen class="w-5 h-5 text-primary"/>
 
-                                <p class="font-semibold">
+                                <p class="font-semibold text-text-primary">
                                     Notes
                                 </p>
                             </div>
@@ -3027,29 +3043,55 @@
                     <!-- FOOTER -->
                     <div
                         class="border-t-2 border-border
-                            px-6 py-5
-                            flex justify-end"
+                            px-6 py-5 font-montserrat
+                            flex justify-end gap-3"
                     >
-
+                        <template x-if="reviewMode">
+                            <div class="flex gap-3">
+                                <button
+                                    @click="rejectSubmission()"
+                                    class="px-6 py-2
+                                        rounded-2xl
+                                        bg-red-accent
+                                        hover:bg-red-700
+                                        text-white
+                                        transition
+                                        font-montserrat
+                                        cursor-pointer"
+                                >
+                                    Reject
+                                </button>
+                                <button
+                                    @click="approveSubmission()"
+                                    class="px-6 py-2
+                                        rounded-2xl
+                                        bg-quartiary
+                                        hover:bg-emerald-700
+                                        text-white
+                                        transition
+                                        font-montserrat
+                                        cursor-pointer"
+                                >
+                                    Approve
+                                </button>
+                            </div>
+                        </template>
                         <button
                             @click="closeSubmission()"
-                            class="px-6 py-3
+                            class="px-6 py-2
                                 rounded-2xl
-                                bg-surface
-                                hover:bg-border
+                                border-2
+                                border-border
+                                hover:bg-surface
                                 transition
-                                font-semibold
+                                font-montserrat
+                                text-text-primary
                                 cursor-pointer"
                         >
-
                             Close
-
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     @endif
