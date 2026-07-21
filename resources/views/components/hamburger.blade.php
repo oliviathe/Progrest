@@ -12,7 +12,7 @@
 
         <div class="relative">
             <button id="mobile-profile-btn" class="focus:outline-none flex items-center">
-                <img src="{{ auth()->check() ? auth()->user()->avatar : asset('/images/profile.jpg') }}" alt="Profile" class="h-10 rounded-full border border-border object-cover">
+                <img src="{{ auth()->check() ? auth()->user()->avatar_url : asset('/images/profile.jpg') }}" alt="Profile" class="h-10 rounded-full border border-border object-cover">
             </button>
 
             <div id="mobile-profile-dropdown" class="hidden absolute right-0 mt-3 w-48 bg-background border border-border rounded-xl shadow-lg p-4 text-center">

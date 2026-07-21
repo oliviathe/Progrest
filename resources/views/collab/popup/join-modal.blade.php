@@ -20,70 +20,103 @@
 
         </div>
 
-        <div class="p-6 space-y-4">
-
-            <h3
-                id="joinTitle"
-                class="text-xl font-bold">
-
-            </h3>
-
-            <p
-                id="joinDescription">
-
-            </p>
-
-            <p>
-
-                Deadline :
-
-                <span id="joinDeadline"></span>
-
-            </p>
-
-            <p>
-
-                Leader :
-
-                <span id="joinLeader"></span>
-
-            </p>
-
-            <p>
-
-                Members :
-
-                <span id="joinMembers"></span>
-
-            </p>
-
-            <p>
-
-                Reward :
-
-                <span id="joinReward"></span>
-
-            </p>
-
+        <div class="p-8 space-y-6">
+        
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Collaboration Title
+                </label>
+            
+                <div
+                    id="joinTitle"
+                    class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 font-medium">
+                </div>
+            </div>
+        
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Description
+                </label>
+            
+                <div
+                    id="joinDescription"
+                    class="w-full min-h-[110px] rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 whitespace-pre-line">
+                </div>
+            </div>
+        
+            <div class="grid grid-cols-2 gap-5">
+            
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Deadline
+                    </label>
+                
+                    <div
+                        id="joinDeadline"
+                        class="rounded-xl border border-gray-300 bg-gray-50 px-4 py-3">
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Members
+                    </label>
+                
+                    <div
+                        id="joinMembers"
+                        class="rounded-xl border border-gray-300 bg-gray-50 px-4 py-3">
+                    </div>
+                </div>
+            
+            </div>
+        
+            <div class="grid grid-cols-2 gap-5">
+            
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Leader
+                    </label>
+                
+                    <div
+                        id="joinLeader"
+                        class="rounded-xl border border-gray-300 bg-gray-50 px-4 py-3">
+                    </div>
+                </div>
+            
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Reward
+                    </label>
+                
+                    <div
+                        id="joinReward"
+                        class="rounded-xl border border-gray-300 bg-gray-50 px-4 py-3">
+                    </div>
+                </div>
+            
+            </div>
+        
         </div>
-
         <div class="border-t p-6 flex justify-end">
 
             <form
                 id="joinForm"
                 method="POST">
-
+                
                 @csrf
-
+                
                 <button
-                    class="bg-primary text-white rounded-full px-6 py-2">
-
+                    type="submit"
+                    class="bg-primary hover:bg-primary/90 transition
+                           text-white font-semibold
+                           rounded-full px-8 py-3">
+                
                     Join Collaboration
-
+                
                 </button>
-
+            
             </form>
-
+        
         </div>
 
     </div>

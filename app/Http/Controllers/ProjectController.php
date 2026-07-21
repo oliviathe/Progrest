@@ -35,7 +35,7 @@ class ProjectController extends Controller
         $projects = Project::where(function ($query) {
             $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) {
-                    $q->where('user_id', auth()->id());
+                    $q->whereKey(auth()->id());
                 });
         });
 
@@ -66,7 +66,7 @@ class ProjectController extends Controller
         $projectsCol = Project::where(function ($query) use ($user) {
             $query->where('leader_id', auth()->id())
                 ->orWhereHas('users', function ($q) use ($user) {
-                    $q->where('user_id', auth()->id());
+                    $q->whereKey($user->id);
                 });
         })
         ->with(['users', 'leader'])

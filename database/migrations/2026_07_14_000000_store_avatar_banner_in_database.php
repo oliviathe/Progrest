@@ -16,13 +16,11 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->longText('avatar')
-                ->default('/images/profile.jpg')
-                ->nullable(false)
+                ->nullable()
                 ->change();
 
             $table->longText('banner')
-                ->default('/images/Checker_BG.png')
-                ->nullable(false)
+                ->nullable()
                 ->change();
         });
     }
