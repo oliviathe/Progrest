@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollabController;
+use App\Http\Controllers\CollabSubmissionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
@@ -130,7 +131,7 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('auth')
         ->name('notifications.read');
 
-    Route::get('/collab', [CollabController::class, 'index']);
+    Route::get('/collab', [CollabController::class, 'index'])->name('collab.index');
 
     Route::get('/collab/active', [CollabController::class, 'active'])
         ->name('collab.active');

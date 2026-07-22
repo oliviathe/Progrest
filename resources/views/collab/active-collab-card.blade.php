@@ -8,6 +8,14 @@
             'medium' => 'bg-yellow-accent',
             default => 'bg-quartiary'
         };
+
+        $collaboration = $task->collaborations
+            ->firstWhere('user_id', auth()->id());
+
+        $submission = $task->activeSubmission;
+
+        $isLeader = auth()->id() === $task->project->leader_id;
+        $isCollaborator = $collaboration !== null;
     @endphp
 
     {{-- Hero Image --}}
@@ -153,22 +161,136 @@
         </div>
     </div>
 
-    {{-- Join Button --}}
+    {{-- Buttons --}}
     <div class="mt-5 font-montserrat">
-        @if($task->users->count() >= $task->go_collab_limit)
+
+        {{-- View Details --}}
+        <button
+            @click="open({
+                id: {{ $task->id }},
+                title: @js($task->title),
+                description: @js($task->description),
+                image: @js($task->image),
+                priority: @js($task->priority),
+                status: @js($task->status),
+                deadline: @js(optional($task->deadline)?->format('d M Y')),
+                project: @js($task->project->title),
+                project_icon: @js($task->project->icon),
+                leader: @js($task->project->leader->name),
+                leader_avatar: @js($task->project->leader->avatar),
+                go_collab_description: @js($task->go_collab_description),
+                go_collab_reward: {{ $task->go_collab_reward }},
+                go_collab_limit: {{ $task->go_collab_limit }},
+                collaborators: @js(
+                    $task->collaborators->map(fn($user)=>[
+                        'id'=>$user->id,
+                        'name'=>$user->name,
+                        'avatar'=>$user->avatar,
+                        'status'=>$user->pivot->status,
+                    ])
+                ),
+                isLeader: @js($isLeader),
+                isCollaborator: @js($isCollaborator),
+                submission: @js(
+                    $submission ? [
+                        'id' => $submission->id,
+                        'task_id' => $task->id,
+                        'title' => $task->title,
+                        'submitter' => $submission->submitter->name,
+                        'submitter_avatar' => $submission->submitter->avatar,
+                        'submitted_at' => optional($submission->created_at)?->format('d M Y'),
+                        'proof_image' => $submission->proof_image,
+                        'proof_link' => $submission->proof_link,
+                        'notes' => $submission->notes,
+                        'status' => $submission->status,
+                    ] : null
+                ),
+            })"
+            class="w-full py-2.5 rounded-full border-2 border-gray-100 shadow-sm
+                   text-sm font-semibold text-text-primary hover:bg-surface
+                   transition-colors flex justify-center items-center gap-2 cursor-pointer">
+
+            View Details
+            <x-lucide-eye class="w-4 h-4"/>
+
+        </button>
+
+        {{-- Review / View Submission / Submit --}}
+        @if($submission)
+
+            @if($isLeader && $submission->status === 'pending')
+
+                <button
+                    @click="openReview({
+                        id: {{ $submission->id }},
+                        task_id: {{ $task->id }},
+                        title: @js($task->title),
+                        submitter: @js($submission->submitter->name),
+                        submitter_avatar: @js($submission->submitter->avatar),
+                        submitted_at: @js($submission->created_at?->format('d M Y')),
+                        proof_image: @js($submission->proof_image),
+                        proof_link: @js($submission->proof_link),
+                        notes: @js($submission->notes),
+                        status: @js($submission->status),
+                    })"
+                    class="w-full mt-3 py-2.5 rounded-full bg-review-submission
+                           hover:bg-review-submission/60 transition-colors
+                           text-sm font-semibold text-text-primary flex
+                           justify-center items-center gap-2 cursor-pointer">
+
+                    Review Submission
+                    <x-lucide-search-check class="w-4 h-4"/>
+
+                </button>
+
+            @else
+
+                <button
+                    @click="openSubmission({
+                        id: {{ $submission->id }},
+                        task_id: {{ $task->id }},
+                        title: @js($task->title),
+                        submitter: @js($submission->submitter->name),
+                        submitter_avatar: @js($submission->submitter->avatar),
+                        submitted_at: @js($submission->created_at?->format('d M Y')),
+                        proof_image: @js($submission->proof_image),
+                        proof_link: @js($submission->proof_link),
+                        notes: @js($submission->notes),
+                        status: @js($submission->status),
+                    })"
+                    class="w-full mt-3 py-2.5 rounded-full bg-mark-completed
+                           hover:bg-mark-completed/60 transition-colors
+                           text-sm font-semibold text-text-primary flex
+                           justify-center items-center gap-2 cursor-pointer">
+
+                    View Submission
+                    <x-lucide-view class="w-4 h-4"/>
+
+                </button>
+
+            @endif
+
+        @elseif($isCollaborator && $task->status !== 'completed' && $task->status !== 'cancelled')
+
             <button
-                disabled
-                class="w-full rounded-full py-2.5 bg-gray-300 text-gray-600 font-semibold cursor-not-allowed text-sm"
-            >
-                Collaboration Full
+                @click="openComplete({
+                    id: {{ $task->id }},
+                    title: @js($task->title),
+                    description: @js($task->description),
+                    go_collab_reward: @js($task->go_collab_reward)
+                })"
+                class="w-full mt-3 py-2.5 rounded-full bg-mark-completed
+                    hover:bg-mark-completed/60 transition-colors
+                    text-sm font-semibold text-text-primary flex
+                    justify-center items-center gap-2 cursor-pointer">
+
+                Mark as Completed
+                <x-lucide-check-circle class="w-4 h-4"/>
+
             </button>
-        @else
-            <button
-                class="w-full text-sm cursor-pointer rounded-full py-2.5 bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex justify-center items-center gap-2"
-            >
-                Join Collaboration
-                <x-lucide-arrow-right class="w-4 h-4"/>
-            </button>
+
         @endif
+
     </div>
+
 </div>

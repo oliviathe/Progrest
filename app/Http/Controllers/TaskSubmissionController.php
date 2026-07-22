@@ -15,11 +15,15 @@ class TaskSubmissionController extends Controller{
         $isAssigned = $task->users()
             ->where('users.id', $user->id)
             ->exists();
+        
+        $isCollaborator = $task->collaborators()
+            ->where('users.id', $user->id)
+            ->exists();
 
         $isLeader = $task->project->leader_id === $user->id;
 
         abort_unless(
-            $isAssigned || $isLeader,
+            $isAssigned || $isCollaborator || $isLeader,
             403,
             'You are not allowed to submit this task.'
         );
@@ -125,6 +129,26 @@ class TaskSubmissionController extends Controller{
             'reviewed_by' => auth()->id(),
             'reviewed_at' => now(),
         ]);
+
+        // Handle Point Reward
+
+        $reward = $task->go_collab_reward ?? 0;
+
+        if ($task->go_collab_enabled) {
+
+            // Kurangi points dri internal members
+            foreach ($task->users as $member) {
+                $member->decrement('points', $reward);
+            }
+
+            // Kasih reward ke external collaborator
+            $submission->submitter->increment('points', $reward);
+        } else {
+            // Normal Task
+            foreach ($task->users as $member) {
+                $member->increment('points', $reward);
+            }
+        }
 
         $submission->task->update([
             'status' => 'completed',
