@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskCollaboration;
+use App\Models\TaskSubmission;
 use App\Models\User;
 
 class ProfileController extends Controller
@@ -25,9 +27,21 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
-        // Tasks helped / done (completed only)
-        $tasksHelped = $user->tasks()
-            ->where('is_completed', true)
+        // Tasks helped: assigned tasks that were completed in either
+        // task_collaborations or task_submissions.
+        $assignedTaskIds = $user->tasks()->pluck('tasks.id');
+
+        $completedTaskIds = TaskCollaboration::whereIn('task_id', $assignedTaskIds)
+            ->where('status', 'completed')
+            ->pluck('task_id')
+            ->merge(
+                TaskSubmission::whereIn('task_id', $assignedTaskIds)
+                    ->where('status', 'approved')
+                    ->pluck('task_id')
+            )
+            ->unique();
+
+        $tasksHelped = Task::whereIn('id', $completedTaskIds)
             ->with('project')
             ->latest()
             ->get();
@@ -40,9 +54,6 @@ class ProfileController extends Controller
 
         $projectIds = $user->projects()->pluck('projects.id');
 
-        // Points per task priority
-        $priorityPoints = ['high' => 15, 'medium' => 10, 'low' => 5];
-
         $stats = [
             'projects_joined' => $projectIds->count(),
             'tasks_completed' => $tasksHelped->count(),
@@ -50,7 +61,7 @@ class ProfileController extends Controller
             'collaborations'  => User::where('id', '!=', $user->id)
                 ->whereHas('projects', fn ($q) => $q->whereIn('projects.id', $projectIds))
                 ->count(),
-            'points'          => $tasksHelped->sum(fn ($task) => $priorityPoints[$task->priority] ?? 0),
+            'points'          => (int) ($user->points ?? 0),
         ];
 
         return view('profile.index', [

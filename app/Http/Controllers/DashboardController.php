@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\TaskCollaboration;
+use App\Models\TaskSubmission;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -110,24 +111,34 @@ class DashboardController extends Controller
             ];
         }
 
-        $rangeStart = $buckets[0]['start'];
-        $rangeEnd = $buckets[count($buckets) - 1]['end'];
+        // Tasks assigned to the user, then look up which of those were completed
+        // in task_collaborations or task_submissions. One date per task (dedupe
+        // by task_id); fall back to updated_at when the completion time is null.
+        $assignedTaskIds = $user->tasks()->pluck('tasks.id');
 
-        // Two queries for the whole range, then bucket in PHP. This keeps the
-        // page at a fixed query count and avoids database-specific date grouping.
-        $dates = $user->tasks()
-            ->where('tasks.is_completed', true)
-            ->whereBetween('tasks.completed_at', [$rangeStart, $rangeEnd])
-            ->pluck('tasks.completed_at')
-            ->merge(
-                TaskCollaboration::where('user_id', $user->id)
-                    ->where('status', 'completed')
-                    ->whereBetween('completed_at', [$rangeStart, $rangeEnd])
-                    ->pluck('completed_at')
-            )
-            ->filter();
+        $dates = [];
+
+        TaskCollaboration::whereIn('task_id', $assignedTaskIds)
+            ->where('status', 'completed')
+            ->get()
+            ->each(function ($collab) use (&$dates) {
+                $dates[$collab->task_id] = $collab->completed_at ?? $collab->updated_at;
+            });
+
+        TaskSubmission::whereIn('task_id', $assignedTaskIds)
+            ->where('status', 'approved')
+            ->get()
+            ->each(function ($submission) use (&$dates) {
+                $dates[$submission->task_id] = $submission->reviewed_at ?? $submission->updated_at;
+            });
 
         foreach ($dates as $date) {
+            if ($date === null) {
+                continue;
+            }
+
+            $date = Carbon::parse($date);
+
             foreach ($buckets as $index => $bucket) {
                 if ($date >= $bucket['start'] && $date <= $bucket['end']) {
                     $buckets[$index]['value']++;

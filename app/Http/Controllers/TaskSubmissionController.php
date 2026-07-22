@@ -136,17 +136,24 @@ class TaskSubmissionController extends Controller{
 
         if ($task->go_collab_enabled) {
 
-            // Kurangi points dri internal members
+            // Internal members fund the reward (a spend; peak unchanged).
             foreach ($task->users as $member) {
                 $member->decrement('points', $reward);
             }
 
-            // Kasih reward ke external collaborator
-            $submission->submitter->increment('points', $reward);
+            // External collaborator earns it (ratchets highest_points).
+            $submission->submitter->awardPoints($reward);
+
+            // Record the collaboration as completed with the reward earned.
+            $task->collaborators()->updateExistingPivot($submission->submitted_by, [
+                'status' => 'completed',
+                'reward_earned' => $reward,
+                'completed_at' => now(),
+            ]);
         } else {
-            // Normal Task
+            // Normal task: every assigned member earns the reward.
             foreach ($task->users as $member) {
-                $member->increment('points', $reward);
+                $member->awardPoints($reward);
             }
         }
 

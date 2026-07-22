@@ -224,6 +224,8 @@ class ProjectTaskController extends Controller
                 ->store('tasks', 'public');
         }
 
+        $wasCompleted = $task->is_completed;
+
         $task->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
@@ -283,6 +285,15 @@ class ProjectTaskController extends Controller
         }
 
         $task->load('users');
+
+        // Award the task's reward to assigned members the first time it completes
+        // (go-collab tasks pay out through submission approval instead).
+        if (! $wasCompleted && $task->is_completed && ! $task->go_collab_enabled) {
+            $reward = (int) ($task->go_collab_reward ?? 0);
+            foreach ($task->users as $member) {
+                $member->awardPoints($reward);
+            }
+        }
 
         foreach ($task->project->users as $member) {
 

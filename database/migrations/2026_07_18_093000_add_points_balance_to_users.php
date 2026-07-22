@@ -12,21 +12,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        // Starting balance every account is granted; keep in sync with the
+        // column defaults below.
+        $base = 50;
+
+        Schema::table('users', function (Blueprint $table) use ($base) {
             if (! Schema::hasColumn('users', 'points')) {
                 // Current spendable balance.
-                $table->unsignedInteger('points')->default(50)->after('best_streak');
+                $table->unsignedInteger('points')->default($base)->after('best_streak');
             }
 
             if (! Schema::hasColumn('users', 'highest_points')) {
                 // High-water mark: the largest balance this account has ever held.
-                $table->unsignedInteger('highest_points')->default(50)->after('points');
+                $table->unsignedInteger('highest_points')->default($base)->after('points');
             }
         });
 
-        // Seed the balance from rewards already earned, so existing accounts
-        // don't reset to zero. Nothing has been spent yet, so the peak equals
-        // the total at this point in time.
+        // Seed existing accounts with the starting balance plus rewards already
+        // earned. Nothing has been spent yet, so the peak equals the balance.
         $totals = DB::table('task_collaborations')
             ->where('status', 'completed')
             ->selectRaw('user_id, SUM(reward_earned) as total')
@@ -37,8 +40,8 @@ return new class extends Migration
             DB::table('users')
                 ->where('id', $userId)
                 ->update([
-                    'points' => (int) $total,
-                    'highest_points' => (int) $total,
+                    'points' => $base + (int) $total,
+                    'highest_points' => $base + (int) $total,
                 ]);
         }
     }
